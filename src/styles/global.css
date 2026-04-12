@@ -461,7 +461,7 @@ section[data-counted] { counter-increment: section; }
 /* ---------- Skills ---------- */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
   gap: 2.5rem 3rem;
 }
 
@@ -678,4 +678,63 @@ section[data-counted] { counter-increment: section; }
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* ---------- Mobile ---------- */
+.brand__short { display: none; }
+.brand__full { display: inline; }
+
+@media (max-width: 720px) {
+  .site-header__inner { padding-block: 0.9rem; gap: 1rem; }
+  .brand { font-size: 0.78rem; flex-shrink: 0; }
+  .brand__short { display: inline; }
+  .brand__full { display: none; }
+
+  .nav { gap: 1.1rem; flex-wrap: wrap; justify-content: flex-end; }
+  .nav a { font-size: 0.78rem; }
+}
+
+@media (max-width: 480px) {
+  .nav { gap: 0.9rem; }
+  .nav a { font-size: 0.74rem; }
+  .nav a[href="/#education"] { display: none; }
+}
+
+@media (max-width: 640px) {
+  section { padding-block: clamp(3rem, 10vw, 5rem); }
+  .hero { padding-block: clamp(4rem, 14vw, 7rem) clamp(2.5rem, 8vw, 4rem); }
+
+  .hero__title { max-width: none; }
+  .hero__lede { margin-bottom: 2rem; }
+  .hero__meta { gap: 0.4rem 1.25rem; font-size: 0.72rem; }
+
+  .section-title { max-width: none; margin-bottom: 2rem; }
+  .section-label { margin-bottom: 1.75rem; }
+
+  .exp-item { padding-block: 1.5rem; }
+  .exp-item__date { padding-top: 0; font-size: 0.72rem; }
+
+  .proj-item { padding-block: 1.5rem; gap: 0.6rem 0.9rem; }
+  .proj-item__num { font-size: 0.7rem; }
+  .proj-item__desc { font-size: 0.9rem; }
+  .proj-item__tags span { font-size: 0.68rem; }
+
+  .contact-link {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "label arrow"
+      "value arrow";
+    row-gap: 0.15rem;
+    padding-block: 1rem;
+  }
+  .contact-link__label { grid-area: label; }
+  .contact-link__value { grid-area: value; word-break: break-word; }
+  .contact-link__arrow { grid-area: arrow; align-self: center; }
+  .contact-link:hover { padding-inline: 0; }
+
+  .site-footer { padding-block: 2rem; }
+  .site-footer__inner { font-size: 0.72rem; }
+
+  .prose { font-size: 0.98rem; line-height: 1.7; }
+  .prose pre { padding: 0.85rem 1rem; font-size: 0.78em; }
 }
