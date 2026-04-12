@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  current?: 'home' | 'thoughts';
+}
+
+const {
+  title = 'Harsh Vardhan Bhanot — AI Systems & Research',
+  description = 'CS undergrad at TAMU–Corpus Christi. Building AI systems, evolutionary simulation tooling, and ML-powered research infrastructure.',
+  current = 'home',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- OG -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <!-- Fonts: Fraunces (serif display), Geist (sans body), JetBrains Mono (mono accent) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Geist:wght@300..600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a href="/" class="brand" aria-label="Home">hvb / harsh vardhan bhanot</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="/" aria-current={current === 'home' ? 'page' : undefined}>home</a>
+          <a href="/#education">education</a>
+          <a href="/#work">work</a>
+          <a href="/thoughts" aria-current={current === 'thoughts' ? 'page' : undefined}>thoughts</a>
+          <a href="/#contact">contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <span>© {new Date().getFullYear()} Harsh Vardhan Bhanot</span>
+        <span>TAMU–Corpus Christi · Texas, USA</span>
+      </div>
+    </footer>
+  </body>
+</html>
