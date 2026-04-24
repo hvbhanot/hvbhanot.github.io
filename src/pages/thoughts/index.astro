@@ -11,24 +11,24 @@ const fmt = (d: Date) =>
 ---
 
 <Base title="Thoughts — Harsh Vardhan Bhanot" current="thoughts">
-  <section class="hero" style="padding-block: clamp(5rem, 10vw, 8rem) 2rem;">
-    <div class="container narrow">
-      <p class="hero__eyebrow">Notes & essays</p>
-      <h1 class="hero__title" style="font-size: clamp(2.4rem, 5vw + 0.5rem, 4.2rem); max-width: 16ch;">
-        Working notes, <em>half-baked</em><br />ideas, and post-mortems.
+  <section style="padding-block: clamp(5rem, 10vw, 8rem) 2rem;">
+    <div class="container container--narrow">
+      <p class="eyebrow" style="margin-bottom: 1.25rem;">Notes &amp; essays</p>
+      <h1 style="font-size: clamp(2.2rem, 5vw + 0.5rem, 3.8rem); letter-spacing: -0.035em; line-height: 1.02; max-width: 18ch; margin-bottom: 1rem;">
+        Working notes, half-baked ideas, and post-mortems.
       </h1>
-      <p class="hero__lede">
+      <p style="color: var(--ink-3); font-size: 1.02rem; line-height: 1.55; max-width: 56ch;">
         Thinking out loud about ML systems, research infrastructure, and the
         weird stuff I run into building them.
       </p>
     </div>
   </section>
 
-  <section style="padding-block: 2rem 6rem; border-top: none;">
-    <div class="container narrow">
+  <section style="padding-block: 1rem 5rem;">
+    <div class="container container--narrow">
       {
         posts.length === 0 ? (
-          <p style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--ink-mute);">
+          <p class="mono" style="font-size: 0.9rem; color: var(--ink-3);">
             // no posts yet — check back soon
           </p>
         ) : (

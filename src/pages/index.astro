@@ -3,179 +3,386 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base>
-  <section class="portfolio-hero" aria-labelledby="hero-title">
-    <canvas id="portfolio-scene" class="portfolio-hero__scene" aria-hidden="true"></canvas>
-    <div class="portfolio-hero__shade" aria-hidden="true"></div>
+  <!-- ────────── HERO ────────── -->
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas id="portfolio-scene" class="hero__scene" aria-hidden="true"></canvas>
+    <div class="hero__glow" aria-hidden="true"></div>
 
-    <div class="container portfolio-hero__inner">
-      <div class="portfolio-hero__copy">
-        <p class="kicker reveal reveal-1">CS @ TAMU-CC / AI systems / applied math</p>
-        <h1 id="hero-title" class="portfolio-hero__title reveal reveal-2">
-          Harsh Vardhan Bhanot builds AI research systems.
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <h1 id="hero-title" class="hero__title reveal reveal-1">
+          AI systems<br />for research.
         </h1>
-        <p class="portfolio-hero__lede reveal reveal-3">
+        <p class="hero__lede reveal reveal-2">
           I fine-tune coding models for population-genetics simulators, build
-          local multi-agent CTF solvers, and turn research ideas into reproducible
-          infrastructure.
+          local multi-agent CTF solvers, and turn research ideas into
+          reproducible infrastructure.
         </p>
-        <div class="hero-actions reveal reveal-4">
-          <a class="button button--primary" href="#work">View work</a>
-          <a class="button button--ghost" href="mailto:hvbhanot1@gmail.com">Contact</a>
+        <div class="hero__ctas reveal reveal-3">
+          <a class="btn btn--primary" href="#work">
+            View work
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn--ghost" href="/thoughts">
+            Read notes
+          </a>
+        </div>
+        <div class="hero__meta reveal reveal-4">
+          <span><strong>Now</strong> SLiM / Eidos fine-tuning</span>
+          <span><strong>Next</strong> MS CS · Texas Tech · 2026</span>
         </div>
       </div>
-
-      <aside class="command-panel reveal reveal-5" aria-label="Portfolio status">
-        <div class="command-panel__top">
-          <span>live map</span>
-          <span class="status-dot">online</span>
-        </div>
-        <dl class="signal-list">
-          <div>
-            <dt>Focus</dt>
-            <dd>ML systems + scientific computing</dd>
-          </div>
-          <div>
-            <dt>Now</dt>
-            <dd>SLiM/Eidos fine-tuning and evaluation</dd>
-          </div>
-          <div>
-            <dt>Next</dt>
-            <dd>MS CS @ Texas Tech, fall 2026</dd>
-          </div>
-        </dl>
-      </aside>
     </div>
   </section>
 
-  <section data-counted id="work" class="work-stage">
+  <!-- ────────── LOGOS STRIP ────────── -->
+  <section class="logos" aria-label="Affiliations and tools">
+    <div class="container">
+      <p class="logos__label">Work and research anchored across</p>
+      <ul class="logos__row">
+        <li>TAMU&ndash;CC</li>
+        <li>Texas Tech</li>
+        <li>Intel</li>
+        <li>Hugging Face</li>
+        <li>NVIDIA</li>
+        <li>SLiM</li>
+        <li>Ollama</li>
+        <li>DataEssenceAI</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ────────── INTEGRATE TONIGHT → FINE-TUNE TONIGHT ────────── -->
+  <section id="tonight">
     <div class="container">
       <div class="section-head">
-        <p class="section-label">Selected Work</p>
-        <h2 class="section-title">Project nodes worth opening.</h2>
+        <div class="feat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 7h16M4 12h16M4 17h10" stroke-linecap="round" />
+          </svg>
+        </div>
+        <h2 class="section-title">Fine-tune <em>tonight</em>.</h2>
+        <p class="section-lede">
+          A repeatable pipeline so I can go from a raw Eidos corpus to a
+          published LoRA adapter overnight &mdash; tokenizer-aware loading,
+          two-pass repair, Excel output.
+        </p>
       </div>
 
-      <div class="project-orbit" aria-label="Selected projects">
-        <a class="project-card project-card--large" href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener">
-          <span class="project-card__index">01</span>
-          <h3>SLiM Fine-Tuning Pipeline</h3>
+      <ul class="feat-tabs" role="tablist">
+        <li aria-current="true">unsloth</li>
+        <li>transformers</li>
+        <li>trl</li>
+        <li>peft</li>
+        <li>torch</li>
+        <li>datasets</li>
+        <li>evaluate</li>
+      </ul>
+
+      <div class="code-card">
+        <div class="code-card__bar">
+          <span class="code-card__dot"></span>
+          <span class="code-card__dot"></span>
+          <span class="code-card__dot"></span>
+        </div>
+        <div class="code-card__tabs">
+          <span class="code-card__tab" aria-current="true">train.py</span>
+          <span class="code-card__tab">config.yaml</span>
+          <span class="code-card__tab">adapter_readme.md</span>
+          <span class="code-card__tab">eval.py</span>
+        </div>
+        <div class="code-card__body">
+<pre><span class="tok-kw">from</span> unsloth <span class="tok-kw">import</span> FastLanguageModel
+<span class="tok-kw">from</span> trl <span class="tok-kw">import</span> SFTTrainer
+<span class="tok-kw">from</span> datasets <span class="tok-kw">import</span> load_dataset
+
+model, tok = FastLanguageModel.<span class="tok-fn">from_pretrained</span>(
+  <span class="tok-prop">model_name</span> = <span class="tok-str">"unsloth/qwen2.5-coder-7b-bnb-4bit"</span>,
+  <span class="tok-prop">max_seq_length</span> = <span class="tok-num">4096</span>,
+  <span class="tok-prop">load_in_4bit</span> = <span class="tok-kw">True</span>,
+)
+
+model = FastLanguageModel.<span class="tok-fn">get_peft_model</span>(
+  model, <span class="tok-prop">r</span> = <span class="tok-num">32</span>, <span class="tok-prop">lora_alpha</span> = <span class="tok-num">32</span>,
+  <span class="tok-prop">target_modules</span> = [<span class="tok-str">"q_proj"</span>, <span class="tok-str">"k_proj"</span>, <span class="tok-str">"v_proj"</span>, <span class="tok-str">"o_proj"</span>],
+)
+
+ds = <span class="tok-fn">load_dataset</span>(<span class="tok-str">"hvbhanot/slim-eidos-pairs"</span>, <span class="tok-prop">split</span>=<span class="tok-str">"train"</span>)
+
+<span class="tok-fn">SFTTrainer</span>(model, <span class="tok-prop">tokenizer</span>=tok, <span class="tok-prop">train_dataset</span>=ds).<span class="tok-fn">train</span>()
+model.<span class="tok-fn">push_to_hub</span>(<span class="tok-str">"hvbhanot/slim-coder-lora"</span>)  <span class="tok-cmt"># ⇢ 1 H100, ~2h</span></pre>
+        </div>
+        <div class="code-card__foot">
+          <span>adapter · qwen2.5-coder-7b</span>
+          <span class="tok-ok">● pushed</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────── FIRST-CLASS RESEARCH WORKFLOW ────────── -->
+  <section>
+    <div class="container">
+      <div class="section-head section-head--left">
+        <h2 class="section-title">First-class<br />research workflow.</h2>
+        <p class="section-lede">
+          Reproducibility isn&rsquo;t a vibe &mdash; it&rsquo;s a checklist.
+          Every run is versioned, every artifact is small enough to ship, and
+          every evaluation writes to disk.
+        </p>
+      </div>
+
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="feat-card__media">
+            <span class="mock-pill">
+              <span class="mock-pill__dot" aria-hidden="true"></span>
+              eval.run &middot; <b style="color:var(--ink)">pass@1 · 0.71</b>
+            </span>
+          </div>
+          <div class="feat-card__body">
+            <p class="feat-card__title">Deterministic evals</p>
+            <p class="feat-card__desc">
+              Fixed seeds, cached corpora, and a two-pass repair step so the
+              same inputs always yield the same pass@k &mdash; no silent drift
+              between runs.
+            </p>
+          </div>
+        </div>
+
+        <div class="feat-card">
+          <div class="feat-card__media">
+            <div class="mock-lines" role="presentation">
+              <span><b>POST</b> /run <span class="tok-mute">200</span></span>
+              <span><b>GET</b> /adapters/slim-coder-lora</span>
+              <span><b>GET</b> /metrics <span class="tok-mute">200</span></span>
+            </div>
+          </div>
+          <div class="feat-card__body">
+            <p class="feat-card__title">Local inference endpoints</p>
+            <p class="feat-card__desc">
+              Every model I train also ships a FastAPI runner &mdash; so the
+              same adapter I pushed tonight is serving requests on a Jetson
+              Orin by morning.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────── BUILD WITH OPEN MODELS (big code card) ────────── -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="feat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 9l-4 3 4 3M16 9l4 3-4 3M14 6l-4 12" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <h2 class="section-title">Build with <em>open models</em>.</h2>
+        <p class="section-lede">
+          Every piece of inference runs locally. Ollama, llama.cpp, vLLM &mdash;
+          whichever runtime makes the agent reproducible on someone else&rsquo;s
+          box.
+        </p>
+      </div>
+
+      <div class="code-card">
+        <div class="code-card__bar">
+          <span class="code-card__dot"></span>
+          <span class="code-card__dot"></span>
+          <span class="code-card__dot"></span>
+        </div>
+        <div class="code-card__tabs">
+          <span class="code-card__tab" aria-current="true">ctf_agent/plan.py</span>
+          <span class="code-card__tab">tools.py</span>
+          <span class="code-card__tab">verifier.py</span>
+        </div>
+        <div class="code-card__body">
+<pre><span class="tok-kw">from</span> ollama <span class="tok-kw">import</span> chat
+<span class="tok-kw">from</span> ctf_agent <span class="tok-kw">import</span> Planner, Verifier, TOOLS
+
+planner  = <span class="tok-fn">Planner</span>(<span class="tok-prop">model</span>=<span class="tok-str">"qwen2.5-coder:7b"</span>)
+verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</span>=<span class="tok-str">"llama3.1:8b"</span>)
+
+<span class="tok-kw">def</span> <span class="tok-fn">solve</span>(chal):
+    plan = planner.<span class="tok-fn">decompose</span>(chal)
+    <span class="tok-kw">for</span> step <span class="tok-kw">in</span> plan:
+        out = TOOLS[step.tool].<span class="tok-fn">run</span>(step.args)
+        <span class="tok-kw">if</span> verifier.<span class="tok-fn">accepts</span>(step, out):
+            <span class="tok-kw">yield</span> out
+        <span class="tok-kw">else</span>:
+            plan.<span class="tok-fn">replan</span>(step, out)   <span class="tok-cmt"># scratchpad loop</span></pre>
+        </div>
+        <div class="code-card__foot">
+          <span>22 tool wrappers · scratchpad memory · JSON persistence</span>
+          <span class="tok-ok">● offline</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────── PROJECTS ────────── -->
+  <section id="work">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Selected <em>work</em>.</h2>
+        <p class="section-lede">
+          Research pipelines, local AI tooling, and the occasional end-to-end
+          web platform &mdash; shipped with the artifacts.
+        </p>
+      </div>
+
+      <div class="proj-grid">
+        <a class="proj proj--wide" href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener">
+          <span class="proj__idx">01 / pipeline</span>
+          <h3>SLiM fine-tuning pipeline</h3>
           <p>
             Benchmarking and fine-tuning workflow for LLM-generated SLiM/Eidos
             code on H100, with tokenizer-aware loading, two-pass repair, Excel
             output, and a published LoRA adapter.
           </p>
-          <span class="project-card__meta">python / unsloth / trl / qwen2.5-coder</span>
+          <div class="proj__meta">
+            <span>python · unsloth · trl · qwen2.5-coder</span>
+            <span class="proj__arrow" aria-hidden="true">↗</span>
+          </div>
         </a>
 
-        <a class="project-card" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
-          <span class="project-card__index">02</span>
+        <a class="proj" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
+          <span class="proj__idx">02 / teaching ai</span>
           <h3>Professor Tux</h3>
           <p>
-            Local AI cybersecurity teaching assistant with FastAPI, ChromaDB RAG,
-            markdown teaching modes, Ollama, and Jetson Orin Nano deployment.
+            Local AI cybersecurity teaching assistant with FastAPI, ChromaDB
+            RAG, markdown teaching modes, Ollama, and Jetson Orin Nano
+            deployment.
           </p>
-          <span class="project-card__meta">fastapi / chromadb / ollama</span>
+          <div class="proj__meta">
+            <span>fastapi · chromadb · ollama</span>
+            <span class="proj__arrow" aria-hidden="true">↗</span>
+          </div>
         </a>
 
-        <a class="project-card" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
-          <span class="project-card__index">03</span>
+        <a class="proj" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
+          <span class="proj__idx">03 / agents</span>
           <h3>ctf_agent</h3>
           <p>
             Multi-agent CTF solver with planner, specialists, verifier, 22 tool
             wrappers, scratchpad memory, JSON persistence, and local inference.
           </p>
-          <span class="project-card__meta">python / react agents / ctf</span>
+          <div class="proj__meta">
+            <span>python · react agents · ctf</span>
+            <span class="proj__arrow" aria-hidden="true">↗</span>
+          </div>
         </a>
 
-        <a class="project-card" href="https://aisenate.pro" target="_blank" rel="noopener">
-          <span class="project-card__index">04</span>
+        <a class="proj" href="https://aisenate.pro" target="_blank" rel="noopener">
+          <span class="proj__idx">04 / platform</span>
           <h3>AI Senate</h3>
           <p>
             Multi-model debate platform where frontier models argue, critique,
             and converge on a synthesized answer with client-side persistence.
           </p>
-          <span class="project-card__meta">fastapi / react / railway</span>
+          <div class="proj__meta">
+            <span>fastapi · react · railway</span>
+            <span class="proj__arrow" aria-hidden="true">↗</span>
+          </div>
         </a>
 
-        <a class="project-card" href="https://github.com/hvbhanot/FNN" target="_blank" rel="noopener">
-          <span class="project-card__index">05</span>
-          <h3>Neural Net from Scratch</h3>
+        <a class="proj" href="https://github.com/hvbhanot/FNN" target="_blank" rel="noopener">
+          <span class="proj__idx">05 / from scratch</span>
+          <h3>Neural net from scratch</h3>
           <p>
             Pure NumPy feedforward network with hand-derived backprop, ReLU,
             softmax output, and 90%+ Iris accuracy.
           </p>
-          <span class="project-card__meta">numpy / backprop / math</span>
+          <div class="proj__meta">
+            <span>numpy · backprop · math</span>
+            <span class="proj__arrow" aria-hidden="true">↗</span>
+          </div>
         </a>
 
-        <a class="project-card" href="https://github.com/hvbhanot/RestAPI" target="_blank" rel="noopener">
-          <span class="project-card__index">06</span>
+        <a class="proj" href="https://github.com/hvbhanot/RestAPI" target="_blank" rel="noopener">
+          <span class="proj__idx">06 / backend</span>
           <h3>Go REST API + JWT</h3>
           <p>
             JWT-authenticated CRUD API with SQLite, clean middleware, and a
             practical dive into Go backend structure.
           </p>
-          <span class="project-card__meta">go / gin / jwt / sqlite</span>
+          <div class="proj__meta">
+            <span>go · gin · jwt · sqlite</span>
+            <span class="proj__arrow" aria-hidden="true">↗</span>
+          </div>
         </a>
       </div>
     </div>
   </section>
 
-  <section data-counted id="about" class="depth-section">
-    <div class="container depth-grid">
-      <div>
-        <p class="section-label">About</p>
-        <h2 class="section-title">Builder first. Researcher by training.</h2>
-      </div>
-      <div class="copy-stack">
-        <p>
+  <!-- ────────── ABOUT + QUOTE ────────── -->
+  <section id="about">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Builder first.<br />Researcher by <em>training</em>.</h2>
+        <p class="section-lede">
           I am finishing a BS in Computer Science with an Applied Math minor at
-          Texas A&amp;M University-Corpus Christi, where I founded Islanders
-          Research in AI and serve as an Intel Student Brand Ambassador.
-        </p>
-        <p>
+          Texas A&amp;M University&ndash;Corpus Christi, where I founded
+          Islanders Research in AI and serve as an Intel Student Brand Ambassador.
           My work sits across machine learning, cybersecurity, and the
-          infrastructure that makes experiments reproducible. Recently that has
-          meant fine-tuning open-weight coding models on Eidos for the
-          <a href="https://messerlab.org/slim/">SLiM</a> evolutionary simulator
-          and building a local Ollama-only CTF agent.
+          infrastructure that makes experiments reproducible.
+        </p>
+      </div>
+
+      <div class="quote">
+        <div class="quote__up" aria-hidden="true">&ldquo;</div>
+        <p class="quote__text">
+          The real portfolio is the pipeline. Reproducibility is the product &mdash;
+          the model is just the output.
+        </p>
+        <p class="quote__by">
+          <b>Harsh Vardhan Bhanot</b> &middot; working principle
         </p>
       </div>
     </div>
   </section>
 
-  <section data-counted id="experience" class="timeline-section">
+  <!-- ────────── TRAJECTORY / TIMELINE ────────── -->
+  <section id="experience">
     <div class="container">
       <div class="section-head">
-        <p class="section-label">Trajectory</p>
-        <h2 class="section-title">The current path through the system.</h2>
+        <h2 class="section-title">The <em>trajectory</em>.</h2>
+        <p class="section-lede">
+          Where I am on the path &mdash; research roles, the org I founded, and
+          what&rsquo;s on the calendar.
+        </p>
       </div>
 
       <ol class="timeline">
         <li>
-          <time>2025 - present</time>
+          <time>2025 &mdash; present</time>
           <div>
-            <h3>Undergraduate Researcher</h3>
-            <p>Computational genetics and AI systems at TAMU-CC, building agent workflows, SLiM analysis pipelines, and LoRA fine-tuning runs.</p>
+            <h3>Undergraduate researcher</h3>
+            <p>Computational genetics and AI systems at TAMU&ndash;CC, building agent workflows, SLiM analysis pipelines, and LoRA fine-tuning runs.</p>
           </div>
         </li>
         <li>
-          <time>May - Aug 2024</time>
+          <time>May &mdash; Aug 2024</time>
           <div>
-            <h3>AI &amp; ML Intern</h3>
+            <h3>AI &amp; ML intern</h3>
             <p>DataEssenceAI, Houston. Built PyTorch and OpenCV models for predictive analysis, tuning, testing, and deployment workflows.</p>
           </div>
         </li>
         <li>
-          <time>2023 - present</time>
+          <time>2023 &mdash; present</time>
           <div>
-            <h3>Founder &amp; Vice President</h3>
-            <p>Islanders Research in AI, a student research org for ML fundamentals, reproducibility, project mentoring, and career development.</p>
+            <h3>Founder &amp; vice president</h3>
+            <p>Islanders Research in AI &mdash; a student research org for ML fundamentals, reproducibility, project mentoring, and career development.</p>
           </div>
         </li>
         <li>
-          <time>2022 - 2026</time>
+          <time>2022 &mdash; 2026</time>
           <div>
             <h3>B.S. Computer Science</h3>
-            <p>Texas A&amp;M University-Corpus Christi, cybersecurity specialization, applied math minor, Dean's List standing.</p>
+            <p>Texas A&amp;M University&ndash;Corpus Christi, cybersecurity specialization, applied math minor, Dean&rsquo;s List standing.</p>
           </div>
         </li>
         <li>
@@ -189,33 +396,69 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <section data-counted id="stack" class="stack-section">
-    <div class="container stack-layout">
-      <div>
-        <p class="section-label">Stack</p>
-        <h2 class="section-title">Tools in active rotation.</h2>
+  <!-- ────────── STACK (dashboard-style panel) ────────── -->
+  <section id="stack">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Everything in the <em>toolkit</em>.</h2>
+        <p class="section-lede">
+          The tools in active rotation &mdash; chosen so that the same repo
+          runs on an H100 cluster, a Jetson Orin, and my laptop.
+        </p>
       </div>
-      <div class="stack-cloud" aria-label="Skills">
-        <span>Python</span><span>Go</span><span>C++</span><span>TypeScript</span>
-        <span>PyTorch</span><span>Transformers</span><span>PEFT / LoRA</span>
-        <span>Unsloth</span><span>FastAPI</span><span>Docker</span>
-        <span>Ollama</span><span>Jetson</span><span>SLiM / Eidos</span>
-        <span>Linux</span><span>OpenCV</span><span>LaTeX</span>
+
+      <div class="panel-card">
+        <div class="panel-card__bar">
+          <span class="code-card__dot"></span>
+          <span class="code-card__dot"></span>
+          <span class="code-card__dot"></span>
+          <span class="mono" style="margin-left:auto;color:var(--ink-3);font-size:0.74rem;">stack &middot; 16 items</span>
+        </div>
+        <div class="panel-card__body">
+          <div class="stack-cloud" aria-label="Skills">
+            <span>Python</span><span>Go</span><span>C++</span><span>TypeScript</span>
+            <span>PyTorch</span><span>Transformers</span><span>PEFT / LoRA</span>
+            <span>Unsloth</span><span>FastAPI</span><span>Docker</span>
+            <span>Ollama</span><span>Jetson</span><span>SLiM / Eidos</span>
+            <span>Linux</span><span>OpenCV</span><span>LaTeX</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section data-counted id="contact" class="contact-section">
-    <div class="container contact-grid">
-      <div>
-        <p class="section-label">Contact</p>
-        <h2 class="section-title">Open a channel.</h2>
+  <!-- ────────── CONTACT ────────── -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Research <em>reimagined</em>.<br />Open a channel.</h2>
+        <p class="section-lede">
+          Collaborations, research invites, or a quick technical question &mdash;
+          all four channels are live.
+        </p>
       </div>
-      <div class="contact-links">
-        <a href="mailto:hvbhanot1@gmail.com"><span>Email</span><strong>hvbhanot1@gmail.com</strong></a>
-        <a href="https://linkedin.com/in/hvbhanot" target="_blank" rel="noopener"><span>LinkedIn</span><strong>/in/hvbhanot</strong></a>
-        <a href="https://github.com/hvbhanot" target="_blank" rel="noopener"><span>GitHub</span><strong>@hvbhanot</strong></a>
-        <a href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener"><span>Hugging Face</span><strong>@hvbhanot</strong></a>
+
+      <div class="contact-grid">
+        <a class="contact-link" href="mailto:hvbhanot1@gmail.com">
+          <span class="contact-link__label">Email</span>
+          <span class="contact-link__value">hvbhanot1@gmail.com</span>
+          <span class="contact-link__arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/hvbhanot" target="_blank" rel="noopener">
+          <span class="contact-link__label">LinkedIn</span>
+          <span class="contact-link__value">/in/hvbhanot</span>
+          <span class="contact-link__arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="contact-link" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
+          <span class="contact-link__label">GitHub</span>
+          <span class="contact-link__value">@hvbhanot</span>
+          <span class="contact-link__arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="contact-link" href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener">
+          <span class="contact-link__label">Hugging Face</span>
+          <span class="contact-link__value">@hvbhanot</span>
+          <span class="contact-link__arrow" aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
   </section>
@@ -236,94 +479,93 @@ import Base from '../layouts/Base.astro';
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-      camera.position.set(0, 0.9, 8);
+      const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+      camera.position.set(0.6, 0.4, 8.4);
 
       const group = new THREE.Group();
+      group.position.x = 2.2;
       scene.add(group);
 
-      const palette = {
-        cyan: new THREE.Color('#4fd8ff'),
-        amber: new THREE.Color('#f4b860'),
-        rose: new THREE.Color('#ff6f91'),
-        green: new THREE.Color('#7be495'),
-      };
-
-      const coreMaterial = new THREE.MeshStandardMaterial({
-        color: palette.cyan,
-        metalness: 0.72,
-        roughness: 0.22,
-        emissive: '#173f4d',
-        emissiveIntensity: 0.35,
+      // Rubik-ish stacked cube cluster (mono metallic)
+      const cubeMat = new THREE.MeshStandardMaterial({
+        color: '#d9d9d9',
+        metalness: 0.9,
+        roughness: 0.25,
+        emissive: '#111111',
+        emissiveIntensity: 0.18,
       });
-      const wireMaterial = new THREE.MeshBasicMaterial({
-        color: palette.amber,
-        wireframe: true,
+      const edgeMat = new THREE.LineBasicMaterial({
+        color: '#777777',
         transparent: true,
-        opacity: 0.32,
+        opacity: 0.35,
       });
 
-      const core = new THREE.Mesh(new THREE.IcosahedronGeometry(1.45, 3), coreMaterial);
-      const wire = new THREE.Mesh(new THREE.TorusKnotGeometry(2.25, 0.045, 220, 12, 2, 5), wireMaterial);
-      group.add(core, wire);
-
-      const ringMaterial = new THREE.MeshBasicMaterial({
-        color: palette.rose,
-        transparent: true,
-        opacity: 0.48,
-        side: THREE.DoubleSide,
-      });
-      for (let i = 0; i < 3; i += 1) {
-        const ring = new THREE.Mesh(new THREE.TorusGeometry(3 + i * 0.48, 0.012, 8, 160), ringMaterial);
-        ring.rotation.x = Math.PI / 2 + i * 0.36;
-        ring.rotation.y = i * 0.5;
-        group.add(ring);
+      const cluster = new THREE.Group();
+      const size = 0.94;
+      const gap = 0.04;
+      for (let x = -1; x <= 1; x += 1) {
+        for (let y = -1; y <= 1; y += 1) {
+          for (let z = -1; z <= 1; z += 1) {
+            const geo = new THREE.BoxGeometry(size, size, size);
+            const box = new THREE.Mesh(geo, cubeMat);
+            box.position.set(
+              x * (size + gap),
+              y * (size + gap),
+              z * (size + gap),
+            );
+            const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo), edgeMat);
+            box.add(edges);
+            cluster.add(box);
+          }
+        }
       }
+      cluster.scale.setScalar(0.92);
+      group.add(cluster);
 
-      const pointsGeometry = new THREE.BufferGeometry();
-      const pointCount = 900;
-      const positions = new Float32Array(pointCount * 3);
-      const colors = new Float32Array(pointCount * 3);
-      for (let i = 0; i < pointCount; i += 1) {
-        const radius = 4.2 + Math.random() * 6.5;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-        positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.62;
-        positions[i * 3 + 2] = radius * Math.cos(phi);
+      // Ambient halo ring
+      const halo = new THREE.Mesh(
+        new THREE.TorusGeometry(3.4, 0.008, 8, 180),
+        new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.08 }),
+      );
+      halo.rotation.x = Math.PI / 2.3;
+      group.add(halo);
 
-        const color = [palette.cyan, palette.amber, palette.rose, palette.green][i % 4];
-        colors[i * 3] = color.r;
-        colors[i * 3 + 1] = color.g;
-        colors[i * 3 + 2] = color.b;
+      // Dust points, subtle
+      const pts = 420;
+      const posArr = new Float32Array(pts * 3);
+      for (let i = 0; i < pts; i += 1) {
+        const r = 4.5 + Math.random() * 6;
+        const t = Math.random() * Math.PI * 2;
+        const p = Math.acos(2 * Math.random() - 1);
+        posArr[i * 3] = r * Math.sin(p) * Math.cos(t);
+        posArr[i * 3 + 1] = r * Math.sin(p) * Math.sin(t) * 0.55;
+        posArr[i * 3 + 2] = r * Math.cos(p);
       }
-      pointsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      pointsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-      const points = new THREE.Points(
-        pointsGeometry,
+      const ptGeo = new THREE.BufferGeometry();
+      ptGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
+      const dust = new THREE.Points(
+        ptGeo,
         new THREE.PointsMaterial({
-          size: 0.035,
-          vertexColors: true,
+          size: 0.018,
+          color: '#ffffff',
           transparent: true,
-          opacity: 0.82,
+          opacity: 0.35,
           depthWrite: false,
         }),
       );
-      scene.add(points);
+      scene.add(dust);
 
-      const grid = new THREE.GridHelper(18, 36, '#4fd8ff', '#243548');
-      grid.position.y = -2.15;
-      grid.material.transparent = true;
-      grid.material.opacity = 0.18;
-      scene.add(grid);
-
-      scene.add(new THREE.AmbientLight('#d8f6ff', 0.85));
-      const key = new THREE.PointLight('#4fd8ff', 12, 18);
-      key.position.set(2.6, 3.4, 4);
+      // Lighting: cool key + warmer rim to read as metal
+      scene.add(new THREE.AmbientLight('#ffffff', 0.38));
+      const key = new THREE.DirectionalLight('#ffffff', 2.8);
+      key.position.set(5, 5, 6);
       scene.add(key);
-      const fill = new THREE.PointLight('#ff6f91', 6, 18);
-      fill.position.set(-3, -1, 3);
-      scene.add(fill);
+      const rim = new THREE.PointLight('#a78bfa', 2.6, 20);
+      rim.position.set(-4, 2, -2);
+      scene.add(rim);
+      const under = new THREE.PointLight('#67e8f9', 1.2, 18);
+      under.position.set(2, -3, 2);
+      scene.add(under);
 
       const pointer = { x: 0, y: 0 };
       window.addEventListener('pointermove', (event) => {
@@ -345,11 +587,10 @@ import Base from '../layouts/Base.astro';
         const time = clock.getElapsedTime();
         const speed = reducedMotion ? 0.08 : 1;
 
-        group.rotation.y = time * 0.16 * speed + pointer.x * 0.22;
-        group.rotation.x = -0.18 + pointer.y * 0.12;
-        wire.rotation.z = time * 0.11 * speed;
-        points.rotation.y = time * 0.025 * speed;
-        grid.position.z = ((time * 0.45 * speed) % 1) - 0.5;
+        cluster.rotation.y = time * 0.18 * speed + pointer.x * 0.28;
+        cluster.rotation.x = -0.22 + Math.sin(time * 0.4 * speed) * 0.06 + pointer.y * 0.12;
+        halo.rotation.z = time * 0.07 * speed;
+        dust.rotation.y = time * 0.015 * speed;
 
         renderer.render(scene, camera);
         window.requestAnimationFrame(render);
