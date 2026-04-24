@@ -5,32 +5,48 @@ import Base from '../layouts/Base.astro';
 <Base>
   <!-- ────────── HERO ────────── -->
   <section class="hero" aria-labelledby="hero-title">
-    <canvas id="portfolio-scene" class="hero__scene" aria-hidden="true"></canvas>
+    <div class="hero__grid" aria-hidden="true"></div>
     <div class="hero__glow" aria-hidden="true"></div>
 
     <div class="container hero__inner">
       <div class="hero__copy">
-        <h1 id="hero-title" class="hero__title reveal reveal-1">
-          AI systems<br />for research.
+        <span class="hero__badge reveal reveal-1">
+          <b>v2026.04</b> &nbsp;·&nbsp; shipping SLiM&nbsp;coder&nbsp;LoRA
+        </span>
+        <h1 id="hero-title" class="hero__title reveal reveal-2">
+          AI systems<br />for <em>research</em>.
         </h1>
-        <p class="hero__lede reveal reveal-2">
+        <p class="hero__lede reveal reveal-3">
           I fine-tune coding models for population-genetics simulators, build
           local multi-agent CTF solvers, and turn research ideas into
           reproducible infrastructure.
         </p>
-        <div class="hero__ctas reveal reveal-3">
+        <div class="hero__ctas reveal reveal-4">
           <a class="btn btn--primary" href="#work">
             View work
             <span class="btn__arrow" aria-hidden="true">→</span>
           </a>
-          <a class="btn btn--ghost" href="/thoughts">
-            Read notes
-          </a>
+          <a class="btn btn--ghost" href="/thoughts">Read notes</a>
         </div>
-        <div class="hero__meta reveal reveal-4">
-          <span><strong>Now</strong> SLiM / Eidos fine-tuning</span>
-          <span><strong>Next</strong> MS CS · Texas Tech · 2026</span>
-        </div>
+        <dl class="hero__meta reveal reveal-5">
+          <div>
+            <dt>Focus</dt>
+            <dd>ML systems &middot; sci-computing</dd>
+          </div>
+          <div>
+            <dt>Now</dt>
+            <dd>SLiM / Eidos fine-tuning</dd>
+          </div>
+          <div>
+            <dt>Next</dt>
+            <dd>MS CS &middot; Texas Tech &middot; 2026</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="hero__visual reveal reveal-3" aria-hidden="true">
+        <div class="hero__halo"></div>
+        <canvas id="portfolio-scene" class="hero__scene"></canvas>
       </div>
     </div>
   </section>
@@ -52,13 +68,14 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <!-- ────────── INTEGRATE TONIGHT → FINE-TUNE TONIGHT ────────── -->
+  <!-- ────────── FINE-TUNE TONIGHT ────────── -->
   <section id="tonight">
     <div class="container">
       <div class="section-head">
         <div class="feat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M4 7h16M4 12h16M4 17h10" stroke-linecap="round" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" stroke-linecap="round" />
+            <circle cx="12" cy="12" r="3.2" />
           </svg>
         </div>
         <h2 class="section-title">Fine-tune <em>tonight</em>.</h2>
@@ -84,6 +101,7 @@ import Base from '../layouts/Base.astro';
           <span class="code-card__dot"></span>
           <span class="code-card__dot"></span>
           <span class="code-card__dot"></span>
+          <span class="code-card__bar-title">slim-coder &nbsp;·&nbsp; train.py</span>
         </div>
         <div class="code-card__tabs">
           <span class="code-card__tab" aria-current="true">train.py</span>
@@ -92,28 +110,10 @@ import Base from '../layouts/Base.astro';
           <span class="code-card__tab">eval.py</span>
         </div>
         <div class="code-card__body">
-<pre><span class="tok-kw">from</span> unsloth <span class="tok-kw">import</span> FastLanguageModel
-<span class="tok-kw">from</span> trl <span class="tok-kw">import</span> SFTTrainer
-<span class="tok-kw">from</span> datasets <span class="tok-kw">import</span> load_dataset
-
-model, tok = FastLanguageModel.<span class="tok-fn">from_pretrained</span>(
-  <span class="tok-prop">model_name</span> = <span class="tok-str">"unsloth/qwen2.5-coder-7b-bnb-4bit"</span>,
-  <span class="tok-prop">max_seq_length</span> = <span class="tok-num">4096</span>,
-  <span class="tok-prop">load_in_4bit</span> = <span class="tok-kw">True</span>,
-)
-
-model = FastLanguageModel.<span class="tok-fn">get_peft_model</span>(
-  model, <span class="tok-prop">r</span> = <span class="tok-num">32</span>, <span class="tok-prop">lora_alpha</span> = <span class="tok-num">32</span>,
-  <span class="tok-prop">target_modules</span> = [<span class="tok-str">"q_proj"</span>, <span class="tok-str">"k_proj"</span>, <span class="tok-str">"v_proj"</span>, <span class="tok-str">"o_proj"</span>],
-)
-
-ds = <span class="tok-fn">load_dataset</span>(<span class="tok-str">"hvbhanot/slim-eidos-pairs"</span>, <span class="tok-prop">split</span>=<span class="tok-str">"train"</span>)
-
-<span class="tok-fn">SFTTrainer</span>(model, <span class="tok-prop">tokenizer</span>=tok, <span class="tok-prop">train_dataset</span>=ds).<span class="tok-fn">train</span>()
-model.<span class="tok-fn">push_to_hub</span>(<span class="tok-str">"hvbhanot/slim-coder-lora"</span>)  <span class="tok-cmt"># ⇢ 1 H100, ~2h</span></pre>
+<pre><span class="ln"><span class="tok-kw">from</span> unsloth <span class="tok-kw">import</span> FastLanguageModel</span><span class="ln"><span class="tok-kw">from</span> trl <span class="tok-kw">import</span> SFTTrainer</span><span class="ln"><span class="tok-kw">from</span> datasets <span class="tok-kw">import</span> load_dataset</span><span class="ln"></span><span class="ln">model, tok = FastLanguageModel.<span class="tok-fn">from_pretrained</span>(</span><span class="ln">  <span class="tok-prop">model_name</span> = <span class="tok-str">"unsloth/qwen2.5-coder-7b-bnb-4bit"</span>,</span><span class="ln">  <span class="tok-prop">max_seq_length</span> = <span class="tok-num">4096</span>,</span><span class="ln">  <span class="tok-prop">load_in_4bit</span> = <span class="tok-kw">True</span>,</span><span class="ln">)</span><span class="ln"></span><span class="ln">model = FastLanguageModel.<span class="tok-fn">get_peft_model</span>(</span><span class="ln">  model, <span class="tok-prop">r</span>=<span class="tok-num">32</span>, <span class="tok-prop">lora_alpha</span>=<span class="tok-num">32</span>,</span><span class="ln">  <span class="tok-prop">target_modules</span> = [<span class="tok-str">"q_proj"</span>, <span class="tok-str">"k_proj"</span>, <span class="tok-str">"v_proj"</span>, <span class="tok-str">"o_proj"</span>],</span><span class="ln">)</span><span class="ln"></span><span class="ln">ds = <span class="tok-fn">load_dataset</span>(<span class="tok-str">"hvbhanot/slim-eidos-pairs"</span>, <span class="tok-prop">split</span>=<span class="tok-str">"train"</span>)</span><span class="ln"><span class="tok-fn">SFTTrainer</span>(model, <span class="tok-prop">tokenizer</span>=tok, <span class="tok-prop">train_dataset</span>=ds).<span class="tok-fn">train</span>()</span><span class="ln">model.<span class="tok-fn">push_to_hub</span>(<span class="tok-str">"hvbhanot/slim-coder-lora"</span>)  <span class="tok-cmt"># ⇢ 1 H100, ~2h</span></span></pre>
         </div>
         <div class="code-card__foot">
-          <span>adapter · qwen2.5-coder-7b</span>
+          <span>adapter &middot; qwen2.5-coder-7b</span>
           <span class="tok-ok">● pushed</span>
         </div>
       </div>
@@ -135,10 +135,28 @@ model.<span class="tok-fn">push_to_hub</span>(<span class="tok-str">"hvbhanot/sl
       <div class="feat-grid">
         <div class="feat-card">
           <div class="feat-card__media">
-            <span class="mock-pill">
-              <span class="mock-pill__dot" aria-hidden="true"></span>
-              eval.run &middot; <b style="color:var(--ink)">pass@1 · 0.71</b>
-            </span>
+            <div class="mock-inbox" role="presentation">
+              <div class="mock-inbox__row">
+                <span class="mock-inbox__key">run</span>
+                <span class="mock-inbox__val">slim-coder-01</span>
+                <span class="mock-inbox__tag">v4</span>
+              </div>
+              <div class="mock-inbox__row mock-inbox__row--hi">
+                <span class="mock-inbox__key">eval</span>
+                <span class="mock-inbox__val">pass@1 &middot; <b>0.71</b></span>
+                <span class="mock-inbox__tag mock-inbox__tag--ok">✓ ok</span>
+              </div>
+              <div class="mock-inbox__row">
+                <span class="mock-inbox__key">seed</span>
+                <span class="mock-inbox__val">1337 &middot; fixed</span>
+                <span class="mock-inbox__tag">det</span>
+              </div>
+              <div class="mock-inbox__row">
+                <span class="mock-inbox__key">size</span>
+                <span class="mock-inbox__val">lora &middot; 84&nbsp;MB</span>
+                <span class="mock-inbox__tag">ship</span>
+              </div>
+            </div>
           </div>
           <div class="feat-card__body">
             <p class="feat-card__title">Deterministic evals</p>
@@ -152,10 +170,21 @@ model.<span class="tok-fn">push_to_hub</span>(<span class="tok-str">"hvbhanot/sl
 
         <div class="feat-card">
           <div class="feat-card__media">
-            <div class="mock-lines" role="presentation">
-              <span><b>POST</b> /run <span class="tok-mute">200</span></span>
-              <span><b>GET</b> /adapters/slim-coder-lora</span>
-              <span><b>GET</b> /metrics <span class="tok-mute">200</span></span>
+            <div class="mock-event" role="presentation">
+              <div class="mock-event__head">
+                <b>webhook.event</b>
+                <span>● 200</span>
+              </div>
+              <div style="color:var(--ink-3);">
+                &#123;<br />
+                &nbsp;&nbsp;<span class="tok-prop">"type"</span>: <span class="tok-str">"run.completed"</span>,<br />
+                &nbsp;&nbsp;<span class="tok-prop">"adapter"</span>: <span class="tok-str">"slim-coder-lora"</span>,<br />
+                &nbsp;&nbsp;<span class="tok-prop">"metrics"</span>: &#123;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-prop">"pass@1"</span>: <span class="tok-num">0.71</span>,<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-prop">"loss"</span>: <span class="tok-num">0.42</span><br />
+                &nbsp;&nbsp;&#125;<br />
+                &#125;
+              </div>
             </div>
           </div>
           <div class="feat-card__body">
@@ -171,13 +200,13 @@ model.<span class="tok-fn">push_to_hub</span>(<span class="tok-str">"hvbhanot/sl
     </div>
   </section>
 
-  <!-- ────────── BUILD WITH OPEN MODELS (big code card) ────────── -->
+  <!-- ────────── BUILD WITH OPEN MODELS ────────── -->
   <section>
     <div class="container">
       <div class="section-head">
         <div class="feat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M8 9l-4 3 4 3M16 9l4 3-4 3M14 6l-4 12" stroke-linecap="round" stroke-linejoin="round" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M8 6l-5 6 5 6M16 6l5 6-5 6M14 4l-4 16" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </div>
         <h2 class="section-title">Build with <em>open models</em>.</h2>
@@ -193,30 +222,19 @@ model.<span class="tok-fn">push_to_hub</span>(<span class="tok-str">"hvbhanot/sl
           <span class="code-card__dot"></span>
           <span class="code-card__dot"></span>
           <span class="code-card__dot"></span>
+          <span class="code-card__bar-title">ctf_agent &nbsp;·&nbsp; plan.py</span>
         </div>
         <div class="code-card__tabs">
-          <span class="code-card__tab" aria-current="true">ctf_agent/plan.py</span>
+          <span class="code-card__tab" aria-current="true">plan.py</span>
           <span class="code-card__tab">tools.py</span>
           <span class="code-card__tab">verifier.py</span>
+          <span class="code-card__tab">scratchpad.json</span>
         </div>
         <div class="code-card__body">
-<pre><span class="tok-kw">from</span> ollama <span class="tok-kw">import</span> chat
-<span class="tok-kw">from</span> ctf_agent <span class="tok-kw">import</span> Planner, Verifier, TOOLS
-
-planner  = <span class="tok-fn">Planner</span>(<span class="tok-prop">model</span>=<span class="tok-str">"qwen2.5-coder:7b"</span>)
-verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</span>=<span class="tok-str">"llama3.1:8b"</span>)
-
-<span class="tok-kw">def</span> <span class="tok-fn">solve</span>(chal):
-    plan = planner.<span class="tok-fn">decompose</span>(chal)
-    <span class="tok-kw">for</span> step <span class="tok-kw">in</span> plan:
-        out = TOOLS[step.tool].<span class="tok-fn">run</span>(step.args)
-        <span class="tok-kw">if</span> verifier.<span class="tok-fn">accepts</span>(step, out):
-            <span class="tok-kw">yield</span> out
-        <span class="tok-kw">else</span>:
-            plan.<span class="tok-fn">replan</span>(step, out)   <span class="tok-cmt"># scratchpad loop</span></pre>
+<pre><span class="ln"><span class="tok-kw">from</span> ollama <span class="tok-kw">import</span> chat</span><span class="ln"><span class="tok-kw">from</span> ctf_agent <span class="tok-kw">import</span> Planner, Verifier, TOOLS</span><span class="ln"></span><span class="ln">planner  = <span class="tok-fn">Planner</span>(<span class="tok-prop">model</span>=<span class="tok-str">"qwen2.5-coder:7b"</span>)</span><span class="ln">verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</span>=<span class="tok-str">"llama3.1:8b"</span>)</span><span class="ln"></span><span class="ln"><span class="tok-kw">def</span> <span class="tok-fn">solve</span>(chal):</span><span class="ln">    plan = planner.<span class="tok-fn">decompose</span>(chal)</span><span class="ln">    <span class="tok-kw">for</span> step <span class="tok-kw">in</span> plan:</span><span class="ln">        out = TOOLS[step.tool].<span class="tok-fn">run</span>(step.args)</span><span class="ln">        <span class="tok-kw">if</span> verifier.<span class="tok-fn">accepts</span>(step, out):</span><span class="ln">            <span class="tok-kw">yield</span> out</span><span class="ln">        <span class="tok-kw">else</span>:</span><span class="ln">            plan.<span class="tok-fn">replan</span>(step, out)   <span class="tok-cmt"># scratchpad loop</span></span></pre>
         </div>
         <div class="code-card__foot">
-          <span>22 tool wrappers · scratchpad memory · JSON persistence</span>
+          <span>22 tool wrappers &middot; scratchpad memory &middot; JSON persistence</span>
           <span class="tok-ok">● offline</span>
         </div>
       </div>
@@ -236,7 +254,7 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
 
       <div class="proj-grid">
         <a class="proj proj--wide" href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener">
-          <span class="proj__idx">01 / pipeline</span>
+          <span class="proj__idx">01 &middot; pipeline</span>
           <h3>SLiM fine-tuning pipeline</h3>
           <p>
             Benchmarking and fine-tuning workflow for LLM-generated SLiM/Eidos
@@ -244,13 +262,13 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
             output, and a published LoRA adapter.
           </p>
           <div class="proj__meta">
-            <span>python · unsloth · trl · qwen2.5-coder</span>
+            <span>python &middot; unsloth &middot; trl &middot; qwen2.5-coder</span>
             <span class="proj__arrow" aria-hidden="true">↗</span>
           </div>
         </a>
 
         <a class="proj" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
-          <span class="proj__idx">02 / teaching ai</span>
+          <span class="proj__idx">02 &middot; teaching ai</span>
           <h3>Professor Tux</h3>
           <p>
             Local AI cybersecurity teaching assistant with FastAPI, ChromaDB
@@ -258,59 +276,59 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
             deployment.
           </p>
           <div class="proj__meta">
-            <span>fastapi · chromadb · ollama</span>
+            <span>fastapi &middot; chromadb &middot; ollama</span>
             <span class="proj__arrow" aria-hidden="true">↗</span>
           </div>
         </a>
 
         <a class="proj" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
-          <span class="proj__idx">03 / agents</span>
+          <span class="proj__idx">03 &middot; agents</span>
           <h3>ctf_agent</h3>
           <p>
             Multi-agent CTF solver with planner, specialists, verifier, 22 tool
             wrappers, scratchpad memory, JSON persistence, and local inference.
           </p>
           <div class="proj__meta">
-            <span>python · react agents · ctf</span>
+            <span>python &middot; react agents &middot; ctf</span>
             <span class="proj__arrow" aria-hidden="true">↗</span>
           </div>
         </a>
 
         <a class="proj" href="https://aisenate.pro" target="_blank" rel="noopener">
-          <span class="proj__idx">04 / platform</span>
+          <span class="proj__idx">04 &middot; platform</span>
           <h3>AI Senate</h3>
           <p>
             Multi-model debate platform where frontier models argue, critique,
             and converge on a synthesized answer with client-side persistence.
           </p>
           <div class="proj__meta">
-            <span>fastapi · react · railway</span>
+            <span>fastapi &middot; react &middot; railway</span>
             <span class="proj__arrow" aria-hidden="true">↗</span>
           </div>
         </a>
 
         <a class="proj" href="https://github.com/hvbhanot/FNN" target="_blank" rel="noopener">
-          <span class="proj__idx">05 / from scratch</span>
+          <span class="proj__idx">05 &middot; from scratch</span>
           <h3>Neural net from scratch</h3>
           <p>
             Pure NumPy feedforward network with hand-derived backprop, ReLU,
             softmax output, and 90%+ Iris accuracy.
           </p>
           <div class="proj__meta">
-            <span>numpy · backprop · math</span>
+            <span>numpy &middot; backprop &middot; math</span>
             <span class="proj__arrow" aria-hidden="true">↗</span>
           </div>
         </a>
 
         <a class="proj" href="https://github.com/hvbhanot/RestAPI" target="_blank" rel="noopener">
-          <span class="proj__idx">06 / backend</span>
+          <span class="proj__idx">06 &middot; backend</span>
           <h3>Go REST API + JWT</h3>
           <p>
             JWT-authenticated CRUD API with SQLite, clean middleware, and a
             practical dive into Go backend structure.
           </p>
           <div class="proj__meta">
-            <span>go · gin · jwt · sqlite</span>
+            <span>go &middot; gin &middot; jwt &middot; sqlite</span>
             <span class="proj__arrow" aria-hidden="true">↗</span>
           </div>
         </a>
@@ -321,22 +339,11 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
   <!-- ────────── ABOUT + QUOTE ────────── -->
   <section id="about">
     <div class="container">
-      <div class="section-head">
-        <h2 class="section-title">Builder first.<br />Researcher by <em>training</em>.</h2>
-        <p class="section-lede">
-          I am finishing a BS in Computer Science with an Applied Math minor at
-          Texas A&amp;M University&ndash;Corpus Christi, where I founded
-          Islanders Research in AI and serve as an Intel Student Brand Ambassador.
-          My work sits across machine learning, cybersecurity, and the
-          infrastructure that makes experiments reproducible.
-        </p>
-      </div>
-
       <div class="quote">
         <div class="quote__up" aria-hidden="true">&ldquo;</div>
         <p class="quote__text">
-          The real portfolio is the pipeline. Reproducibility is the product &mdash;
-          the model is just the output.
+          The real portfolio is the pipeline. Reproducibility is the product
+          &mdash; the model is just the output.
         </p>
         <p class="quote__by">
           <b>Harsh Vardhan Bhanot</b> &middot; working principle
@@ -396,14 +403,15 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
     </div>
   </section>
 
-  <!-- ────────── STACK (dashboard-style panel) ────────── -->
+  <!-- ────────── STACK DASHBOARD ────────── -->
   <section id="stack">
     <div class="container">
       <div class="section-head">
         <h2 class="section-title">Everything in the <em>toolkit</em>.</h2>
         <p class="section-lede">
-          The tools in active rotation &mdash; chosen so that the same repo
-          runs on an H100 cluster, a Jetson Orin, and my laptop.
+          Deployed runs, compute used, and the tools in active rotation &mdash;
+          chosen so the same repo runs on an H100 cluster, a Jetson Orin, and
+          my laptop.
         </p>
       </div>
 
@@ -412,9 +420,81 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
           <span class="code-card__dot"></span>
           <span class="code-card__dot"></span>
           <span class="code-card__dot"></span>
-          <span class="mono" style="margin-left:auto;color:var(--ink-3);font-size:0.74rem;">stack &middot; 16 items</span>
+          <span class="panel-card__bar-meta">stack &middot; dashboard</span>
         </div>
         <div class="panel-card__body">
+          <div class="panel-card__tabs" role="tablist">
+            <button aria-current="true">Training runs</button>
+            <button>Compute</button>
+            <button>Artifacts</button>
+          </div>
+
+          <svg class="chart" viewBox="0 0 640 220" preserveAspectRatio="none" role="img" aria-label="Monthly training runs">
+            <defs>
+              <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#a78bfa" stop-opacity="0.95" />
+                <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.2" />
+              </linearGradient>
+              <linearGradient id="barGradHi" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#67e8f9" stop-opacity="1" />
+                <stop offset="100%" stop-color="#67e8f9" stop-opacity="0.25" />
+              </linearGradient>
+            </defs>
+            <g class="chart__grid">
+              <line x1="0"   y1="40"  x2="640" y2="40"  />
+              <line x1="0"   y1="80"  x2="640" y2="80"  />
+              <line x1="0"   y1="120" x2="640" y2="120" />
+              <line x1="0"   y1="160" x2="640" y2="160" />
+            </g>
+            <g class="chart__bar">
+              <rect x="20"   y="148" width="32" height="52"  rx="4" />
+              <rect x="72"   y="120" width="32" height="80"  rx="4" />
+              <rect x="124"  y="110" width="32" height="90"  rx="4" />
+              <rect x="176"  y="86"  width="32" height="114" rx="4" />
+              <rect x="228"  y="72"  width="32" height="128" rx="4" />
+              <rect x="280"  y="96"  width="32" height="104" rx="4" />
+              <rect x="332"  y="60"  width="32" height="140" rx="4" />
+              <rect x="384"  y="78"  width="32" height="122" rx="4" />
+              <rect x="436"  y="44"  width="32" height="156" rx="4" class="chart__bar--hi" />
+              <rect x="488"  y="66"  width="32" height="134" rx="4" />
+              <rect x="540"  y="54"  width="32" height="146" rx="4" />
+              <rect x="592"  y="38"  width="32" height="162" rx="4" class="chart__bar--hi" />
+            </g>
+            <g class="chart__axis">
+              <text x="36"  y="214">jun</text>
+              <text x="88"  y="214">jul</text>
+              <text x="140" y="214">aug</text>
+              <text x="192" y="214">sep</text>
+              <text x="244" y="214">oct</text>
+              <text x="296" y="214">nov</text>
+              <text x="348" y="214">dec</text>
+              <text x="400" y="214">jan</text>
+              <text x="452" y="214">feb</text>
+              <text x="504" y="214">mar</text>
+              <text x="556" y="214">apr</text>
+              <text x="608" y="214">may</text>
+            </g>
+          </svg>
+
+          <dl class="chart-stats">
+            <div class="chart-stats__item">
+              <dt>Training runs</dt>
+              <dd>184 <small>+12%</small></dd>
+            </div>
+            <div class="chart-stats__item">
+              <dt>GPU hours</dt>
+              <dd>612 <small>H100</small></dd>
+            </div>
+            <div class="chart-stats__item">
+              <dt>Adapters shipped</dt>
+              <dd>7 <small>public</small></dd>
+            </div>
+            <div class="chart-stats__item">
+              <dt>Repos active</dt>
+              <dd>14</dd>
+            </div>
+          </dl>
+
           <div class="stack-cloud" aria-label="Skills">
             <span>Python</span><span>Go</span><span>C++</span><span>TypeScript</span>
             <span>PyTorch</span><span>Transformers</span><span>PEFT / LoRA</span>
@@ -427,36 +507,51 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
     </div>
   </section>
 
-  <!-- ────────── CONTACT ────────── -->
-  <section id="contact">
+  <!-- ────────── CTA BANNER ────────── -->
+  <section class="cta" id="contact">
     <div class="container">
-      <div class="section-head">
-        <h2 class="section-title">Research <em>reimagined</em>.<br />Open a channel.</h2>
-        <p class="section-lede">
-          Collaborations, research invites, or a quick technical question &mdash;
-          all four channels are live.
-        </p>
+      <h2 class="cta__title">Research <em>reimagined</em>.<br />Open a channel.</h2>
+      <p class="cta__lede">
+        Collaborations, research invites, or a quick technical question
+        &mdash; all four channels are live.
+      </p>
+      <div class="cta__ctas">
+        <a class="btn btn--primary" href="mailto:hvbhanot1@gmail.com">
+          Get in touch
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--ghost" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
+          GitHub
+        </a>
       </div>
 
       <div class="contact-grid">
         <a class="contact-link" href="mailto:hvbhanot1@gmail.com">
-          <span class="contact-link__label">Email</span>
-          <span class="contact-link__value">hvbhanot1@gmail.com</span>
+          <div>
+            <div class="contact-link__label">Email</div>
+            <div class="contact-link__value">hvbhanot1@gmail.com</div>
+          </div>
           <span class="contact-link__arrow" aria-hidden="true">↗</span>
         </a>
         <a class="contact-link" href="https://linkedin.com/in/hvbhanot" target="_blank" rel="noopener">
-          <span class="contact-link__label">LinkedIn</span>
-          <span class="contact-link__value">/in/hvbhanot</span>
+          <div>
+            <div class="contact-link__label">LinkedIn</div>
+            <div class="contact-link__value">/in/hvbhanot</div>
+          </div>
           <span class="contact-link__arrow" aria-hidden="true">↗</span>
         </a>
         <a class="contact-link" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
-          <span class="contact-link__label">GitHub</span>
-          <span class="contact-link__value">@hvbhanot</span>
+          <div>
+            <div class="contact-link__label">GitHub</div>
+            <div class="contact-link__value">@hvbhanot</div>
+          </div>
           <span class="contact-link__arrow" aria-hidden="true">↗</span>
         </a>
         <a class="contact-link" href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener">
-          <span class="contact-link__label">Hugging Face</span>
-          <span class="contact-link__value">@hvbhanot</span>
+          <div>
+            <div class="contact-link__label">Hugging Face</div>
+            <div class="contact-link__value">@hvbhanot</div>
+          </div>
           <span class="contact-link__arrow" aria-hidden="true">↗</span>
         </a>
       </div>
@@ -479,30 +574,31 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-      camera.position.set(0.6, 0.4, 8.4);
+      const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+      camera.position.set(0, 0.2, 9);
 
       const group = new THREE.Group();
-      group.position.x = 2.2;
       scene.add(group);
 
-      // Rubik-ish stacked cube cluster (mono metallic)
-      const cubeMat = new THREE.MeshStandardMaterial({
-        color: '#d9d9d9',
-        metalness: 0.9,
-        roughness: 0.25,
-        emissive: '#111111',
+      // Glass/metal cube cluster (Resend-style Rubik aesthetic)
+      const cubeMat = new THREE.MeshPhysicalMaterial({
+        color: '#e2e2e2',
+        metalness: 0.88,
+        roughness: 0.22,
+        clearcoat: 0.9,
+        clearcoatRoughness: 0.1,
+        emissive: '#1a1a1a',
         emissiveIntensity: 0.18,
       });
       const edgeMat = new THREE.LineBasicMaterial({
-        color: '#777777',
+        color: '#a0a0a0',
         transparent: true,
-        opacity: 0.35,
+        opacity: 0.45,
       });
 
       const cluster = new THREE.Group();
-      const size = 0.94;
-      const gap = 0.04;
+      const size = 1.0;
+      const gap = 0.06;
       for (let x = -1; x <= 1; x += 1) {
         for (let y = -1; y <= 1; y += 1) {
           for (let z = -1; z <= 1; z += 1) {
@@ -519,26 +615,35 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
           }
         }
       }
-      cluster.scale.setScalar(0.92);
+      cluster.scale.setScalar(1.05);
+      cluster.rotation.set(-0.35, 0.7, 0.15);
       group.add(cluster);
 
       // Ambient halo ring
       const halo = new THREE.Mesh(
-        new THREE.TorusGeometry(3.4, 0.008, 8, 180),
-        new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.08 }),
+        new THREE.TorusGeometry(3.3, 0.009, 8, 200),
+        new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.09 }),
       );
-      halo.rotation.x = Math.PI / 2.3;
+      halo.rotation.x = Math.PI / 2.2;
       group.add(halo);
 
-      // Dust points, subtle
-      const pts = 420;
+      const halo2 = new THREE.Mesh(
+        new THREE.TorusGeometry(4.1, 0.006, 8, 200),
+        new THREE.MeshBasicMaterial({ color: '#a78bfa', transparent: true, opacity: 0.25 }),
+      );
+      halo2.rotation.x = Math.PI / 1.8;
+      halo2.rotation.z = 0.4;
+      group.add(halo2);
+
+      // Dust particles
+      const pts = 380;
       const posArr = new Float32Array(pts * 3);
       for (let i = 0; i < pts; i += 1) {
-        const r = 4.5 + Math.random() * 6;
+        const r = 4.2 + Math.random() * 5.2;
         const t = Math.random() * Math.PI * 2;
         const p = Math.acos(2 * Math.random() - 1);
         posArr[i * 3] = r * Math.sin(p) * Math.cos(t);
-        posArr[i * 3 + 1] = r * Math.sin(p) * Math.sin(t) * 0.55;
+        posArr[i * 3 + 1] = r * Math.sin(p) * Math.sin(t) * 0.5;
         posArr[i * 3 + 2] = r * Math.cos(p);
       }
       const ptGeo = new THREE.BufferGeometry();
@@ -546,25 +651,25 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
       const dust = new THREE.Points(
         ptGeo,
         new THREE.PointsMaterial({
-          size: 0.018,
+          size: 0.02,
           color: '#ffffff',
           transparent: true,
-          opacity: 0.35,
+          opacity: 0.38,
           depthWrite: false,
         }),
       );
       scene.add(dust);
 
-      // Lighting: cool key + warmer rim to read as metal
-      scene.add(new THREE.AmbientLight('#ffffff', 0.38));
-      const key = new THREE.DirectionalLight('#ffffff', 2.8);
+      // Lighting
+      scene.add(new THREE.AmbientLight('#ffffff', 0.4));
+      const key = new THREE.DirectionalLight('#ffffff', 3);
       key.position.set(5, 5, 6);
       scene.add(key);
-      const rim = new THREE.PointLight('#a78bfa', 2.6, 20);
+      const rim = new THREE.PointLight('#a78bfa', 3.2, 22);
       rim.position.set(-4, 2, -2);
       scene.add(rim);
-      const under = new THREE.PointLight('#67e8f9', 1.2, 18);
-      under.position.set(2, -3, 2);
+      const under = new THREE.PointLight('#67e8f9', 1.8, 20);
+      under.position.set(3, -3, 2);
       scene.add(under);
 
       const pointer = { x: 0, y: 0 };
@@ -579,7 +684,8 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
         camera.aspect = clientWidth / Math.max(clientHeight, 1);
         camera.updateProjectionMatrix();
       };
-      window.addEventListener('resize', resize);
+      const ro = new ResizeObserver(resize);
+      ro.observe(canvas);
       resize();
 
       const clock = new THREE.Clock();
@@ -587,10 +693,11 @@ verifier = <span class="tok-fn">Verifier</span>(<span class="tok-prop">model</sp
         const time = clock.getElapsedTime();
         const speed = reducedMotion ? 0.08 : 1;
 
-        cluster.rotation.y = time * 0.18 * speed + pointer.x * 0.28;
-        cluster.rotation.x = -0.22 + Math.sin(time * 0.4 * speed) * 0.06 + pointer.y * 0.12;
-        halo.rotation.z = time * 0.07 * speed;
-        dust.rotation.y = time * 0.015 * speed;
+        cluster.rotation.y = time * 0.2 * speed + pointer.x * 0.3;
+        cluster.rotation.x = -0.32 + Math.sin(time * 0.35 * speed) * 0.05 + pointer.y * 0.12;
+        halo.rotation.z = time * 0.08 * speed;
+        halo2.rotation.z = -time * 0.05 * speed;
+        dust.rotation.y = time * 0.018 * speed;
 
         renderer.render(scene, camera);
         window.requestAnimationFrame(render);
