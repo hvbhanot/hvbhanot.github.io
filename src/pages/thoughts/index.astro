@@ -11,31 +11,29 @@ const fmt = (d: Date) =>
 ---
 
 <Base title="Journal — Harsh Vardhan Bhanot" current="thoughts">
-  <section style="padding-block: clamp(4rem, 9vw, 7rem) 1rem; border-bottom: 1px solid var(--rule);">
-    <div class="container">
-      <div class="sec-head">
-        <span class="sec-num">Journal &nbsp; · &nbsp; notes &amp; essays</span>
-        <h1 class="sec-title" style="font-size: clamp(2.4rem, 5vw + 0.5rem, 4.2rem); letter-spacing: -0.035em;">
-          Working notes, <em>half-baked</em> ideas, and post-mortems.
-        </h1>
-        <p class="sec-lede">
-          Thinking out loud about ML systems, research infrastructure, and the
-          weird stuff I run into while building them.
-        </p>
-      </div>
+  <section style="padding-block: clamp(4.5rem, 9vw, 7rem) 2rem; border-bottom: 1px solid var(--border);">
+    <div class="container container--narrow">
+      <span class="sec-tag" style="margin-bottom: 1.25rem;">journal</span>
+      <h1 style="font-size: clamp(2.3rem, 5vw + 0.5rem, 4rem); letter-spacing: -0.04em; line-height: 1.02; font-weight: 500; color: var(--ink); margin: 1rem 0;">
+        Working notes, <span class="grad-2">half-baked</span> ideas, and post-mortems.
+      </h1>
+      <p style="color: var(--ink-3); font-size: 1.05rem; line-height: 1.6; max-width: 58ch;">
+        Thinking out loud about ML systems, research infrastructure, and the
+        weird stuff I run into while building them.
+      </p>
     </div>
   </section>
 
-  <section style="padding-block: 2rem 5rem;">
-    <div class="container">
+  <section style="padding-block: 1.5rem 5rem;">
+    <div class="container container--narrow">
       {
         posts.length === 0 ? (
           <p class="mono" style="color: var(--ink-3);">
             // no entries yet — check back soon
           </p>
         ) : (
-          <ol class="thoughts">
-            {posts.map((post, i) => (
+          <ol class="thought-list">
+            {posts.map((post) => (
               <li>
                 <a href={`/thoughts/${post.slug}`} class="thought-item">
                   <span class="thought-item__date">{fmt(post.data.date)}</span>
