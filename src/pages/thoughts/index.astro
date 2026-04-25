@@ -10,30 +10,32 @@ const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).toLowerCase();
 ---
 
-<Base title="Thoughts — Harsh Vardhan Bhanot" current="thoughts">
-  <section style="padding-block: clamp(5rem, 10vw, 8rem) 2rem;">
-    <div class="container container--narrow">
-      <p class="eyebrow" style="margin-bottom: 1.25rem;">Notes &amp; essays</p>
-      <h1 style="font-size: clamp(2.2rem, 5vw + 0.5rem, 3.8rem); letter-spacing: -0.035em; line-height: 1.02; max-width: 18ch; margin-bottom: 1rem;">
-        Working notes, half-baked ideas, and post-mortems.
-      </h1>
-      <p style="color: var(--ink-3); font-size: 1.02rem; line-height: 1.55; max-width: 56ch;">
-        Thinking out loud about ML systems, research infrastructure, and the
-        weird stuff I run into building them.
-      </p>
+<Base title="Journal — Harsh Vardhan Bhanot" current="thoughts">
+  <section style="padding-block: clamp(4rem, 9vw, 7rem) 1rem; border-bottom: 1px solid var(--rule);">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-num">Journal &nbsp; · &nbsp; notes &amp; essays</span>
+        <h1 class="sec-title" style="font-size: clamp(2.4rem, 5vw + 0.5rem, 4.2rem); letter-spacing: -0.035em;">
+          Working notes, <em>half-baked</em> ideas, and post-mortems.
+        </h1>
+        <p class="sec-lede">
+          Thinking out loud about ML systems, research infrastructure, and the
+          weird stuff I run into while building them.
+        </p>
+      </div>
     </div>
   </section>
 
-  <section style="padding-block: 1rem 5rem;">
-    <div class="container container--narrow">
+  <section style="padding-block: 2rem 5rem;">
+    <div class="container">
       {
         posts.length === 0 ? (
-          <p class="mono" style="font-size: 0.9rem; color: var(--ink-3);">
-            // no posts yet — check back soon
+          <p class="mono" style="color: var(--ink-3);">
+            // no entries yet — check back soon
           </p>
         ) : (
-          <ol class="thought-list">
-            {posts.map((post) => (
+          <ol class="thoughts">
+            {posts.map((post, i) => (
               <li>
                 <a href={`/thoughts/${post.slug}`} class="thought-item">
                   <span class="thought-item__date">{fmt(post.data.date)}</span>
