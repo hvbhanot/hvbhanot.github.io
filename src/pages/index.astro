@@ -3,361 +3,302 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base>
-  <!-- ────────── HERO ────────── -->
+  <!-- ────────── HERO STATEMENT ────────── -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="container">
-      <div class="hero__inner">
-        <div class="hero__copy">
-          <div class="hero__kicker reveal reveal-1">
-            <span class="ai-pill">
-              <span class="ai-pill__dot" aria-hidden="true"></span>
-              model: <b>slim-coder-lora</b> &middot; live
-            </span>
-            <span class="chip chip--cyan">v2026.04</span>
-          </div>
+      <p class="eyebrow eyebrow--accent reveal reveal-1" style="margin-bottom: 2.25rem;">
+        — Portfolio &middot; MMXXVI
+      </p>
 
-          <h1 id="hero-title" class="hero__title reveal reveal-2">
-            Building <span class="grad">AI systems</span><br />
-            for <em style="font-style:italic;">research</em>.
+      <div class="hero__grid">
+        <div>
+          <h1 id="hero-title" class="hero__statement reveal reveal-2">
+            <b>Harsh Vardhan Bhanot</b> is a researcher building AI systems for <em>scientific computing</em>.
           </h1>
 
-          <p class="hero__lede reveal reveal-3">
-            I fine-tune coding models for population-genetics simulators,
-            build local multi-agent CTF solvers, and turn research ideas into
-            reproducible infrastructure.
+          <p class="hero__sub reveal reveal-3">
+            Fine-tuned coding models for population-genetics simulators,
+            local multi-agent CTF solvers, and the reproducible infrastructure
+            in-between. Currently affiliated with <a href="https://www.tamucc.edu/">TAMU&ndash;Corpus Christi</a>; incoming MS at <a href="https://www.ttu.edu/">Texas Tech</a>, fall 2026.
           </p>
 
           <div class="hero__ctas reveal reveal-4">
             <a class="btn btn--primary" href="#work">
-              Explore systems
+              Read the work
               <span class="btn__arrow" aria-hidden="true">→</span>
             </a>
             <a class="btn btn--ghost" href="/thoughts">
-              <span class="mono" style="color:var(--violet);">/</span> journal
+              Journal
             </a>
           </div>
-
-          <dl class="hero__metrics reveal reveal-5">
-            <div class="hero__metric">
-              <dt class="hero__metric__label">Runs</dt>
-              <dd class="hero__metric__value">184</dd>
-            </div>
-            <div class="hero__metric">
-              <dt class="hero__metric__label">GPU hrs</dt>
-              <dd class="hero__metric__value">612</dd>
-            </div>
-            <div class="hero__metric">
-              <dt class="hero__metric__label">Adapters</dt>
-              <dd class="hero__metric__value">7</dd>
-            </div>
-            <div class="hero__metric">
-              <dt class="hero__metric__label">Pass@1</dt>
-              <dd class="hero__metric__value">0.71</dd>
-            </div>
-          </dl>
         </div>
 
-        <div class="hero__visual reveal reveal-3">
-          <div class="hero__ring" aria-hidden="true"></div>
-          <canvas id="portfolio-scene" class="hero__scene" aria-hidden="true"></canvas>
-        </div>
+        <aside class="hero__meta reveal reveal-5" aria-label="Practice details">
+          <div class="hero__meta__row">
+            <span class="hero__meta__label">Practice</span>
+            <span class="hero__meta__value">ML systems &amp; scientific computing</span>
+          </div>
+          <div class="hero__meta__row">
+            <span class="hero__meta__label">Now</span>
+            <span class="hero__meta__value">SLiM / Eidos fine-tuning</span>
+          </div>
+          <div class="hero__meta__row">
+            <span class="hero__meta__label">Next</span>
+            <span class="hero__meta__value">M.S. CS &middot; Texas Tech &middot; &rsquo;26</span>
+          </div>
+          <div class="hero__meta__row">
+            <span class="hero__meta__label">Located</span>
+            <span class="hero__meta__value">Corpus Christi, TX</span>
+          </div>
+        </aside>
       </div>
     </div>
+
+    <canvas id="portfolio-scene" class="hero__scene" aria-hidden="true"></canvas>
   </section>
 
-  <!-- ────────── ABOUT (chat) ────────── -->
+  <!-- ────────── ABOUT ────────── -->
   <section id="about">
     <div class="container">
-      <div class="sec-head">
-        <span class="sec-tag">about</span>
-        <h2 class="sec-title">A short <span class="grad-2">intro</span>.</h2>
-      </div>
-
-      <div class="chat">
-        <div class="chat__row chat__row--me">
-          <span class="chat__who">
-            <span class="chat__who__avatar">you</span>
-            <b>You</b>
-          </span>
-          <div class="chat__bubble">
-            Who is Harsh Vardhan Bhanot and what are you building right now?
-          </div>
-        </div>
-
-        <div class="chat__row chat__row--ai">
-          <span class="chat__who">
-            <span class="chat__who__avatar">hv</span>
-            <b>Harsh</b>
-            <span style="color:var(--ink-4);">&middot; responding</span>
-          </span>
-          <div class="chat__bubble">
-            I&rsquo;m finishing a <strong>BS in CS</strong> with an Applied
-            Math minor at <strong>Texas A&amp;M&ndash;Corpus Christi</strong>,
-            where I founded <strong>Islanders Research in AI</strong> and serve
-            as an <strong>Intel Student Brand Ambassador</strong>. Right now my
-            work sits across machine learning, cybersecurity, and the
-            infrastructure that makes experiments reproducible.
-          </div>
-        </div>
-
-        <div class="chat__row chat__row--ai">
-          <div class="chat__bubble">
-            Currently that means fine-tuning open-weight coding models on
+      <div class="about-grid">
+        <div class="about-grid__label" data-num="01">About</div>
+        <div class="about-grid__body">
+          <p>
+            I am finishing a B.S. in Computer Science with an Applied
+            Mathematics minor at <b>Texas A&amp;M University&ndash;Corpus
+            Christi</b>, where I founded <b>Islanders Research in AI</b> and
+            serve as an <b>Intel Student Brand Ambassador</b>. My work sits
+            across machine learning, cybersecurity, and the infrastructure
+            that makes experiments reproducible.
+          </p>
+          <p>
+            Recently that has meant fine-tuning open-weight coding models on
             Eidos for the <a href="https://messerlab.org/slim/">SLiM</a>
             evolutionary simulator, building a local Ollama-only CTF agent,
             and shipping every training run alongside a small FastAPI runner
-            so the artifact is usable on someone else&rsquo;s box.<span class="chat__cursor"></span>
-          </div>
+            so the artifact is usable on someone else&rsquo;s box.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ────────── TERMINAL LOG ────────── -->
-  <section>
+  <!-- ────────── WHAT I WORK ON ────────── -->
+  <section id="focus">
     <div class="container">
       <div class="sec-head">
-        <span class="sec-tag">runtime</span>
-        <h2 class="sec-title">Fine-tune <span class="grad-2">tonight</span>.</h2>
-        <p class="sec-lede">
-          A repeatable pipeline so I can go from a raw Eidos corpus to a
-          published LoRA adapter overnight &mdash; tokenizer-aware loading,
-          two-pass repair, Excel output.
-        </p>
+        <span class="sec-head__label" data-num="02">What I work on</span>
+        <div class="sec-head__main">
+          <h2>Three lines of work, all <em>research-grade</em>.</h2>
+          <p>
+            Each line of work has its own pipeline, its own evaluation, and a
+            published artifact that someone outside my lab can pick up and
+            run. The shared concern is reproducibility &mdash; the model is
+            never the deliverable.
+          </p>
+        </div>
       </div>
 
-      <div class="terminal">
-        <div class="terminal__bar">
-          <span class="terminal__dot"></span>
-          <span class="terminal__dot"></span>
-          <span class="terminal__dot"></span>
-          <span class="terminal__title">zsh &mdash; slim-coder &mdash; ~/research/slim</span>
-          <span class="chip chip--lime" style="margin-left:auto;">● live</span>
+      <div class="pillars">
+        <div class="pillar">
+          <span class="pillar__num">01</span>
+          <h3>ML systems for science</h3>
+          <p>
+            Fine-tuning open-weight coding models for domain-specific
+            languages &mdash; Eidos for SLiM today, scientific Python next.
+            Tokenizer-aware loading, two-pass repair, evaluations that write
+            to disk.
+          </p>
         </div>
-        <div class="terminal__body">
-<pre><span class="terminal__line terminal__line--prompt">python train.py --model qwen2.5-coder-7b --r 32 --alpha 32</span>
-<span class="terminal__line terminal__line--info">loaded dataset hvbhanot/slim-eidos-pairs &middot; 24,812 examples</span>
-<span class="terminal__line terminal__line--info">tokenizer: fast &middot; 4-bit nf4 &middot; max_seq_len 4096</span>
-<span class="terminal__line terminal__line--out">step <span class="tok-num">100</span>  loss <span class="tok-num">0.8421</span>  lr <span class="tok-num">1.0e-4</span>  <span class="tok-cmt">gpu: 74&deg;C · 67.3 GB</span></span>
-<span class="terminal__line terminal__line--out">step <span class="tok-num">500</span>  loss <span class="tok-num">0.5238</span>  lr <span class="tok-num">8.2e-5</span></span>
-<span class="terminal__line terminal__line--out">step <span class="tok-num">900</span>  loss <span class="tok-num">0.4221</span>  lr <span class="tok-num">4.1e-5</span></span>
-<span class="terminal__line terminal__line--ok">eval &middot; pass@1 <span class="tok-num">0.71</span> &middot; repair <span class="tok-num">+0.08</span></span>
-<span class="terminal__line terminal__line--ok">adapter pushed &rarr; hvbhanot/slim-coder-lora</span>
-<span class="terminal__line terminal__line--out"><span class="tok-cmt"># 1 H100 &middot; 2h 14m &middot; 84 MB artifact</span></span>
-<span class="terminal__line terminal__line--prompt">_<span class="chat__cursor"></span></span></pre>
+        <div class="pillar">
+          <span class="pillar__num">02</span>
+          <h3>Local AI tooling</h3>
+          <p>
+            Multi-agent systems &mdash; planners, specialists, verifiers
+            &mdash; that run entirely on local inference. Ollama, llama.cpp,
+            and Jetson Orin deployments where bandwidth and privacy matter.
+          </p>
+        </div>
+        <div class="pillar">
+          <span class="pillar__num">03</span>
+          <h3>Reproducible infrastructure</h3>
+          <p>
+            Every training run ships with a FastAPI runner, a versioned
+            adapter, and a small evaluation harness. Same repository on the
+            cluster, the edge box, and the laptop.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ────────── SYSTEMS / PROJECTS ────────── -->
+  <!-- ────────── SYSTEMS / SELECTED WORK ────────── -->
   <section id="work">
     <div class="container">
       <div class="sec-head">
-        <span class="sec-tag">systems</span>
-        <h2 class="sec-title">Selected <span class="grad-2">work</span>.</h2>
-        <p class="sec-lede">
-          Research pipelines, local AI tooling, and the occasional end-to-end
-          web platform &mdash; each shipped with the artifacts.
-        </p>
+        <span class="sec-head__label" data-num="03">Selected systems</span>
+        <div class="sec-head__main">
+          <h2>Six systems, <em>shipped</em>.</h2>
+          <p>
+            A representative sample &mdash; research pipelines, local AI
+            tooling, and the occasional end-to-end web platform. Each links to
+            the repository or the published weights.
+          </p>
+        </div>
       </div>
 
-      <div class="proj-grid">
-        <a class="proj proj--wide" href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener">
-          <div class="proj__head">
-            <span class="proj__id">sys_<b>01</b> &middot; pipeline</span>
-            <span class="proj__status">live on 🤗</span>
-          </div>
-          <h3>SLiM fine-tuning pipeline</h3>
-          <p>
-            Benchmarking and fine-tuning workflow for LLM-generated SLiM/Eidos
-            code on H100, with tokenizer-aware loading, two-pass repair, Excel
-            output, and a published LoRA adapter.
-          </p>
-          <div class="proj__foot">
-            <div class="proj__tags">
-              <span class="chip chip--violet">python</span>
-              <span class="chip">unsloth</span>
-              <span class="chip">trl</span>
-              <span class="chip chip--cyan">qwen2.5-coder</span>
-            </div>
-            <span class="proj__arrow" aria-hidden="true">→</span>
-          </div>
+      <div class="systems">
+        <a class="system" href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener">
+          <span class="system__num">01.</span>
+          <span class="system__title">SLiM fine-tuning pipeline</span>
+          <span class="system__desc">Benchmarking and fine-tuning workflow for LLM-generated SLiM/Eidos code on H100 with two-pass repair and a published LoRA adapter.</span>
+          <span class="system__meta">Python · Unsloth<br />TRL · Qwen2.5-Coder</span>
+          <span class="system__arrow" aria-hidden="true">→</span>
         </a>
 
-        <a class="proj" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
-          <div class="proj__head">
-            <span class="proj__id">sys_<b>02</b> &middot; teaching ai</span>
-            <span class="proj__status">edge</span>
-          </div>
-          <h3>Professor Tux</h3>
-          <p>
-            Local AI cybersecurity teaching assistant with FastAPI, ChromaDB
-            RAG, markdown teaching modes, Ollama, and Jetson Orin Nano
-            deployment.
-          </p>
-          <div class="proj__foot">
-            <div class="proj__tags">
-              <span class="chip">fastapi</span>
-              <span class="chip">chromadb</span>
-              <span class="chip chip--cyan">ollama</span>
-            </div>
-            <span class="proj__arrow" aria-hidden="true">→</span>
-          </div>
+        <a class="system" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
+          <span class="system__num">02.</span>
+          <span class="system__title">Professor Tux</span>
+          <span class="system__desc">Local AI cybersecurity teaching assistant with ChromaDB RAG, markdown teaching modes, and Jetson Orin Nano deployment.</span>
+          <span class="system__meta">FastAPI · ChromaDB<br />Ollama · Jetson</span>
+          <span class="system__arrow" aria-hidden="true">→</span>
         </a>
 
-        <a class="proj" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
-          <div class="proj__head">
-            <span class="proj__id">sys_<b>03</b> &middot; agents</span>
-            <span class="proj__status">offline</span>
-          </div>
-          <h3>ctf_agent</h3>
-          <p>
-            Multi-agent CTF solver with planner, specialists, verifier, 22
-            tool wrappers, scratchpad memory, JSON persistence, and local
-            inference.
-          </p>
-          <div class="proj__foot">
-            <div class="proj__tags">
-              <span class="chip chip--violet">multi-agent</span>
-              <span class="chip">react</span>
-              <span class="chip chip--cyan">ctf</span>
-            </div>
-            <span class="proj__arrow" aria-hidden="true">→</span>
-          </div>
+        <a class="system" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
+          <span class="system__num">03.</span>
+          <span class="system__title">ctf_agent</span>
+          <span class="system__desc">Multi-agent CTF solver &mdash; planner, specialists, verifier, 22 tool wrappers, scratchpad memory, JSON persistence.</span>
+          <span class="system__meta">Python · React agents<br />Local inference</span>
+          <span class="system__arrow" aria-hidden="true">→</span>
         </a>
 
-        <a class="proj" href="https://aisenate.pro" target="_blank" rel="noopener">
-          <div class="proj__head">
-            <span class="proj__id">sys_<b>04</b> &middot; platform</span>
-            <span class="proj__status">shipping</span>
-          </div>
-          <h3>AI Senate</h3>
-          <p>
-            Multi-model debate platform where frontier models argue, critique,
-            and converge on a synthesized answer with client-side persistence.
-          </p>
-          <div class="proj__foot">
-            <div class="proj__tags">
-              <span class="chip">fastapi</span>
-              <span class="chip chip--violet">react</span>
-              <span class="chip">railway</span>
-            </div>
-            <span class="proj__arrow" aria-hidden="true">→</span>
-          </div>
+        <a class="system" href="https://aisenate.pro" target="_blank" rel="noopener">
+          <span class="system__num">04.</span>
+          <span class="system__title">AI Senate</span>
+          <span class="system__desc">Multi-model debate platform where frontier models argue, critique, and converge on a synthesized answer with client-side persistence.</span>
+          <span class="system__meta">FastAPI · React<br />Railway</span>
+          <span class="system__arrow" aria-hidden="true">→</span>
         </a>
 
-        <a class="proj" href="https://github.com/hvbhanot/FNN" target="_blank" rel="noopener">
-          <div class="proj__head">
-            <span class="proj__id">sys_<b>05</b> &middot; from scratch</span>
-            <span class="proj__status">archived</span>
-          </div>
-          <h3>Neural net, from scratch</h3>
-          <p>
-            Pure NumPy feedforward network with hand-derived backprop, ReLU,
-            softmax output, and 90%+ Iris accuracy.
-          </p>
-          <div class="proj__foot">
-            <div class="proj__tags">
-              <span class="chip">numpy</span>
-              <span class="chip chip--violet">backprop</span>
-              <span class="chip">math</span>
-            </div>
-            <span class="proj__arrow" aria-hidden="true">→</span>
-          </div>
+        <a class="system" href="https://github.com/hvbhanot/FNN" target="_blank" rel="noopener">
+          <span class="system__num">05.</span>
+          <span class="system__title">Neural network, from scratch</span>
+          <span class="system__desc">Pure NumPy feedforward network with hand-derived backprop, ReLU, softmax output, and 90%+ Iris accuracy.</span>
+          <span class="system__meta">NumPy · Backprop<br />Math</span>
+          <span class="system__arrow" aria-hidden="true">→</span>
         </a>
 
-        <a class="proj" href="https://github.com/hvbhanot/RestAPI" target="_blank" rel="noopener">
-          <div class="proj__head">
-            <span class="proj__id">sys_<b>06</b> &middot; backend</span>
-            <span class="proj__status">archived</span>
-          </div>
-          <h3>Go REST API &amp; JWT</h3>
-          <p>
-            JWT-authenticated CRUD API with SQLite, clean middleware, and a
-            practical dive into Go backend structure.
-          </p>
-          <div class="proj__foot">
-            <div class="proj__tags">
-              <span class="chip chip--cyan">go</span>
-              <span class="chip">gin</span>
-              <span class="chip">jwt</span>
-              <span class="chip">sqlite</span>
-            </div>
-            <span class="proj__arrow" aria-hidden="true">→</span>
-          </div>
+        <a class="system" href="https://github.com/hvbhanot/RestAPI" target="_blank" rel="noopener">
+          <span class="system__num">06.</span>
+          <span class="system__title">Go REST API &amp; JWT</span>
+          <span class="system__desc">JWT-authenticated CRUD API with SQLite, clean middleware, and a practical dive into Go backend structure.</span>
+          <span class="system__meta">Go · Gin<br />JWT · SQLite</span>
+          <span class="system__arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ────────── TRAJECTORY / TIMELINE RAIL ────────── -->
+  <!-- ────────── STATEMENT / PULLQUOTE ────────── -->
+  <section class="statement">
+    <div class="container">
+      <div class="statement__inner">
+        <blockquote>
+          The real portfolio is the pipeline. <em>Reproducibility</em> is the product &mdash; the model is just the output.
+        </blockquote>
+        <cite><b>Harsh Vardhan Bhanot</b> &middot; working principle</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────── TRAJECTORY ────────── -->
   <section id="experience">
     <div class="container">
       <div class="sec-head">
-        <span class="sec-tag">trajectory</span>
-        <h2 class="sec-title">The <span class="grad-2">path</span> through the system.</h2>
-        <p class="sec-lede">
-          Research appointments, the org I founded, degrees earned and in
-          progress, and what&rsquo;s on the calendar.
-        </p>
+        <span class="sec-head__label" data-num="04">Trajectory</span>
+        <div class="sec-head__main">
+          <h2>Posts held, posts <em>incoming</em>.</h2>
+          <p>
+            Research appointments, the organisation I founded, degrees earned
+            and in progress, and what is on the calendar.
+          </p>
+        </div>
       </div>
 
-      <ol class="timeline-rail">
-        <li>
-          <time>2022 — 2026</time>
-          <h3>B.S. Computer Science <small>TAMU–Corpus Christi</small></h3>
-          <p>Cybersecurity specialization, Applied Math minor, Dean&rsquo;s List standing.</p>
-        </li>
-        <li>
-          <time>May — Aug 2024</time>
-          <h3>AI &amp; ML intern <small>DataEssenceAI, Houston</small></h3>
-          <p>Built PyTorch &amp; OpenCV models for predictive analysis; tuning, testing, and deployment workflows.</p>
-        </li>
-        <li>
-          <time>2023 — present</time>
-          <h3>Founder &amp; VP <small>Islanders Research in AI</small></h3>
-          <p>A student research org for ML fundamentals, reproducibility, project mentoring, and career development.</p>
-        </li>
-        <li>
-          <time>Fall 2026</time>
-          <h3>M.S. Computer Science <small>Texas Tech University</small></h3>
-          <p>Incoming &mdash; focused on ML systems &amp; applied AI for scientific computing.</p>
-        </li>
-        <li>
-          <time>2025 — present &middot; <span style="color:var(--lime);">active</span></time>
-          <h3>Undergraduate researcher <small>TAMU–Corpus Christi</small></h3>
-          <p>Computational genetics and AI systems &mdash; building agent workflows, SLiM analysis pipelines, and LoRA fine-tuning runs.</p>
-        </li>
-      </ol>
+      <table class="ledger">
+        <tbody>
+          <tr>
+            <td>2025 — present</td>
+            <td>
+              <b>Undergraduate researcher</b>
+              <span>TAMU–Corpus Christi</span>
+            </td>
+            <td>Computational genetics &amp; AI systems &mdash; building agent workflows, SLiM analysis pipelines, and LoRA fine-tuning runs.</td>
+          </tr>
+          <tr>
+            <td>May — Aug 2024</td>
+            <td>
+              <b>AI &amp; ML intern</b>
+              <span>DataEssenceAI, Houston</span>
+            </td>
+            <td>Built PyTorch &amp; OpenCV models for predictive analysis; responsible for tuning, testing, and deployment workflows.</td>
+          </tr>
+          <tr>
+            <td>2023 — present</td>
+            <td>
+              <b>Founder &amp; Vice President</b>
+              <span>Islanders Research in AI</span>
+            </td>
+            <td>A student research organisation for ML fundamentals, reproducibility, project mentoring, and career development.</td>
+          </tr>
+          <tr>
+            <td>2022 — 2026</td>
+            <td>
+              <b>B.S. Computer Science</b>
+              <span>TAMU–Corpus Christi</span>
+            </td>
+            <td>Cybersecurity specialisation, Applied Mathematics minor, Dean&rsquo;s List standing.</td>
+          </tr>
+          <tr>
+            <td>Fall 2026</td>
+            <td>
+              <b>M.S. Computer Science</b>
+              <span>Texas Tech University &middot; incoming</span>
+            </td>
+            <td>Focused on ML systems &amp; applied AI for scientific computing.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <!-- ────────── STACK ────────── -->
-  <section id="stack">
+  <!-- ────────── TOOLS ────────── -->
+  <section id="tools">
     <div class="container">
       <div class="sec-head">
-        <span class="sec-tag">stack</span>
-        <h2 class="sec-title">The <span class="grad-2">toolkit</span> in rotation.</h2>
-        <p class="sec-lede">
-          Chosen so the same repo runs on an H100 cluster, a Jetson Orin, and
-          my laptop without rewriting the training loop.
-        </p>
+        <span class="sec-head__label" data-num="05">Tools in rotation</span>
+        <div class="sec-head__main">
+          <h2>The toolkit &mdash; <em>grouped</em>.</h2>
+          <p>
+            Chosen so the same repository runs on an H100 cluster, a Jetson
+            Orin, and my laptop without rewriting the training loop.
+          </p>
+        </div>
       </div>
 
-      <div class="stack-groups">
-        <div class="stack-group">
-          <h4>languages</h4>
+      <div class="tools-grid">
+        <div class="tools-col">
+          <h4 data-num="A">Languages</h4>
           <ul>
-            <li>Python</li>
-            <li>Go</li>
-            <li>C++</li>
-            <li>TypeScript</li>
-            <li>LaTeX</li>
+            <li>Python <small>primary</small></li>
+            <li>Go <small>backend</small></li>
+            <li>C++ <small>perf</small></li>
+            <li>TypeScript <small>web</small></li>
+            <li>LaTeX <small>papers</small></li>
           </ul>
         </div>
-        <div class="stack-group">
-          <h4>ml &amp; research</h4>
+        <div class="tools-col">
+          <h4 data-num="B">ML &amp; research</h4>
           <ul>
             <li>PyTorch</li>
             <li>Transformers</li>
@@ -368,8 +309,8 @@ import Base from '../layouts/Base.astro';
             <li>SLiM / Eidos</li>
           </ul>
         </div>
-        <div class="stack-group">
-          <h4>infrastructure</h4>
+        <div class="tools-col">
+          <h4 data-num="C">Infrastructure</h4>
           <ul>
             <li>FastAPI</li>
             <li>Docker</li>
@@ -383,62 +324,41 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <!-- ────────── CTA ────────── -->
-  <section class="cta" id="contact">
+  <!-- ────────── CONTACT ────────── -->
+  <section id="contact">
     <div class="container">
-      <div style="position: relative;">
-        <span class="ai-pill" style="margin-bottom: 1.5rem;">
-          <span class="ai-pill__dot" aria-hidden="true"></span>
-          channels &middot; <b>live</b>
-        </span>
-        <h2 class="cta__title">Send a <span class="grad">prompt</span>.</h2>
-        <p class="cta__lede">
-          Collaborations, research invites, or a quick technical question
-          &mdash; all four channels are active.
-        </p>
-        <div class="cta__ctas">
-          <a class="btn btn--glow" href="mailto:hvbhanot1@gmail.com">
-            Get in touch
-            <span class="btn__arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="btn btn--ghost" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
-            <span class="mono" style="color:var(--violet);">/</span> github
-          </a>
-        </div>
+      <div class="contact-grid">
+        <div class="contact-grid__label" data-num="06">Contact</div>
+        <div class="contact-grid__body">
+          <h2>Open a <em>channel</em>.</h2>
+          <p>
+            Collaborations, research invitations, or a quick technical
+            question &mdash; the fastest route is email. I read everything,
+            and I reply to most.
+          </p>
 
-        <div class="cta__channels">
-          <a class="cta__channel" href="mailto:hvbhanot1@gmail.com">
-            <span class="cta__channel__icon">@</span>
-            <div>
-              <div class="cta__channel__label">Email</div>
-              <div class="cta__channel__value">hvbhanot1@gmail.com</div>
-            </div>
-            <span class="cta__channel__arrow" aria-hidden="true">↗</span>
-          </a>
-          <a class="cta__channel" href="https://linkedin.com/in/hvbhanot" target="_blank" rel="noopener">
-            <span class="cta__channel__icon">in</span>
-            <div>
-              <div class="cta__channel__label">LinkedIn</div>
-              <div class="cta__channel__value">/in/hvbhanot</div>
-            </div>
-            <span class="cta__channel__arrow" aria-hidden="true">↗</span>
-          </a>
-          <a class="cta__channel" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
-            <span class="cta__channel__icon">gh</span>
-            <div>
-              <div class="cta__channel__label">GitHub</div>
-              <div class="cta__channel__value">@hvbhanot</div>
-            </div>
-            <span class="cta__channel__arrow" aria-hidden="true">↗</span>
-          </a>
-          <a class="cta__channel" href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener">
-            <span class="cta__channel__icon">🤗</span>
-            <div>
-              <div class="cta__channel__label">Hugging Face</div>
-              <div class="cta__channel__value">@hvbhanot</div>
-            </div>
-            <span class="cta__channel__arrow" aria-hidden="true">↗</span>
-          </a>
+          <div class="channels">
+            <a class="channel" href="mailto:hvbhanot1@gmail.com">
+              <span class="channel__label">Email</span>
+              <span class="channel__value">hvbhanot1@gmail.com</span>
+              <span class="channel__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="channel" href="https://linkedin.com/in/hvbhanot" target="_blank" rel="noopener">
+              <span class="channel__label">LinkedIn</span>
+              <span class="channel__value">/in/hvbhanot</span>
+              <span class="channel__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="channel" href="https://github.com/hvbhanot" target="_blank" rel="noopener">
+              <span class="channel__label">GitHub</span>
+              <span class="channel__value">@hvbhanot</span>
+              <span class="channel__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="channel" href="https://huggingface.co/hvbhanot" target="_blank" rel="noopener">
+              <span class="channel__label">Hugging Face</span>
+              <span class="channel__value">@hvbhanot</span>
+              <span class="channel__arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -460,120 +380,42 @@ import Base from '../layouts/Base.astro';
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-      camera.position.set(0, 0, 9);
+      const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+      camera.position.set(0, 0, 5.6);
 
-      const group = new THREE.Group();
-      scene.add(group);
+      // Restrained: a slowly rotating wireframe sphere — institutional, quiet
+      const ink = new THREE.Color('#a9b1c1');
+      const accent = new THREE.Color('#c8a96a');
 
-      const C = {
-        violet: new THREE.Color('#a78bfa'),
-        cyan:   new THREE.Color('#22d3ee'),
-        lime:   new THREE.Color('#bef264'),
-        white:  new THREE.Color('#ffffff'),
-      };
-
-      // Neural graph: layers of nodes, fully connected between layers
-      const layerDefs = [
-        { y:  2.4, n: 3, color: C.violet },
-        { y:  0.9, n: 6, color: C.cyan   },
-        { y: -0.6, n: 6, color: C.cyan   },
-        { y: -2.1, n: 4, color: C.lime   },
-      ];
-
-      const nodes = [];
-      const nodeGeo = new THREE.SphereGeometry(0.09, 16, 16);
-
-      layerDefs.forEach((layer) => {
-        const spread = (layer.n - 1) * 0.72;
-        for (let i = 0; i < layer.n; i += 1) {
-          const x = -spread / 2 + i * 0.72;
-          const mat = new THREE.MeshBasicMaterial({ color: layer.color });
-          const mesh = new THREE.Mesh(nodeGeo, mat);
-          mesh.position.set(x, layer.y, 0);
-          group.add(mesh);
-
-          // Soft halo
-          const haloMat = new THREE.SpriteMaterial({
-            color: layer.color,
-            transparent: true,
-            opacity: 0.35,
-            blending: THREE.AdditiveBlending,
-          });
-          const halo = new THREE.Sprite(haloMat);
-          halo.scale.set(0.55, 0.55, 0.55);
-          mesh.add(halo);
-
-          nodes.push({ mesh, layer: layer.y, baseX: x, color: layer.color });
-        }
-      });
-
-      // Edges between adjacent layers
-      const edges = [];
-      for (let L = 0; L < layerDefs.length - 1; L += 1) {
-        const A = nodes.filter((n) => n.layer === layerDefs[L].y);
-        const B = nodes.filter((n) => n.layer === layerDefs[L + 1].y);
-        A.forEach((a) => {
-          B.forEach((b) => {
-            const geo = new THREE.BufferGeometry().setFromPoints([a.mesh.position, b.mesh.position]);
-            const mat = new THREE.LineBasicMaterial({
-              color: 0xffffff,
-              transparent: true,
-              opacity: 0.1,
-            });
-            const line = new THREE.Line(geo, mat);
-            group.add(line);
-            edges.push({ line, a, b, mat });
-          });
-        });
-      }
-
-      // Token particles flowing along random edges
-      const tokens = [];
-      const tokenGeo = new THREE.SphereGeometry(0.05, 10, 10);
-      for (let i = 0; i < 10; i += 1) {
-        const mat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const mesh = new THREE.Mesh(tokenGeo, mat);
-        group.add(mesh);
-        tokens.push({
-          mesh,
-          mat,
-          edge: edges[Math.floor(Math.random() * edges.length)],
-          t: Math.random(),
-          speed: 0.25 + Math.random() * 0.45,
-        });
-      }
-
-      // Dust particles
-      const pts = 240;
-      const posArr = new Float32Array(pts * 3);
-      for (let i = 0; i < pts; i += 1) {
-        const r = 4.2 + Math.random() * 4;
-        const t = Math.random() * Math.PI * 2;
-        const p = Math.acos(2 * Math.random() - 1);
-        posArr[i * 3]     = r * Math.sin(p) * Math.cos(t);
-        posArr[i * 3 + 1] = r * Math.sin(p) * Math.sin(t) * 0.6;
-        posArr[i * 3 + 2] = r * Math.cos(p);
-      }
-      const ptGeo = new THREE.BufferGeometry();
-      ptGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
-      const dust = new THREE.Points(
-        ptGeo,
-        new THREE.PointsMaterial({
-          size: 0.02,
-          color: '#a78bfa',
-          transparent: true,
-          opacity: 0.5,
-          depthWrite: false,
-        }),
+      const sphere = new THREE.LineSegments(
+        new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(1.6, 2)),
+        new THREE.LineBasicMaterial({ color: ink, transparent: true, opacity: 0.45 }),
       );
-      scene.add(dust);
+      scene.add(sphere);
 
-      const pointer = { x: 0, y: 0 };
-      window.addEventListener('pointermove', (event) => {
-        pointer.x = (event.clientX / window.innerWidth - 0.5) * 2;
-        pointer.y = (event.clientY / window.innerHeight - 0.5) * 2;
-      });
+      const inner = new THREE.Mesh(
+        new THREE.IcosahedronGeometry(0.9, 1),
+        new THREE.MeshBasicMaterial({ color: accent, wireframe: true, transparent: true, opacity: 0.5 }),
+      );
+      scene.add(inner);
+
+      const dotGeo = new THREE.BufferGeometry();
+      const dotCount = 60;
+      const positions = new Float32Array(dotCount * 3);
+      for (let i = 0; i < dotCount; i += 1) {
+        const r = 2.6 + Math.random() * 1.2;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
+        positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.6;
+        positions[i * 3 + 2] = r * Math.cos(phi);
+      }
+      dotGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const dots = new THREE.Points(
+        dotGeo,
+        new THREE.PointsMaterial({ size: 0.025, color: ink, transparent: true, opacity: 0.45 }),
+      );
+      scene.add(dots);
 
       const resize = () => {
         const { clientWidth, clientHeight } = canvas;
@@ -585,44 +427,16 @@ import Base from '../layouts/Base.astro';
       ro.observe(canvas);
       resize();
 
-      const tmp = new THREE.Vector3();
       const clock = new THREE.Clock();
       const render = () => {
-        const time = clock.getElapsedTime();
+        const t = clock.getElapsedTime();
         const speed = reducedMotion ? 0.1 : 1;
-        const dt = clock.getDelta();
 
-        group.rotation.y = Math.sin(time * 0.22 * speed) * 0.4 + pointer.x * 0.3;
-        group.rotation.x = Math.cos(time * 0.17 * speed) * 0.12 + pointer.y * 0.12;
-        dust.rotation.y = time * 0.03 * speed;
-
-        // Pulse nodes
-        nodes.forEach((n, i) => {
-          const s = 1 + Math.sin(time * 1.5 * speed + i * 0.6) * 0.12;
-          n.mesh.scale.setScalar(s);
-        });
-
-        // Animate edge opacity (traveling activity)
-        edges.forEach((e, i) => {
-          const wave = 0.08 + 0.15 * Math.max(0, Math.sin(time * 0.8 * speed + i * 0.15));
-          e.mat.opacity = wave;
-        });
-
-        // Token particles
-        tokens.forEach((tk) => {
-          tk.t += dt * tk.speed * speed;
-          if (tk.t >= 1) {
-            tk.t = 0;
-            tk.edge = edges[Math.floor(Math.random() * edges.length)];
-            tk.mat.color.copy(Math.random() > 0.5 ? C.violet : (Math.random() > 0.5 ? C.cyan : C.lime));
-          }
-          const a = tk.edge.a.mesh.position;
-          const b = tk.edge.b.mesh.position;
-          tmp.copy(a).lerp(b, tk.t);
-          tk.mesh.position.copy(tmp);
-          tk.mat.opacity = Math.sin(tk.t * Math.PI) * 1.2;
-          tk.mat.transparent = true;
-        });
+        sphere.rotation.y = t * 0.1 * speed;
+        sphere.rotation.x = Math.sin(t * 0.07 * speed) * 0.18;
+        inner.rotation.y = -t * 0.18 * speed;
+        inner.rotation.x = t * 0.13 * speed;
+        dots.rotation.y = t * 0.04 * speed;
 
         renderer.render(scene, camera);
         window.requestAnimationFrame(render);
