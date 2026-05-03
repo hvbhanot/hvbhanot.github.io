@@ -1,14 +1,24 @@
 # Harsh Vardhan Bhanot Portfolio
 
-Premium React portfolio for AI systems, cybersecurity, edge AI, and full-stack work.
+Premium personal portfolio for Harsh Vardhan Bhanot, focused on AI/ML research, computational genetics, scientific computing, and reproducible research tooling.
 
 ## Stack
 
 - React + Vite
+- TypeScript
 - Tailwind CSS
-- React Three Fiber + Three.js
+- React Router
 - Framer Motion
 - Playwright scene verification
+
+## Routes
+
+- `/`
+- `/about`
+- `/research`
+- `/projects`
+- `/experience`
+- `/contact`
 
 ## Run locally
 
@@ -22,14 +32,15 @@ The dev server runs at `http://localhost:4321`.
 ## Build
 
 ```bash
+npm run typecheck
 npm run build
 npm run preview
 ```
 
-## Verify the 3D hero
+## Verify the site
 
 ```bash
 npm run test:scene
 ```
 
-The Playwright test checks the hero canvas on desktop and mobile, verifies nonblank pixels, confirms animation changes over time, and writes screenshots into `test-results/`.
+The Playwright test checks all routes, verifies the technical hero visual on desktop and mobile, and writes screenshots into `test-results/`.

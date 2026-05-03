@@ -1,11 +1,12 @@
 # Deploying
 
-This portfolio is a Vite React app that builds into static files under `dist/`.
+This portfolio is a Vite React + React Router app that builds into static files under `dist/`.
 
 ## Local verification
 
 ```bash
 npm install
+npm run typecheck
 npm run build
 npm run test:scene
 ```
@@ -26,7 +27,7 @@ npm run build
 - Build command: `npm install && npm run build`
 - Start command: `npm start`
 
-The `start` script serves `dist/` on Railway's `$PORT`.
+The `start` script uses `serve -s` so direct React Router URLs such as `/research` and `/projects` fall back to the SPA entry.
 
 ## Custom domain
 
