@@ -1,226 +1,252 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowUpRight, FlaskConical, NotebookText } from 'lucide-react';
-import { profile, navItems, researchInterests } from '../data/resume';
+import { ArrowRight, ExternalLink } from 'lucide-react';
+import { profile } from '../data/resume';
 import { projects } from '../data/projects';
-import { getAllNotes } from '../data/notes';
-import { experiments } from '../data/lab';
-
-const fade = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.06 * i, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const },
-  }),
-};
-
-const formatDate = (iso: string) => {
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-};
 
 export default function Home() {
-  const allNotes = getAllNotes();
-  const latestNote = allNotes[0];
-  const featured = projects.slice(0, 2);
-  const running = experiments.filter((e) => e.status === 'running' || e.status === 'observing').length;
-
   return (
-    <>
-      <section className="relative pb-16 pt-16 lg:pb-24 lg:pt-24">
-        <div className="gutter-wide">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            className="mx-auto max-w-3xl text-center"
-          >
-            <motion.p custom={0} variants={fade} className="tag tag-accent mb-4">
-              {profile.tagline}
-            </motion.p>
-            <motion.h1
-              custom={1}
-              variants={fade}
-              className="font-display text-[44px] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-[64px] lg:text-[80px]"
-            >
-              Harsh Vardhan
-              <br />
-              <span className="text-accent">Bhanot</span>
-            </motion.h1>
-            <motion.p
-              custom={2}
-              variants={fade}
-              className="mx-auto mt-6 max-w-xl text-[18px] leading-[1.65] text-ink-soft"
-            >
-              Undergraduate researcher turning evolutionary simulations, model fine-tuning,
-              and messy experiment trails into tools that stay readable after the rush.
-            </motion.p>
-
-            <motion.div custom={3} variants={fade} className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link to="/work" className="pill pill-accent">
-                <ArrowUpRight size={16} strokeWidth={2.2} />
-                View projects
-              </Link>
-              <Link to="/lab" className="pill">
-                <FlaskConical size={16} strokeWidth={2.2} />
-                Live lab
-              </Link>
-              <Link to="/notes" className="pill pill-ghost">
-                <NotebookText size={16} strokeWidth={2.2} />
-                Field notes
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mx-auto mt-14 grid max-w-2xl gap-4 sm:grid-cols-3"
-          >
-            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-5 text-center">
-              <p className="tag tag-rose">Projects</p>
-              <p className="mt-2 font-display text-[36px] font-bold tracking-tight text-ink num">{projects.length}</p>
-              <p className="mt-1 text-[13px] text-ink-faint">catalogued builds</p>
-            </div>
-            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-5 text-center">
-              <p className="tag tag-highlight">Active</p>
-              <p className="mt-2 font-display text-[36px] font-bold tracking-tight text-ink num">{running}</p>
-              <p className="mt-1 text-[13px] text-ink-faint">live experiments</p>
-            </div>
-            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-5 text-center">
-              <p className="tag tag-accent">Notes</p>
-              <p className="mt-2 font-display text-[36px] font-bold tracking-tight text-ink num">{allNotes.length}</p>
-              <p className="mt-1 text-[13px] text-ink-faint">field entries</p>
-            </div>
-          </motion.div>
+    <main className="pt-16">
+      {/* ── HERO ─────────────────────────────────────────────── */}
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+        {/* Background elements */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden
+        >
+          <div
+            className="absolute top-1/4 -right-20 w-[600px] h-[600px] rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,77,28,0.12) 0%, transparent 70%)',
+            }}
+          />
+          <div
+            className="absolute bottom-1/4 -left-20 w-[400px] h-[400px] rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(0,229,192,0.08) 0%, transparent 70%)',
+            }}
+          />
+          <div
+            className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[1px]"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(255,77,28,0.3), transparent)',
+            }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[1px] h-[300px]"
+            style={{
+              background: 'linear-gradient(180deg, transparent, rgba(255,77,28,0.15), transparent)',
+            }}
+          />
         </div>
-      </section>
 
-      <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="gutter-wide grid gap-10 lg:grid-cols-[minmax(200px,0.8fr)_2.5fr]">
-          <aside>
-            <div className="inline-flex items-baseline gap-2 rounded-md bg-[var(--surface-muted)] px-2.5 py-1.5">
-              <span className="tag tag-accent">01</span>
-              <span className="tag">Focus areas</span>
-            </div>
-            <p className="mt-4 max-w-sm text-[13px] leading-6 text-ink-faint">
-              Current areas of focus, written as a working map rather than a mission statement.
-            </p>
-          </aside>
-          <div>
-            <p className="font-serif text-[20px] leading-[1.65] text-ink-soft">
-              My work sits at the intersection of simulation and systems: SLiM models
-              for evolutionary dynamics, transformer experiments for research-code
-              understanding, and the tooling around both so the outputs can be
-              audited, repeated, and explained.
+        <div className="gutter relative z-10 w-full">
+          <div className="max-w-3xl">
+            <div className="index-label mb-8">Portfolio — {new Date().getFullYear()}</div>
+
+            <h1 className="font-display leading-[0.95]" style={{ fontSize: 'clamp(48px, 9vw, 112px)' }}>
+              <span className="block text-[#ededf0]">Harsh</span>
+              <span className="block gradient-text">Bhanot</span>
+            </h1>
+
+            <p
+              className="mt-6 max-w-xl text-[18px] leading-relaxed"
+              style={{ color: '#8888a0' }}
+            >
+              {profile.bio}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-2">
-              {researchInterests.map((interest, i) => (
-                <span key={interest} className="chip">
-                  {interest}
-                </span>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {profile.tagline.split(' · ').map((t) => (
+                <span key={t} className="chip">{t}</span>
               ))}
             </div>
+
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link to="/work" className="btn btn-primary">
+                View my work <ArrowRight size={16} strokeWidth={2.2} />
+              </Link>
+              <Link to="/contact" className="btn btn-ghost">
+                Get in touch
+              </Link>
+            </div>
+          </div>
+
+          {/* Floating tag */}
+          <div
+            className="absolute bottom-12 right-0 hidden lg:flex items-center gap-3 px-5 py-3 rounded-xl"
+            style={{
+              background: '#14141f',
+              border: '1px solid #1e1e2e',
+              writingMode: 'horizontal-tb',
+            }}
+          >
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ background: '#ff4d1c', boxShadow: '0 0 8px #ff4d1c' }}
+            />
+            <span className="tag text-[11px]">{profile.location}</span>
           </div>
         </div>
       </section>
 
-      <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="gutter-wide">
-          <div
-            className="flex flex-col justify-between gap-4 pb-5 sm:flex-row sm:items-end"
-            style={{ borderBottom: '1px solid var(--border-strong)' }}
-          >
-            <div>
-              <div className="inline-flex items-baseline gap-2 rounded-md bg-[var(--surface-muted)] px-2.5 py-1.5">
-                <span className="tag tag-accent">02</span>
-                <span className="tag">Featured</span>
-              </div>
-              <h2 className="mt-3 font-display text-[36px] font-bold leading-[1.05] tracking-tight text-ink sm:text-[48px]">
-                Featured projects
-              </h2>
-            </div>
-            <Link to="/work" className="ink-link text-[14px]">
-              All projects <ArrowUpRight size={14} strokeWidth={2.2} />
-            </Link>
+      {/* ── MARQUEE ─────────────────────────────────────────── */}
+      <div
+        className="overflow-hidden py-5"
+        style={{ borderTop: '1px solid #1e1e2e', borderBottom: '1px solid #1e1e2e', background: '#0f0f1a' }}
+      >
+        <div className="flex whitespace-nowrap animate-marquee">
+          {[...Array(2)].map((_, mi) =>
+            ['Computational genetics', 'SLiM simulation', 'Transformer fine-tuning',
+              'Python pipelines', 'LoRA adapters', 'Reproducible research',
+              'Population modeling', 'Research tooling', 'Scientific computing',
+              'AI systems', 'Data analysis'].map((item, i) => (
+              <span
+                key={`${mi}-${i}`}
+                className="mx-8 flex items-center gap-3 text-[13px] font-medium"
+                style={{ color: '#8888a0' }}
+              >
+                <span
+                  className="inline-block w-1.5 h-1.5 rounded-full"
+                  style={{ background: mi === 0 ? '#ff4d1c' : '#00e5c0' }}
+                />
+                {item}
+              </span>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* ── SELECTED WORK ────────────────────────────────────── */}
+      <section className="py-24">
+        <div className="gutter">
+          <div className="index-label">Selected work</div>
+          <h2 className="section-title mt-4">
+            Things I've{' '}
+            <span className="gradient-text">built</span>
+          </h2>
+          <p className="section-subtitle mt-4">
+            A focused selection of projects spanning AI systems,
+            computational genetics, and research tooling.
+          </p>
+
+          <div className="mt-14 grid gap-5 md:grid-cols-2">
+            {projects.map((p) => (
+              <a
+                key={p.title}
+                href={p.href || '#'}
+                target={p.href ? '_blank' : undefined}
+                rel={p.href ? 'noreferrer' : undefined}
+                className="project-card group block"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="tag text-[#ff4d1c]">{p.catalog}</span>
+                    <span
+                      className="tag"
+                      style={{
+                        color: p.status === 'ongoing' ? '#00e5c0' : '#8888a0',
+                        borderColor: p.status === 'ongoing' ? 'rgba(0,229,192,0.3)' : '#2a2a3a',
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
+                        padding: '2px 8px',
+                        borderRadius: '4px',
+                      }}
+                    >
+                      {p.status}
+                    </span>
+                  </div>
+                  {p.href && (
+                    <ExternalLink
+                      size={15}
+                      className="text-[#44445a] group-hover:text-[#ff4d1c] transition-colors"
+                    />
+                  )}
+                </div>
+
+                <h3
+                  className="project-title mt-5 font-display text-[24px] font-bold text-white transition-colors"
+                  style={{ letterSpacing: '-0.02em' }}
+                >
+                  {p.title}
+                </h3>
+                <p className="mt-1 text-[14px] italic" style={{ color: '#8888a0' }}>
+                  {p.subtitle}
+                </p>
+                <p className="mt-4 text-[15px] leading-relaxed" style={{ color: '#ededf0', opacity: 0.8 }}>
+                  {p.description}
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {p.technologies.slice(0, 4).map((t) => (
+                    <span key={t} className="chip">{t}</span>
+                  ))}
+                </div>
+              </a>
+            ))}
           </div>
 
-          <div className="grid gap-0">
-            {featured.map((p) => (
-              <Link to="/work" key={p.title} className="catalog-card group grid gap-6 lg:grid-cols-[140px_1fr_1.2fr_auto]">
-                <span className="tag tag-accent num pt-1">{p.catalog}</span>
-                <div>
-                  <h3 className="font-display text-[24px] font-bold leading-[1.1] tracking-tight text-ink transition-colors group-hover:text-accent">
-                    {p.title}
-                  </h3>
-                  <p className="mt-1.5 text-[14px] italic text-ink-mid">{p.subtitle}</p>
-                </div>
-                <p className="text-[15px] leading-[1.6] text-ink-soft">{p.description}</p>
-                <span className="tag self-start pt-1 num">{p.year}</span>
-              </Link>
+          <div className="mt-10 text-center">
+            <Link to="/about" className="btn btn-ghost">
+              See full background <ArrowRight size={15} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── STATS STRIP ──────────────────────────────────────── */}
+      <section
+        className="py-16"
+        style={{ background: '#0f0f1a', borderTop: '1px solid #1e1e2e', borderBottom: '1px solid #1e1e2e' }}
+      >
+        <div className="gutter">
+          <div className="grid gap-8 sm:grid-cols-4">
+            {[
+              { value: projects.length, label: 'Projects', accent: '#ff4d1c' },
+              { value: '4+', label: 'Years research', accent: '#ffa552' },
+              { value: '3+', label: 'Languages', accent: '#00e5c0' },
+              { value: profile.graduation, label: 'Graduation', accent: '#8888a0' },
+            ].map((s) => (
+              <div key={s.label} className="text-center">
+                <p
+                  className="font-display font-bold"
+                  style={{ fontSize: '48px', color: s.accent, lineHeight: 1 }}
+                >
+                  {s.value}
+                </p>
+                <p className="tag mt-2">{s.label}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {latestNote ? (
-        <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
-          <div className="gutter-wide grid gap-10 lg:grid-cols-[minmax(200px,0.8fr)_2.5fr]">
-            <div>
-              <div className="inline-flex items-baseline gap-2 rounded-md bg-[var(--surface-muted)] px-2.5 py-1.5">
-                <span className="tag tag-accent">03</span>
-                <span className="tag">Latest note</span>
-              </div>
-              <Link to="/notes" className="ink-link mt-4 inline-flex text-[13px]">
-                All notes <ArrowUpRight size={13} strokeWidth={2.2} />
-              </Link>
-            </div>
-            <Link to={`/notes/${latestNote.slug}`} className="group block rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-6 transition-all hover:border-[var(--accent)] hover:shadow-md">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="tag tag-accent">{latestNote.kind}</span>
-                <span className="tag">{latestNote.catalog}</span>
-                <span className="tag num">{formatDate(latestNote.date)}</span>
-              </div>
-              <h3 className="mt-4 font-display text-[32px] font-bold leading-[1.1] tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[44px]">
-                {latestNote.title}
-              </h3>
-              {latestNote.subtitle ? (
-                <p className="mt-2 text-[14px] italic text-ink-mid">{latestNote.subtitle}</p>
-              ) : null}
-              <p className="mt-4 max-w-2xl font-serif text-[17px] leading-[1.65] text-ink-soft">
-                {latestNote.excerpt}
-              </p>
-              <div className="mt-5 flex flex-wrap items-baseline gap-4">
-                <span className="tag">{latestNote.place}</span>
-                <span className="tag">{latestNote.reading}</span>
-                <span className="ink-link text-[13px]">Read entry</span>
-              </div>
+      {/* ── CTA ──────────────────────────────────────────────── */}
+      <section className="py-28 text-center">
+        <div className="gutter">
+          <div className="big-index select-none">HV</div>
+          <h2 className="section-title mt-2">
+            Let's build something{' '}
+            <span className="gradient-text2">together</span>
+          </h2>
+          <p className="section-subtitle mx-auto mt-4">
+            Open to research collaborations, interesting problems,
+            and conversations about AI, genetics, or tooling.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link to="/contact" className="btn btn-primary" style={{ padding: '14px 32px', fontSize: '15px' }}>
+              Start a conversation <ArrowRight size={16} />
             </Link>
-          </div>
-        </section>
-      ) : null}
-
-      <section className="section-tight" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="gutter-wide grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {navItems.slice(1).map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              className="group flex min-h-[88px] items-end justify-between rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-5 transition-all hover:border-[var(--accent)] hover:bg-[var(--surface-raised)] hover:shadow-sm"
+            <a
+              href="https://github.com/hvbhanot"
+              target="_blank"
+              rel="noreferrer"
+              className="btn btn-ghost"
             >
-              <span>
-                <span className="tag tag-accent block">{item.index}</span>
-                <span className="mt-1.5 block font-display text-[22px] font-semibold leading-none text-ink transition-colors group-hover:text-accent">
-                  {item.label}
-                </span>
-              </span>
-              <ArrowUpRight size={16} strokeWidth={2.2} className="text-ink-faint transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
-            </Link>
-          ))}
+              GitHub <ExternalLink size={14} />
+            </a>
+          </div>
         </div>
       </section>
-    </>
+    </main>
   );
 }

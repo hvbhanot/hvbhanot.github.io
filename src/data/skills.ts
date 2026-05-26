@@ -6,36 +6,23 @@ export type SkillGroup = {
 
 export const skillGroups: SkillGroup[] = [
   {
-    category: 'Programming',
-    caption: 'Languages used routinely in research and systems work.',
+    category: 'Languages',
+    caption: 'Primary languages used in research and systems work.',
     skills: ['Python', 'Go', 'C++', 'Bash', 'SQL'],
   },
   {
-    category: 'Machine learning',
-    caption: 'Stack for modelling, fine-tuning, and evaluation.',
-    skills: [
-      'PyTorch',
-      'Hugging Face Transformers',
-      'scikit-learn',
-      'Parameter-efficient fine-tuning',
-      'LoRA / adapters',
-    ],
+    category: 'Machine Learning',
+    caption: 'Modeling, fine-tuning, and evaluation stack.',
+    skills: ['PyTorch', 'Hugging Face Transformers', 'scikit-learn', 'LoRA / adapters', 'Evaluation pipelines'],
   },
   {
-    category: 'Scientific computing',
-    caption: 'For simulation, analysis, and reproducible experiments.',
-    skills: [
-      'SLiM',
-      'NumPy',
-      'pandas',
-      'Jupyter',
-      'Simulation analysis',
-      'Experiment automation',
-    ],
+    category: 'Scientific Computing',
+    caption: 'Simulation, analysis, and experiment automation.',
+    skills: ['SLiM', 'NumPy', 'pandas', 'Jupyter', 'Simulation analysis'],
   },
   {
-    category: 'Systems',
-    caption: 'Day-to-day environment and infrastructure.',
-    skills: ['Linux', 'macOS', 'Git', 'REST APIs', 'JSON', 'JWT'],
+    category: 'Infrastructure',
+    caption: 'Day-to-day environment and collaboration tools.',
+    skills: ['Linux', 'Git', 'GitHub', 'REST APIs', 'JSON'],
   },
 ];

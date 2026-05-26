@@ -1,166 +1,210 @@
-import Page from '../components/Page';
-import Section from '../components/Section';
-import { capabilities, identityFacts, profile, researchInterests } from '../data/resume';
+import { ExternalLink } from 'lucide-react';
+import { profile } from '../data/resume';
 import { skillGroups } from '../data/skills';
 
 export default function About() {
   return (
-    <>
-      <Page
-        index="01"
-        eyebrow="Origin"
-        title={<>About the<br /><span className="text-accent">researcher</span>.</>}
-        lede={
-          <>
-            An undergraduate working at the intersection of computational
-            genetics, machine learning, and the small, careful pipelines that
-            keep a research project legible after the semester ends.
-          </>
-        }
-        meta={[
-          { label: 'Filed', value: 'Curriculum & disposition' },
-          { label: 'Location', value: profile.location },
-          { label: 'Standing', value: profile.degree + ' \u00b7 ' + profile.graduation },
-        ]}
-      />
+    <main className="pt-24 pb-20">
+      <div className="gutter">
+        {/* ── HEADER ─────────────────────────────────────────── */}
+        <div className="index-label">About me</div>
+        <h1 className="section-title mt-4">
+          The <span className="gradient-text">story</span> so far.
+        </h1>
+        <p className="section-subtitle mt-4">
+          Undergraduate at Texas A&M University – Corpus Christi,
+          working at the intersection of computational genetics, machine learning,
+          and the pipelines that make research worth revisiting.
+        </p>
 
-      <section className="section">
-        <div className="gutter-wide grid gap-10 lg:grid-cols-[1fr_2.4fr]">
-          <aside className="space-y-5">
-            <div className="flex items-baseline gap-2">
-              <span className="tag tag-accent">&sect; 01.1</span>
-              <span className="tag">Biographical</span>
+        <div className="mt-8 flex flex-wrap gap-4">
+          <a
+            href={`mailto:${profile.email}`}
+            className="btn btn-primary"
+          >
+            Say hello
+          </a>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-ghost"
+          >
+            LinkedIn <ExternalLink size={13} />
+          </a>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-ghost"
+          >
+            GitHub <ExternalLink size={13} />
+          </a>
+        </div>
+
+        <div
+          className="mt-16 h-px w-full"
+          style={{ background: 'linear-gradient(90deg, #ff4d1c, transparent)' }}
+        />
+
+        {/* ── BIO ────────────────────────────────────────────── */}
+        <div className="mt-16 grid gap-16 md:grid-cols-[1fr_2fr]">
+          <div>
+            <div className="index-label light">Background</div>
+            <div className="mt-6 space-y-4">
+              {[
+                { label: 'University', value: profile.university },
+                { label: 'Degree', value: profile.degree },
+                { label: 'Minor', value: profile.minor },
+                { label: 'Graduation', value: profile.graduation },
+                { label: 'Location', value: profile.location },
+              ].map((item) => (
+                <div key={item.label}>
+                  <p className="tag">{item.label}</p>
+                  <p className="mt-1 text-[15px] font-medium text-white">{item.value}</p>
+                </div>
+              ))}
             </div>
-            <p className="text-[13px] leading-6 text-ink-faint">
-              Written in the first person. Edited toward honesty rather than polish.
-            </p>
-          </aside>
+          </div>
 
-          <div className="max-w-2xl">
-            <p className="font-serif text-[20px] leading-[1.7] text-ink-soft">
-              I am an undergraduate at Texas A&amp;M University&ndash;Corpus Christi,
-              studying computer science with a minor in applied mathematics. I
-              spend most of my hours in the research lab &mdash; modelling genetic
-              evolution in SLiM, writing Python pipelines around the simulation
-              output, and fine-tuning transformer models on a small corpus of
-              research code so they can be useful as collaborators rather than
-              ornaments.
+          <div>
+            <p className="text-[17px] leading-relaxed" style={{ color: '#ededf0', opacity: 0.9 }}>
+              I study computer science with a minor in applied mathematics at Texas A&M
+              University – Corpus Christi. Most of my time is spent in the research lab:
+              building forward-time genetic simulations in SLiM, writing Python pipelines
+              to make sense of the output, and fine-tuning transformer models on scientific
+              code so they stop hallucinating and start being useful.
             </p>
-            <p className="mt-5 text-[17px] leading-[1.65] text-ink-soft">
-              Before this, I interned at DataEssenceAI on ML models for market
-              trend analysis, and I co-founded Islanders Research in AI to
-              teach reproducible experimentation to other students on campus. I
-              am drawn to the parts of research that usually go unwritten &mdash; the
-              configuration that produced a figure, the seed for a run, the
-              decision on the back of an envelope that started a project.
+            <p className="mt-5 text-[17px] leading-relaxed" style={{ color: '#8888a0' }}>
+              Before all this, I interned at DataEssenceAI building ML models for market
+              trend analysis, and I co-founded Islanders Research in AI — a student group
+              that teaches reproducible experimentation as a habit, not a checklist.
             </p>
-            <p className="mt-5 text-[17px] leading-[1.65] text-ink-soft">
-              The aim, in short: to build research tooling that does its job
-              and then disappears, and to leave behind notebooks that still
-              read clearly a year later.
+            <p className="mt-5 text-[17px] leading-relaxed" style={{ color: '#8888a0' }}>
+              The thing I care about most: building things that make research easier to
+              audit, repeat, and explain — and leaving behind notebooks that still make
+              sense a year later.
             </p>
           </div>
         </div>
-      </section>
 
-      <Section
-        index="&sect; 01.2"
-        label="Identity"
-        title={<>Standing, affiliation,<br/>and method.</>}
-        caption="A short, structured account of who I am as a researcher and how I work."
-      >
-        <dl className="grid gap-0">
-          {identityFacts.map((fact, i) => (
-            <div
-              key={fact.label}
-              className="grid grid-cols-[140px_1fr] gap-6 py-4"
-              style={{
-                borderTop: '1px solid var(--border)',
-                borderBottom: i === identityFacts.length - 1 ? '1px solid var(--border)' : 'none',
-              }}
-            >
-              <dt className="tag tag-accent pt-1.5">{fact.label}</dt>
-              <dd className="font-serif text-[17px] leading-[1.6] text-ink">{fact.detail}</dd>
-            </div>
-          ))}
-        </dl>
-      </Section>
+        {/* ── SKILLS ────────────────────────────────────────── */}
+        <div className="mt-20">
+          <div className="index-label">Toolkit</div>
+          <h2 className="section-title mt-4">
+            What I <span className="gradient-text2">work with</span>
+          </h2>
 
-      <Section
-        index="&sect; 01.3"
-        label="Capabilities"
-        title={<>What I can be<br />asked to do.</>}
-        caption="A partial inventory of practical skills, organised by what they enable rather than by tool."
-      >
-        <ul className="grid gap-0 sm:grid-cols-2">
-          {capabilities.map((c, i) => (
-            <li
-              key={c.title}
-              className="p-5"
-              style={{
-                borderTop: '1px solid var(--border)',
-                borderLeft: i % 2 === 1 ? '1px solid var(--border)' : 'none',
-                borderBottom: i >= capabilities.length - 2 ? '1px solid var(--border)' : 'none',
-              }}
-            >
-              <div className="flex items-baseline justify-between">
-                <h3 className="font-display text-[18px] font-semibold tracking-tight text-ink">{c.title}</h3>
-                <span className="tag num">{String(i + 1).padStart(2, '0')}</span>
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            {skillGroups.map((group) => (
+              <div
+                key={group.category}
+                className="p-6 rounded-xl"
+                style={{ background: '#14141f', border: '1px solid #1e1e2e' }}
+              >
+                <h3
+                  className="font-display text-[18px] font-bold text-white"
+                  style={{ letterSpacing: '-0.01em' }}
+                >
+                  {group.category}
+                </h3>
+                <p className="mt-1 text-[13px]" style={{ color: '#8888a0' }}>
+                  {group.caption}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {group.skills.map((skill) => (
+                    <span key={skill} className="chip">{skill}</span>
+                  ))}
+                </div>
               </div>
-              <p className="mt-1.5 text-[14px] leading-[1.55] text-ink-mid">{c.detail}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      <Section
-        index="&sect; 01.4"
-        label="Toolkit"
-        title={<>A compact<br />toolkit.</>}
-        caption="Grouped by intent. Languages, modelling stack, scientific computing, and day-to-day systems."
-      >
-        <div className="grid gap-0 sm:grid-cols-2">
-          {skillGroups.map((g, i) => (
-            <div
-              key={g.category}
-              className="p-5"
-              style={{
-                borderTop: '1px solid var(--border)',
-                borderLeft: i % 2 === 1 ? '1px solid var(--border)' : 'none',
-                borderBottom: i >= skillGroups.length - 2 ? '1px solid var(--border)' : 'none',
-              }}
-            >
-              <h3 className="font-display text-[22px] font-bold tracking-tight text-ink">{g.category}</h3>
-              <p className="mt-1.5 max-w-md text-[13px] leading-6 text-ink-mid">{g.caption}</p>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {g.skills.map((s) => (
-                  <li key={s} className="chip">{s}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </Section>
 
-      <Section
-        index="&sect; 01.5"
-        label="Interests"
-        title={<>Currently<br />reading & thinking about.</>}
-        caption="A loose list, refreshed as the season's reading shifts."
-      >
-        <ul className="grid gap-x-4 gap-y-0 sm:grid-cols-2">
-          {researchInterests.map((r, i) => (
-            <li
-              key={r}
-              className="flex items-baseline justify-between py-3"
-              style={{ borderBottom: '1px solid var(--border)' }}
-            >
-              <span className="font-serif text-[17px] text-ink">{r}</span>
-              <span className="tag num">{String(i + 1).padStart(2, '0')}</span>
-            </li>
-          ))}
-        </ul>
-      </Section>
-    </>
+        {/* ── EXPERIENCE ────────────────────────────────────── */}
+        <div className="mt-20">
+          <div className="index-label">Experience</div>
+          <h2 className="section-title mt-4">
+            Where I've <span className="gradient-text">worked</span>
+          </h2>
+
+          <div className="mt-10 space-y-0">
+            {[
+              {
+                title: 'Undergraduate Research Assistant',
+                org: 'Texas A&M University – Corpus Christi',
+                period: '2025 – present',
+                desc: 'Computational genetics and AI systems research. Forward-time evolutionary simulation in SLiM, Python analysis pipelines, and transformer fine-tuning for research-code understanding.',
+                bullets: [
+                  'Model genetic evolution, mutation dynamics, and population fitness in SLiM',
+                  'Build Python pipelines that parse simulation outputs and track mutations',
+                  'Fine-tune transformer models with Hugging Face for code understanding',
+                  'Maintain reproducible logs, codebases, and research artifacts',
+                ],
+              },
+              {
+                title: 'AI & ML Intern',
+                org: 'DataEssenceAI',
+                period: 'May 2024 – Aug 2024',
+                desc: 'Worked on PyTorch- and OpenCV-based ML models for market trend analysis.',
+                bullets: [
+                  'Developed and evaluated ML models against held-out benchmarks',
+                  'Reduced training time by ~20% through pipeline optimizations',
+                  'Improved predictive accuracy by ~10% over prior baseline',
+                ],
+              },
+              {
+                title: 'Founder & Vice President',
+                org: 'Islanders Research in AI',
+                period: 'Jan 2023 – present',
+                desc: 'Founded and led a student research organisation focused on AI and ML.',
+                bullets: [
+                  'Organised workshops on machine learning fundamentals',
+                  'Taught reproducible experimentation as a practice',
+                  'Helped students find their way into AI research topics',
+                ],
+              },
+            ].map((exp, i) => (
+              <div
+                key={i}
+                className="py-8"
+                style={{
+                  borderTop: '1px solid #1e1e2e',
+                  borderBottom: i === 2 ? '1px solid #1e1e2e' : 'none',
+                }}
+              >
+                <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3">
+                      <span className="tag text-[#ff4d1c]">0{i + 1}</span>
+                      <span className="tag">{exp.period}</span>
+                    </div>
+                    <h3 className="mt-3 font-display text-[22px] font-bold text-white" style={{ letterSpacing: '-0.01em' }}>
+                      {exp.title}
+                    </h3>
+                    <p className="mt-1 text-[14px] italic" style={{ color: '#8888a0' }}>
+                      {exp.org}
+                    </p>
+                    <p className="mt-3 text-[15px] leading-relaxed" style={{ color: '#ededf0', opacity: 0.75 }}>
+                      {exp.desc}
+                    </p>
+                  </div>
+                  <div className="md:max-w-[320px]">
+                    <ul className="space-y-2">
+                      {exp.bullets.map((b) => (
+                        <li key={b} className="flex items-start gap-3 text-[14px]" style={{ color: '#8888a0' }}>
+                          <span style={{ color: '#ff4d1c', marginTop: '3px' }}>—</span>
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }

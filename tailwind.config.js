@@ -4,35 +4,27 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        serif: ['"Fraunces"', 'Georgia', 'serif'],
-        sans: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['"Syne"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        body: ['"DM Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'SFMono-Regular', 'Consolas', 'monospace'],
       },
       colors: {
-        surface: {
-          DEFAULT: '#ffffff',
-          muted: '#f8f9fa',
-          raised: '#f1f3f5',
-        },
+        void: '#080810',
+        surface: '#0f0f1a',
+        card: '#14141f',
+        border: '#1e1e2e',
         ink: {
-          DEFAULT: '#1a1a2e',
-          soft: '#4a4a6a',
-          mid: '#7c7c9a',
-          faint: '#b0b0c4',
+          DEFAULT: '#ededf0',
+          soft: '#8888a0',
+          faint: '#44445a',
+          ghost: '#2a2a3a',
         },
-        accent: {
-          DEFAULT: '#6c5ce7',
-          light: '#a29bfe',
-          dark: '#5241d0',
-        },
-        highlight: {
-          DEFAULT: '#00d2d3',
-          soft: '#c8f6f6',
-        },
+        accent: '#ff4d1c',
+        accent2: '#00e5c0',
+        warm: '#ffa552',
       },
       letterSpacing: {
-        tightest: '-0.02em',
+        widest: '0.15em',
       },
     },
   },
