@@ -1,74 +1,97 @@
-import { Github, Linkedin, Mail, MapPin } from 'lucide-react';
-import ContactForm from '../components/ContactForm';
-import GlowCard from '../components/GlowCard';
-import PageHero from '../components/PageHero';
+import Page from '../components/Page';
 import { profile } from '../data/resume';
 
-const contacts = [
-  {
-    label: 'Email',
-    value: profile.email,
-    href: `mailto:${profile.email}`,
-    icon: Mail,
-  },
-  {
-    label: 'LinkedIn',
-    value: profile.linkedinLabel,
-    href: profile.linkedin,
-    icon: Linkedin,
-  },
-  {
-    label: 'GitHub',
-    value: profile.githubLabel,
-    href: profile.github,
-    icon: Github,
-  },
-  {
-    label: 'Location',
-    value: profile.location,
-    href: undefined,
-    icon: MapPin,
-  },
-];
-
 export default function Contact() {
+  const channels = [
+    { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, hint: 'Best for research questions, collaborations, and questions from students.' },
+    { label: 'GitHub', value: profile.githubLabel, href: profile.github, hint: 'Code, small tools, the occasional fork.' },
+    { label: 'LinkedIn', value: profile.linkedinLabel, href: profile.linkedin, hint: 'For more formal correspondence and CV-shaped questions.' },
+  ];
+
   return (
     <>
-      <PageHero
-        eyebrow="Contact"
-        title="Connect on AI systems, research tooling, or computational genetics."
-        description="Use the form for a local draft, or reach out directly by email, LinkedIn, or GitHub."
-        meta={['Corpus Christi, Texas', 'Research collaboration', 'Technical projects']}
+      <Page
+        index="05"
+        eyebrow="Ping"
+        title={<>Correspondence,<br /><span className="text-accent">unsealed</span>.</>}
+        lede={
+          <>
+            I read everything that arrives and reply to most of it. Research
+            collaborations, small pieces of tooling, simulation work, and notes
+            from other students are all welcome.
+          </>
+        }
+        meta={[
+          { label: 'Filed', value: 'Channels for correspondence' },
+          { label: 'Location', value: profile.location },
+          { label: 'Reply', value: 'Usually within a few days' },
+        ]}
       />
 
-      <section className="section-wrap">
-        <div className="container-shell grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="grid content-start gap-4">
-            {contacts.map((item) => {
-              const Icon = item.icon;
-              const content = (
-                <GlowCard className="flex items-center gap-4 p-5">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-lg border border-cyanCore/20 bg-cyanCore/10 text-cyanCore">
-                    <Icon size={20} />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block font-mono text-xs font-bold uppercase tracking-[0.14em] text-ink-500">{item.label}</span>
-                    <span className="mt-1 block break-words font-semibold text-ink-100">{item.value}</span>
-                  </span>
-                </GlowCard>
-              );
+      <section className="section">
+        <div className="gutter-wide grid gap-10 lg:grid-cols-[1fr_2fr]">
+          <aside>
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-6">
+              <p className="tag tag-accent mb-3">Address card</p>
+              <h2 className="font-display text-[24px] font-bold leading-[1.1] tracking-tight text-ink">
+                Harsh Vardhan<br />Bhanot
+              </h2>
+              <dl className="mt-5 space-y-2 text-[14px]">
+                <div className="flex items-baseline gap-3">
+                  <dt className="tag w-14 shrink-0 text-ink-faint">c/o</dt>
+                  <dd className="text-ink-soft">{profile.university}</dd>
+                </div>
+                <div className="flex items-baseline gap-3">
+                  <dt className="tag w-14 shrink-0 text-ink-faint">City</dt>
+                  <dd className="text-ink-soft">{profile.location}</dd>
+                </div>
+                <div className="flex items-baseline gap-3">
+                  <dt className="tag w-14 shrink-0 text-ink-faint">Term</dt>
+                  <dd className="num text-ink-soft">{profile.graduation}</dd>
+                </div>
+              </dl>
 
-              return item.href ? (
-                <a key={item.label} href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
-                  {content}
-                </a>
-              ) : (
-                <div key={item.label}>{content}</div>
-              );
-            })}
+              <p className="mt-5 text-[13px] leading-6 text-ink-faint">
+                Drop a line. Letters travel well.
+              </p>
+            </div>
+          </aside>
+
+          <div>
+            <ol className="grid gap-0">
+              {channels.map((c, i) => (
+                <li
+                  key={c.label}
+                  className="grid gap-2 py-5"
+                  style={{
+                    borderTop: '1px solid var(--border)',
+                    borderBottom: i === channels.length - 1 ? '1px solid var(--border)' : 'none',
+                  }}
+                >
+                  <div className="flex items-baseline justify-between gap-4">
+                    <span className="tag tag-accent">{c.label}</span>
+                    <span className="tag num">&sect; {String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                  <a
+                    href={c.href}
+                    target={c.href.startsWith('mailto') ? undefined : '_blank'}
+                    rel="noreferrer"
+                    className="ink-link font-display text-[22px] font-semibold tracking-tight text-ink"
+                  >
+                    {c.value}
+                  </a>
+                  <p className="text-[13px] leading-6 text-ink-faint">{c.hint}</p>
+                </li>
+              ))}
+            </ol>
+
+            <a
+              href={`mailto:${profile.email}`}
+              className="pill pill-accent mt-8 inline-flex"
+            >
+              Write to me &rarr;
+            </a>
           </div>
-
-          <ContactForm />
         </div>
       </section>
     </>

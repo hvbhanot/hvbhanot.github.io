@@ -1,184 +1,224 @@
-import { ArrowRight, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import Button from '../components/Button';
-import ExperienceCard from '../components/ExperienceCard';
-import GlowCard from '../components/GlowCard';
-import HeroVisual from '../components/HeroVisual';
-import ProjectCard from '../components/ProjectCard';
-import SectionHeader, { fadeUp } from '../components/SectionHeader';
-import SkillBadge from '../components/SkillBadge';
-import { experience } from '../data/experience';
+import { ArrowUpRight, FlaskConical, NotebookText } from 'lucide-react';
+import { profile, navItems, researchInterests } from '../data/resume';
 import { projects } from '../data/projects';
-import { identityCards, profile, researchInterests } from '../data/resume';
-import { skillGroups } from '../data/skills';
+import { getAllNotes } from '../data/notes';
+import { experiments } from '../data/lab';
+
+const fade = {
+  hidden: { opacity: 0, y: 16 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.06 * i, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const },
+  }),
+};
+
+const formatDate = (iso: string) => {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+};
 
 export default function Home() {
+  const allNotes = getAllNotes();
+  const latestNote = allNotes[0];
+  const featured = projects.slice(0, 2);
+  const running = experiments.filter((e) => e.status === 'running' || e.status === 'observing').length;
+
   return (
     <>
-      <section className="relative min-h-screen overflow-hidden pt-28">
-        <div className="container-shell grid min-h-[calc(100vh-7rem)] items-center gap-10 py-14 lg:grid-cols-[1.02fr_0.98fr]">
+      <section className="relative pb-16 pt-16 lg:pb-24 lg:pt-24">
+        <div className="gutter-wide">
           <motion.div
-            className="relative z-10 max-w-4xl"
             initial="hidden"
             animate="visible"
-            transition={{ staggerChildren: 0.1 }}
+            className="mx-auto max-w-3xl text-center"
           >
-            <motion.p variants={fadeUp} className="mb-5 font-mono text-xs font-bold uppercase tracking-[0.18em] text-cyanCore">
-              Computer Science / AI Research / Scientific Computing
+            <motion.p custom={0} variants={fade} className="tag tag-accent mb-4">
+              {profile.tagline}
             </motion.p>
-            <motion.h1 variants={fadeUp} className="font-display text-5xl font-bold leading-[1.02] text-ink-50 sm:text-6xl lg:text-7xl">
-              AI systems, computational genetics, and research tooling.
+            <motion.h1
+              custom={1}
+              variants={fade}
+              className="font-display text-[44px] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-[64px] lg:text-[80px]"
+            >
+              Harsh Vardhan
+              <br />
+              <span className="text-accent">Bhanot</span>
             </motion.h1>
-            <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-lg leading-8 text-ink-200 sm:text-xl">
-              I build machine learning systems, simulation pipelines, and reproducible research tools for technical
-              and scientific workflows.
+            <motion.p
+              custom={2}
+              variants={fade}
+              className="mx-auto mt-6 max-w-xl text-[18px] leading-[1.65] text-ink-soft"
+            >
+              Undergraduate researcher turning evolutionary simulations, model fine-tuning,
+              and messy experiment trails into tools that stay readable after the rush.
             </motion.p>
-            <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button to="/research">
-                View Research
-                <ArrowRight size={18} />
-              </Button>
-              <Button to="/projects" variant="secondary">
-                View Projects
-                <ArrowRight size={18} />
-              </Button>
-              <Button to="/contact" variant="ghost">
-                Contact Me
-                <Mail size={18} />
-              </Button>
+
+            <motion.div custom={3} variants={fade} className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link to="/work" className="pill pill-accent">
+                <ArrowUpRight size={16} strokeWidth={2.2} />
+                View projects
+              </Link>
+              <Link to="/lab" className="pill">
+                <FlaskConical size={16} strokeWidth={2.2} />
+                Live lab
+              </Link>
+              <Link to="/notes" className="pill pill-ghost">
+                <NotebookText size={16} strokeWidth={2.2} />
+                Field notes
+              </Link>
             </motion.div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.12 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mx-auto mt-14 grid max-w-2xl gap-4 sm:grid-cols-3"
           >
-            <HeroVisual />
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-5 text-center">
+              <p className="tag tag-rose">Projects</p>
+              <p className="mt-2 font-display text-[36px] font-bold tracking-tight text-ink num">{projects.length}</p>
+              <p className="mt-1 text-[13px] text-ink-faint">catalogued builds</p>
+            </div>
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-5 text-center">
+              <p className="tag tag-highlight">Active</p>
+              <p className="mt-2 font-display text-[36px] font-bold tracking-tight text-ink num">{running}</p>
+              <p className="mt-1 text-[13px] text-ink-faint">live experiments</p>
+            </div>
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-5 text-center">
+              <p className="tag tag-accent">Notes</p>
+              <p className="mt-2 font-display text-[36px] font-bold tracking-tight text-ink num">{allNotes.length}</p>
+              <p className="mt-1 text-[13px] text-ink-faint">field entries</p>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      <section className="section-wrap border-t border-white/[0.08]">
-        <div className="container-shell grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {identityCards.map((card, index) => {
-            const Icon = card.icon;
-            return (
-              <motion.div
-                key={card.label}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.42, ease: 'easeOut', delay: index * 0.04 }}
-                variants={fadeUp}
-              >
-                <GlowCard className="h-full p-5">
-                  <Icon className="mb-5 text-cyanCore" size={24} />
-                  <h3 className="font-display text-lg font-bold text-ink-50">{card.label}</h3>
-                  <p className="mt-3 text-sm leading-6 text-ink-400">{card.detail}</p>
-                </GlowCard>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="section-wrap border-t border-white/[0.08]">
-        <div className="container-shell">
-          <SectionHeader
-            eyebrow="Research Focus"
-            title="Machine learning systems for scientific workflows."
-            description="Harsh works across computational genetics, simulation analysis, transformer fine-tuning, and reproducible tooling."
-            className="mb-10"
-          />
-          <div className="flex flex-wrap gap-2">
-            {researchInterests.map((interest) => (
-              <SkillBadge key={interest}>{interest}</SkillBadge>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-wrap border-t border-white/[0.08]">
-        <div className="container-shell">
-          <SectionHeader
-            eyebrow="Technical Skills"
-            title="A compact toolkit for models, simulations, and systems."
-            description="The skill set is intentionally practical: Python-heavy research work, ML tooling, scientific computing, and systems basics."
-            className="mb-10"
-          />
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {skillGroups.map((group) => (
-              <GlowCard key={group.category} className="p-5">
-                <h3 className="font-display text-xl font-bold text-ink-50">{group.category}</h3>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {group.skills.slice(0, 6).map((skill) => (
-                    <SkillBadge key={skill}>{skill}</SkillBadge>
-                  ))}
-                </div>
-              </GlowCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-wrap border-t border-white/[0.08]">
-        <div className="container-shell">
-          <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeader
-              eyebrow="Featured Projects"
-              title="Selected systems and research tools."
-              description="A focused sample of machine learning, simulation, and research infrastructure work."
-            />
-            <Button to="/projects" variant="secondary" className="shrink-0">
-              All Projects
-              <ArrowRight size={17} />
-            </Button>
-          </div>
-          <div className="grid gap-5 md:grid-cols-2">
-            {projects.slice(0, 2).map((project, index) => (
-              <ProjectCard key={project.title} project={project} index={index} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-wrap border-t border-white/[0.08]">
-        <div className="container-shell">
-          <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeader
-              eyebrow="Experience Preview"
-              title="Research, internships, and AI leadership."
-              description="Experience is grounded in research work, ML model development, and student AI organization leadership."
-            />
-            <Button to="/experience" variant="secondary" className="shrink-0">
-              Full Experience
-              <ArrowRight size={17} />
-            </Button>
-          </div>
-          <div className="grid gap-5 lg:grid-cols-3">
-            {experience.map((item) => (
-              <ExperienceCard key={`${item.title}-${item.period}`} item={item} compact />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-wrap border-t border-white/[0.08]">
-        <div className="container-shell">
-          <GlowCard glow className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <p className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-cyanCore">Contact</p>
-              <h2 className="mt-3 font-display text-3xl font-bold text-ink-50">Research collaboration or technical project?</h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-ink-300">
-                Reach out for AI systems, computational genetics tooling, simulation pipelines, or research workflow conversations.
-              </p>
+      <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="gutter-wide grid gap-10 lg:grid-cols-[minmax(200px,0.8fr)_2.5fr]">
+          <aside>
+            <div className="inline-flex items-baseline gap-2 rounded-md bg-[var(--surface-muted)] px-2.5 py-1.5">
+              <span className="tag tag-accent">01</span>
+              <span className="tag">Focus areas</span>
             </div>
-            <Button to="/contact">
-              Contact {profile.shortName}
-              <ArrowRight size={17} />
-            </Button>
-          </GlowCard>
+            <p className="mt-4 max-w-sm text-[13px] leading-6 text-ink-faint">
+              Current areas of focus, written as a working map rather than a mission statement.
+            </p>
+          </aside>
+          <div>
+            <p className="font-serif text-[20px] leading-[1.65] text-ink-soft">
+              My work sits at the intersection of simulation and systems: SLiM models
+              for evolutionary dynamics, transformer experiments for research-code
+              understanding, and the tooling around both so the outputs can be
+              audited, repeated, and explained.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-2">
+              {researchInterests.map((interest, i) => (
+                <span key={interest} className="chip">
+                  {interest}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="gutter-wide">
+          <div
+            className="flex flex-col justify-between gap-4 pb-5 sm:flex-row sm:items-end"
+            style={{ borderBottom: '1px solid var(--border-strong)' }}
+          >
+            <div>
+              <div className="inline-flex items-baseline gap-2 rounded-md bg-[var(--surface-muted)] px-2.5 py-1.5">
+                <span className="tag tag-accent">02</span>
+                <span className="tag">Featured</span>
+              </div>
+              <h2 className="mt-3 font-display text-[36px] font-bold leading-[1.05] tracking-tight text-ink sm:text-[48px]">
+                Featured projects
+              </h2>
+            </div>
+            <Link to="/work" className="ink-link text-[14px]">
+              All projects <ArrowUpRight size={14} strokeWidth={2.2} />
+            </Link>
+          </div>
+
+          <div className="grid gap-0">
+            {featured.map((p) => (
+              <Link to="/work" key={p.title} className="catalog-card group grid gap-6 lg:grid-cols-[140px_1fr_1.2fr_auto]">
+                <span className="tag tag-accent num pt-1">{p.catalog}</span>
+                <div>
+                  <h3 className="font-display text-[24px] font-bold leading-[1.1] tracking-tight text-ink transition-colors group-hover:text-accent">
+                    {p.title}
+                  </h3>
+                  <p className="mt-1.5 text-[14px] italic text-ink-mid">{p.subtitle}</p>
+                </div>
+                <p className="text-[15px] leading-[1.6] text-ink-soft">{p.description}</p>
+                <span className="tag self-start pt-1 num">{p.year}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {latestNote ? (
+        <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
+          <div className="gutter-wide grid gap-10 lg:grid-cols-[minmax(200px,0.8fr)_2.5fr]">
+            <div>
+              <div className="inline-flex items-baseline gap-2 rounded-md bg-[var(--surface-muted)] px-2.5 py-1.5">
+                <span className="tag tag-accent">03</span>
+                <span className="tag">Latest note</span>
+              </div>
+              <Link to="/notes" className="ink-link mt-4 inline-flex text-[13px]">
+                All notes <ArrowUpRight size={13} strokeWidth={2.2} />
+              </Link>
+            </div>
+            <Link to={`/notes/${latestNote.slug}`} className="group block rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-6 transition-all hover:border-[var(--accent)] hover:shadow-md">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="tag tag-accent">{latestNote.kind}</span>
+                <span className="tag">{latestNote.catalog}</span>
+                <span className="tag num">{formatDate(latestNote.date)}</span>
+              </div>
+              <h3 className="mt-4 font-display text-[32px] font-bold leading-[1.1] tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[44px]">
+                {latestNote.title}
+              </h3>
+              {latestNote.subtitle ? (
+                <p className="mt-2 text-[14px] italic text-ink-mid">{latestNote.subtitle}</p>
+              ) : null}
+              <p className="mt-4 max-w-2xl font-serif text-[17px] leading-[1.65] text-ink-soft">
+                {latestNote.excerpt}
+              </p>
+              <div className="mt-5 flex flex-wrap items-baseline gap-4">
+                <span className="tag">{latestNote.place}</span>
+                <span className="tag">{latestNote.reading}</span>
+                <span className="ink-link text-[13px]">Read entry</span>
+              </div>
+            </Link>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="section-tight" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="gutter-wide grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {navItems.slice(1).map((item) => (
+            <Link
+              key={item.href}
+              to={item.href}
+              className="group flex min-h-[88px] items-end justify-between rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-5 transition-all hover:border-[var(--accent)] hover:bg-[var(--surface-raised)] hover:shadow-sm"
+            >
+              <span>
+                <span className="tag tag-accent block">{item.index}</span>
+                <span className="mt-1.5 block font-display text-[22px] font-semibold leading-none text-ink transition-colors group-hover:text-accent">
+                  {item.label}
+                </span>
+              </span>
+              <ArrowUpRight size={16} strokeWidth={2.2} className="text-ink-faint transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+            </Link>
+          ))}
         </div>
       </section>
     </>

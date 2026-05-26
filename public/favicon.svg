@@ -1,4 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#c5471a"/>
-  <text x="32" y="46" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="44" font-weight="600" fill="#f6f4ef">h</text>
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" rx="20" fill="#07110F"/>
+  <path d="M16 36L112 16V42L16 64V36Z" fill="#FF3B7F"/>
+  <path d="M112 92L16 112V86L112 64V92Z" fill="#29D8FF"/>
+  <rect x="16" y="16" width="96" height="96" rx="12" stroke="#F6FFE9" stroke-opacity="0.36" stroke-width="4"/>
+  <text x="64" y="76" text-anchor="middle" font-family="Bricolage Grotesque, Space Grotesk, Arial, sans-serif" font-size="38" font-weight="800" letter-spacing="0" fill="#F6FFE9">HVB</text>
+  <path d="M24 98H104" stroke="#C8FF4D" stroke-width="6" stroke-linecap="round"/>
 </svg>

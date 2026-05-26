@@ -1,87 +1,44 @@
-import {
-  Atom,
-  Binary,
-  BrainCircuit,
-  Code2,
-  Cpu,
-  FlaskConical,
-  GraduationCap,
-  MapPin,
-  Microscope,
-  Network,
-  Sigma,
-} from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
-
 export type NavItem = {
   label: string;
   href: string;
-};
-
-export type IdentityCard = {
-  label: string;
-  detail: string;
-  icon: LucideIcon;
-};
-
-export type ResearchCapability = {
-  title: string;
-  detail: string;
-  icon: LucideIcon;
+  index: string;
 };
 
 export const profile = {
   name: 'Harsh Vardhan Bhanot',
   shortName: 'Harsh Bhanot',
-  monogram: 'HVB',
-  role: 'Computer Science student, AI/ML researcher, computational genetics researcher, and systems builder',
-  university: 'Texas A&M University-Corpus Christi',
-  degree: 'Bachelor of Science in Computer Science',
-  minor: 'Applied Mathematics',
-  graduation: 'Expected 2026',
+  initials: 'HVB',
+  role: 'Computer science student, undergraduate researcher, builder of reproducible research tooling.',
+  university: 'Texas A&M University–Corpus Christi',
+  degree: 'B.S. Computer Science',
+  minor: 'Applied Mathematics (minor)',
+  graduation: 'Expected May 2026',
   location: 'Corpus Christi, Texas',
   email: 'hvbhanot1@gmail.com',
   linkedin: 'https://linkedin.com/in/hvbhanot',
   linkedinLabel: 'linkedin.com/in/hvbhanot',
   github: 'https://github.com/hvbhanot',
   githubLabel: 'github.com/hvbhanot',
-  tagline: 'AI systems, computational genetics, and reproducible research tooling.',
+  tagline: 'AI systems · computational genetics · reproducible research tooling',
+  motto: 'Research signal from a South Texas lab desk.',
 };
 
 export const navItems: NavItem[] = [
-  { label: 'About', href: '/about' },
-  { label: 'Research', href: '/research' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Experience', href: '/experience' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Signal', href: '/', index: '00' },
+  { label: 'Origin', href: '/about', index: '01' },
+  { label: 'Builds', href: '/work', index: '02' },
+  { label: 'Notes', href: '/notes', index: '03' },
+  { label: 'Record', href: '/experience', index: '04' },
+  { label: 'Ping', href: '/contact', index: '05' },
+  { label: 'Lab', href: '/lab', index: '06' },
 ];
 
-export const identityCards: IdentityCard[] = [
-  {
-    label: 'Computer Science student',
-    detail: 'B.S. Computer Science at Texas A&M University-Corpus Christi',
-    icon: GraduationCap,
-  },
-  {
-    label: 'Applied Mathematics minor',
-    detail: 'Mathematical foundation for modeling, simulation, and ML',
-    icon: Sigma,
-  },
-  {
-    label: 'Undergraduate Research Assistant',
-    detail: 'Computational genetics and AI systems research',
-    icon: Microscope,
-  },
-  {
-    label: 'AI/ML systems builder',
-    detail: 'Research workflows, pipelines, and reproducible tooling',
-    icon: BrainCircuit,
-  },
-];
+// Hidden / utility routes — not shown in main nav.
+export const adminRoute = { label: 'Admin', href: '/admin' };
 
 export const researchInterests = [
   'Computational genetics',
-  'Evolutionary simulation',
+  'Evolutionary simulation (SLiM)',
   'AI-assisted research workflows',
   'Transformer fine-tuning',
   'Domain-specific code understanding',
@@ -89,55 +46,74 @@ export const researchInterests = [
   'Reproducibility tooling',
 ];
 
-export const researchCapabilities: ResearchCapability[] = [
+export type IdentityFact = {
+  label: string;
+  detail: string;
+};
+
+export const identityFacts: IdentityFact[] = [
   {
-    title: 'SLiM simulation modeling',
-    detail: 'Model genetic evolution and population-level behavior with evolutionary simulation frameworks.',
-    icon: Atom,
+    label: 'Standing',
+    detail: 'Undergraduate, Computer Science (B.S.), with a minor in Applied Mathematics.',
   },
   {
-    title: 'Mutation dynamics analysis',
-    detail: 'Track mutation behavior across generations and evaluate outcome patterns.',
-    icon: Network,
+    label: 'Affiliation',
+    detail: 'Texas A&M University–Corpus Christi. Undergraduate Research Assistant.',
   },
   {
-    title: 'Population-level fitness behavior',
-    detail: 'Analyze simulated fitness changes and comparative dynamics across runs.',
-    icon: FlaskConical,
+    label: 'Subjects',
+    detail: 'Computational genetics, evolutionary simulation, AI systems, scientific computing.',
+  },
+  {
+    label: 'Method',
+    detail: 'Quiet pipelines. Reproducible artifacts. Notes you can come back to a year later.',
+  },
+];
+
+export type Capability = {
+  title: string;
+  detail: string;
+};
+
+export const capabilities: Capability[] = [
+  {
+    title: 'SLiM simulation modelling',
+    detail: 'Model evolution and population behaviour with forward-time genetic simulation frameworks.',
+  },
+  {
+    title: 'Mutation dynamics',
+    detail: 'Track mutation behaviour across generations and evaluate outcome patterns.',
+  },
+  {
+    title: 'Population-level fitness',
+    detail: 'Analyse simulated fitness changes and comparative dynamics across runs.',
   },
   {
     title: 'Python parsing pipelines',
-    detail: 'Parse simulation outputs into structured artifacts for downstream analysis.',
-    icon: Code2,
+    detail: 'Turn raw simulation output into structured artifacts ready for analysis.',
   },
   {
     title: 'Automated parameter sweeps',
-    detail: 'Run controlled simulation variants to compare parameterized outcomes.',
-    icon: Cpu,
+    detail: 'Run controlled simulation variants and reconcile their outcomes systematically.',
   },
   {
     title: 'Comparative outcome analysis',
-    detail: 'Summarize run-to-run differences with repeatable analysis notebooks and scripts.',
-    icon: Binary,
+    detail: 'Summarise run-to-run differences in notebooks that survive the year.',
   },
   {
     title: 'Hugging Face fine-tuning',
-    detail: 'Fine-tune transformer-based models for research code understanding and summarization.',
-    icon: BrainCircuit,
+    detail: 'Adapt transformer models for research-code understanding and summarisation.',
   },
   {
-    title: 'LoRA/adapters',
-    detail: 'Apply parameter-efficient tuning methods where full model training is unnecessary.',
-    icon: Cpu,
+    title: 'LoRA / adapters',
+    detail: 'Use parameter-efficient tuning where full model training is wasteful.',
   },
   {
     title: 'Structured experiment logs',
-    detail: 'Preserve settings, outputs, and decisions so experiments can be inspected later.',
-    icon: Code2,
+    detail: 'Preserve settings, outputs, and decisions so the work can be inspected later.',
   },
   {
     title: 'Version-controlled artifacts',
-    detail: 'Keep codebases, logs, and research artifacts traceable across iterations.',
-    icon: MapPin,
+    detail: 'Keep codebases, logs, and figures traceable across iterations.',
   },
 ];

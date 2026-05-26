@@ -1,53 +1,71 @@
-import GlowCard from '../components/GlowCard';
-import PageHero from '../components/PageHero';
-import SectionHeader from '../components/SectionHeader';
-import SkillBadge from '../components/SkillBadge';
-import Timeline from '../components/Timeline';
+import Page from '../components/Page';
 import { experience } from '../data/experience';
-import { skillGroups } from '../data/skills';
 
 export default function Experience() {
   return (
     <>
-      <PageHero
-        eyebrow="Experience"
-        title="Research, ML engineering, and student AI leadership."
-        description="Experience across computational genetics research, AI/ML internship work, and founding a student organization focused on AI and machine learning."
-        meta={['2025 - Present research', 'PyTorch / OpenCV internship', 'AI organization leadership']}
+      <Page
+        index="04"
+        eyebrow="Record"
+        title={<>The<br /><span className="text-accent">record</span>.</>}
+        lede={
+          <>
+            A chronological account of research, internships, and the
+            student organisation I founded. Each entry includes the work
+            actually done rather than the title alone.
+          </>
+        }
+        meta={[
+          { label: 'Filed', value: 'Curriculum vit&aelig;' },
+          { label: 'Entries', value: String(experience.length) },
+          { label: 'Span', value: '2023 \u2014 present' },
+        ]}
       />
 
-      <section className="section-wrap">
-        <div className="container-shell">
-          <SectionHeader
-            eyebrow="Timeline"
-            title="Work and research experience."
-            description="A concise record of roles grounded in the provided resume."
-            className="mb-10"
-          />
-          <Timeline items={experience} />
-        </div>
-      </section>
-
-      <section className="section-wrap border-t border-white/[0.08]">
-        <div className="container-shell">
-          <SectionHeader
-            eyebrow="Skills"
-            title="Technical skill groups."
-            description="Grouped around programming, AI/ML, scientific computing, and systems work."
-            className="mb-10"
-          />
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {skillGroups.map((group) => (
-              <GlowCard key={group.category} className="p-5">
-                <h3 className="font-display text-xl font-bold text-ink-50">{group.category}</h3>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {group.skills.map((skill) => (
-                    <SkillBadge key={skill}>{skill}</SkillBadge>
-                  ))}
+      <section className="section">
+        <div className="gutter-wide">
+          <ol className="grid gap-0">
+            {experience.map((e) => (
+              <li
+                key={`${e.title}-${e.period}`}
+                className="grid gap-6 py-8 lg:grid-cols-[140px_1.2fr_2fr]"
+                style={{ borderTop: '1px solid var(--border)' }}
+              >
+                <div className="flex flex-row items-baseline gap-3 lg:flex-col lg:items-start lg:gap-2">
+                  <span className="tag tag-accent num">{e.catalog}</span>
+                  <span className="tag num">{e.period}</span>
+                  {e.location ? <span className="tag">{e.location}</span> : null}
                 </div>
-              </GlowCard>
+
+                <div>
+                  <h2 className="font-display text-[24px] font-bold leading-[1.12] tracking-tight text-ink">
+                    {e.title}
+                  </h2>
+                  <p className="mt-1.5 text-[14px] italic text-ink-mid">{e.organization}</p>
+                  <p className="mt-4 max-w-md text-[14px] leading-[1.6] text-ink-soft">
+                    {e.description}
+                  </p>
+                </div>
+
+                <ul className="space-y-2 text-[14px] leading-[1.55] text-ink">
+                  {e.bullets.map((b) => (
+                    <li key={b} className="flex items-baseline gap-3">
+                      <span className="text-accent">&mdash;</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
             ))}
-          </div>
+          </ol>
+          <div
+            className="mt-1"
+            style={{
+              borderTop: '2px solid var(--border-strong)',
+              borderBottom: '2px solid var(--border)',
+              height: '5px',
+            }}
+          />
         </div>
       </section>
     </>

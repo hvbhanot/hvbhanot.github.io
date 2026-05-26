@@ -4,31 +4,35 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'Space Grotesk', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['Space Grotesk', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'SFMono-Regular', 'Consolas', 'monospace'],
+        display: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['"Fraunces"', 'Georgia', 'serif'],
+        sans: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'SFMono-Regular', 'Consolas', 'monospace'],
       },
       colors: {
-        ink: {
-          50: '#f7fbff',
-          100: '#e8f0fb',
-          200: '#b7c5d8',
-          300: '#8e9db4',
-          400: '#6f7b91',
-          500: '#4d586e',
-          600: '#30384d',
-          700: '#1b2233',
-          800: '#101626',
-          900: '#070a14',
-          950: '#03050d',
+        surface: {
+          DEFAULT: '#ffffff',
+          muted: '#f8f9fa',
+          raised: '#f1f3f5',
         },
-        cyanCore: '#20f3ff',
-        blueCore: '#2f7dff',
-        violetCore: '#8c5cff',
+        ink: {
+          DEFAULT: '#1a1a2e',
+          soft: '#4a4a6a',
+          mid: '#7c7c9a',
+          faint: '#b0b0c4',
+        },
+        accent: {
+          DEFAULT: '#6c5ce7',
+          light: '#a29bfe',
+          dark: '#5241d0',
+        },
+        highlight: {
+          DEFAULT: '#00d2d3',
+          soft: '#c8f6f6',
+        },
       },
-      boxShadow: {
-        glow: '0 0 40px rgba(32, 243, 255, 0.16)',
-        'glow-violet': '0 0 48px rgba(140, 92, 255, 0.18)',
+      letterSpacing: {
+        tightest: '-0.02em',
       },
     },
   },
