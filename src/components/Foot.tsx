@@ -1,72 +1,74 @@
 import { Link } from 'react-router-dom';
+import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
 import { navItems, profile } from '../data/resume';
 
 export default function Foot() {
   const year = new Date().getFullYear();
 
   return (
-    <footer
-      className="mt-auto"
-      style={{ borderTop: '1px solid #1f2a3f', background: '#080810' }}
-    >
-      <div
-        className="h-px w-full"
-        style={{
-          background: 'linear-gradient(90deg, transparent, rgba(255,77,28,0.4), rgba(0,229,192,0.2), transparent)',
-        }}
-      />
-
-      <div className="gutter py-12">
-        <div className="grid gap-10 md:grid-cols-[1fr_auto] md:items-center">
+    <footer className="mt-auto border-t border-white/10 bg-[#040506]/92">
+      <div className="gutter py-10 md:py-12">
+        <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-start">
           <div>
-            <div className="flex items-center gap-3">
-              <span
-                className="flex items-center justify-center w-8 h-8 rounded-lg font-mono text-[10px] font-bold text-void"
-                style={{
-                  background: 'linear-gradient(135deg, #00eaff, #00b8ff)',
-                }}
-              >
-                HV
+            <Link to="/" className="inline-flex items-center gap-3">
+              <span className="brand-mark">{profile.initials}</span>
+              <span>
+                <span className="block font-display text-lg font-bold">{profile.shortName}</span>
+                <span className="block text-sm text-ink-soft">{profile.role}</span>
               </span>
-              <span className="font-display text-[16px] font-bold text-white">
-                {profile.shortName}
-              </span>
-            </div>
-            <p className="mt-3 text-[14px] leading-relaxed" style={{ color: '#8888a0', maxWidth: '360px' }}>
-              Undergraduate researcher building at the intersection of computational
-              genetics, AI systems, and reproducible tooling.
+            </Link>
+            <p className="mt-5 max-w-md text-sm leading-7 text-ink-soft">
+              Computational genetics, model tooling, and research systems built with a bias
+              toward auditability and repeatable experiments.
             </p>
           </div>
 
-          <nav className="flex flex-wrap gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                className="footer-link text-[14px]"
+          <div className="grid gap-6 sm:grid-cols-2">
+            <nav className="grid gap-2" aria-label="Footer navigation">
+              {navItems.map((item) => (
+                <Link key={item.href} to={item.href} className="footer-link">
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="grid gap-2">
+              <a href={`mailto:${profile.email}`} className="footer-link inline-flex items-center gap-2">
+                <Mail size={15} />
+                Email
+              </a>
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noreferrer"
+                className="footer-link inline-flex items-center gap-2"
               >
-                {item.label}
-              </Link>
-            ))}
-            <a
-              href={`mailto:${profile.email}`}
-              className="footer-link text-[14px]"
-            >
-              Email
-            </a>
-          </nav>
+                <Github size={15} />
+                GitHub
+              </a>
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="footer-link inline-flex items-center gap-2"
+              >
+                <Linkedin size={15} />
+                LinkedIn
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div
-          className="mt-10 flex flex-col items-start justify-between gap-4 pt-6 sm:flex-row sm:items-center"
-          style={{ borderTop: '1px solid #1f2a3f' }}
-        >
-          <p className="tag text-[10px]">
-            &copy; {year} {profile.shortName}
-          </p>
-          <p className="tag text-[10px]" style={{ color: '#44445a' }}>
-            Built with React + Tailwind
-          </p>
+        <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-5 text-sm text-ink-faint sm:flex-row sm:items-center sm:justify-between">
+          <span>&copy; {year} {profile.shortName}</span>
+          <a
+            href="/Resume_Bhanot_HarshVardhan.pdf"
+            download
+            className="inline-flex items-center gap-2 text-ink-soft transition-colors hover:text-volt"
+          >
+            Download resume
+            <ArrowUpRight size={15} />
+          </a>
         </div>
       </div>
     </footer>

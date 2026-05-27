@@ -1,103 +1,159 @@
-import { useState } from 'react';
-import { ExternalLink, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useMemo, useState } from 'react';
+import { ArrowUpRight, Layers3, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { projects, type Project } from '../data/projects';
+
+const filters: Array<{ label: string; value: Project['status'] | 'all' }> = [
+  { label: 'All', value: 'all' },
+  { label: 'Ongoing', value: 'ongoing' },
+  { label: 'Active', value: 'active' },
+  { label: 'Archived', value: 'archived' },
+];
 
 export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
+  const [filter, setFilter] = useState<Project['status'] | 'all'>('all');
+
+  const visibleProjects = useMemo(
+    () => projects.filter((project) => filter === 'all' || project.status === filter),
+    [filter],
+  );
 
   return (
-    <div className="max-w-5xl mx-auto px-6 pt-20 pb-16">
-      <div className="mb-10">
-        <div className="text-xs tracking-[0.2em] text-[#4a5a70]">ARCHIVE</div>
-        <h1 className="text-4xl font-semibold tracking-[-0.02em] mt-1">Projects &amp; Experiments</h1>
-      </div>
+    <div className="gutter pb-20 pt-28">
+      <section className="grid gap-6 md:grid-cols-[0.78fr_1.22fr] md:items-end">
+        <div>
+          <div className="eyebrow">Project archive</div>
+          <h1 className="mt-5 text-5xl md:text-6xl">Experimental systems and applied tooling</h1>
+        </div>
+        <p className="page-kicker">
+          A compact archive of work across transformer fine-tuning, simulation analysis,
+          decision modeling, and first-principles machine learning.
+        </p>
+      </section>
 
-      <div className="grid md:grid-cols-2 gap-5">
-        {projects.map((p, i) => (
+      <section className="mt-10 flex flex-wrap gap-2" aria-label="Project filters">
+        {filters.map((item) => {
+          const active = filter === item.value;
+          return (
+            <button
+              key={item.value}
+              type="button"
+              onClick={() => setFilter(item.value)}
+              className={`min-h-10 rounded-lg border px-4 text-sm font-semibold transition-colors ${
+                active
+                  ? 'border-volt bg-volt text-[#061007]'
+                  : 'border-white/10 bg-white/5 text-ink-soft hover:border-white/20 hover:text-white'
+              }`}
+            >
+              {item.label}
+            </button>
+          );
+        })}
+      </section>
+
+      <section className="mt-8 grid gap-5 md:grid-cols-2">
+        {visibleProjects.map((project) => (
           <button
-            key={i}
-            onClick={() => setSelected(p)}
-            className="text-left group border border-[#1f2a3f] bg-[#0b0f17] p-6 rounded-xl hover:border-[#00eaff]/40 transition-all"
+            key={project.catalog}
+            type="button"
+            onClick={() => setSelected(project)}
+            className="project-tile min-h-[310px] p-6"
           >
-            <div className="flex justify-between items-center">
-              <span className="text-xs font-mono text-[#00eaff]">{p.catalog}</span>
-              <span className={`text-[10px] px-2.5 py-0.5 rounded tracking-wider ${
-                p.status === 'ongoing' ? 'bg-[#00eaff]/10 text-[#00eaff]' : 
-                p.status === 'active' ? 'bg-[#00b8ff]/10 text-[#00b8ff]' : 'bg-[#4a5a70]/20 text-[#8a9ab0]'
-              }`}>{p.status}</span>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <span className="font-mono text-sm text-volt">{project.catalog}</span>
+              <span className={`status-badge ${project.status}`}>{project.status}</span>
             </div>
 
-            <h3 className="mt-4 text-2xl font-semibold tracking-tight group-hover:text-[#00eaff] transition-colors">
-              {p.title}
-            </h3>
-            <p className="text-[#8a9ab0] mt-1">{p.subtitle}</p>
-
-            <p className="mt-4 text-sm leading-relaxed text-[#e8f0ff] line-clamp-3">
-              {p.description}
+            <h2 className="mt-8 text-2xl">{project.title}</h2>
+            <p className="mt-2 text-ink-soft">{project.subtitle}</p>
+            <p className="mt-5 line-clamp-4 text-sm leading-6 text-white/80">
+              {project.description}
             </p>
 
-            <div className="mt-5 flex flex-wrap gap-2">
-              {p.technologies.slice(0, 4).map(t => (
-                <span key={t} className="chip">{t}</span>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {project.technologies.slice(0, 5).map((tech) => (
+                <span key={tech} className="data-token">{tech}</span>
               ))}
             </div>
           </button>
         ))}
-      </div>
+      </section>
 
       <AnimatePresence>
         {selected && (
-          <div 
-            className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+          <div
+            className="fixed inset-0 z-[70] grid place-items-center bg-black/78 p-4 backdrop-blur-md"
             onClick={() => setSelected(null)}
           >
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+            <motion.article
+              initial={{ opacity: 0, y: 18, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.98 }}
-              onClick={e => e.stopPropagation()}
-              className="w-full max-w-2xl bg-[#05070a] border border-[#1f2a3f] rounded-2xl overflow-hidden"
+              exit={{ opacity: 0, y: 12, scale: 0.98 }}
+              transition={{ duration: 0.18 }}
+              onClick={(event) => event.stopPropagation()}
+              className="glass-panel max-h-[88vh] w-full max-w-3xl overflow-y-auto p-6 md:p-8"
             >
-              <div className="p-7">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <span className="text-xs font-mono text-[#00eaff]">{selected.catalog}</span>
-                    <h3 className="text-2xl font-semibold tracking-tight mt-1">{selected.title}</h3>
+              <div className="flex items-start justify-between gap-5">
+                <div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="font-mono text-sm text-volt">{selected.catalog}</span>
+                    <span className={`status-badge ${selected.status}`}>{selected.status}</span>
                   </div>
-                  <button onClick={() => setSelected(null)} className="text-[#8a9ab0] hover:text-white">
-                    <X size={20} />
-                  </button>
+                  <h2 className="mt-5 text-3xl md:text-4xl">{selected.title}</h2>
+                  <p className="mt-2 text-ink-soft">{selected.subtitle}</p>
                 </div>
-
-                <p className="mt-4 text-[#e8f0ff] leading-relaxed">{selected.description}</p>
-
-                {selected.highlights.length > 0 && (
-                  <div className="mt-6">
-                    <div className="text-xs tracking-widest text-[#4a5a70] mb-2">HIGHLIGHTS</div>
-                    <ul className="space-y-2 text-sm">
-                      {selected.highlights.map((h, idx) => (
-                        <li key={idx} className="pl-4 border-l-2 border-[#00eaff]/30">— {h}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {selected.technologies.map(t => <span key={t} className="chip">{t}</span>)}
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelected(null)}
+                  className="button-icon flex-none"
+                  aria-label="Close project details"
+                >
+                  <X size={18} />
+                </button>
               </div>
 
-              <div className="bg-[#0b0f17] border-t border-[#1f2a3f] px-7 py-4 text-sm">
+              <p className="mt-7 text-base leading-8 text-white/[0.86]">{selected.description}</p>
+
+              {selected.highlights.length > 0 && (
+                <div className="mt-8">
+                  <div className="mb-4 flex items-center gap-3 text-sm font-semibold text-ink-soft">
+                    <Layers3 size={17} className="text-plasma" />
+                    Highlights
+                  </div>
+                  <ul className="grid gap-3 text-sm leading-6 text-ink-soft">
+                    {selected.highlights.map((highlight) => (
+                      <li key={highlight} className="flex gap-3">
+                        <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-plasma" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="mt-8 flex flex-wrap gap-2">
+                {selected.technologies.map((tech) => (
+                  <span key={tech} className="data-token">{tech}</span>
+                ))}
+              </div>
+
+              <div className="mt-8 border-t border-white/10 pt-5">
                 {selected.href ? (
-                  <a href={selected.href} target="_blank" rel="noreferrer" className="text-[#00eaff] flex items-center gap-2">
-                    View source <ExternalLink size={15} />
+                  <a
+                    href={selected.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="button-primary"
+                  >
+                    View source
+                    <ArrowUpRight size={17} />
                   </a>
                 ) : (
-                  <span className="text-[#4a5a70]">Internal research artifact</span>
+                  <span className="text-sm text-ink-faint">Research artifact without a public repository.</span>
                 )}
               </div>
-            </motion.div>
+            </motion.article>
           </div>
         )}
       </AnimatePresence>

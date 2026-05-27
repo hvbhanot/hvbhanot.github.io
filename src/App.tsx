@@ -21,8 +21,10 @@ function ScrollToTop() {
 
 function RouteFallback() {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center">
-      <div className="font-mono text-xs tracking-[0.3em] text-[#4a5a70]">INITIALIZING INTERFACE…</div>
+    <div className="gutter flex min-h-[60vh] items-center justify-center">
+      <div className="glass-panel px-5 py-4 font-mono text-sm text-ink-soft">
+        Loading portfolio
+      </div>
     </div>
   );
 }
@@ -31,19 +33,21 @@ export default function App() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-[#05070a] text-[#e8f0ff]">
+    <div className="site-root">
       <Nav />
       <ScrollToTop />
-      <Suspense fallback={<RouteFallback />}>
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/research" element={<Research />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <main className="site-main">
+        <Suspense fallback={<RouteFallback />}>
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/research" element={<Research />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </main>
       <Foot />
     </div>
   );

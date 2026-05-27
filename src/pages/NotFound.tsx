@@ -1,27 +1,26 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { Home, Mail } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-      <div className="inline-flex items-center gap-2 border border-[#1f2a3f] px-4 py-1 text-[11px] font-mono tracking-[0.2em] text-[#4a5a70] mb-6">
-        ERROR 404 — SIGNAL LOST
-      </div>
-
-      <h1 className="text-6xl md:text-7xl font-semibold tracking-[-0.03em]">Page not found</h1>
-      
-      <p className="max-w-sm mt-4 text-[#8a9ab0]">
-        The requested module could not be located in the current operations manifest.
-      </p>
-
-      <div className="mt-8 flex gap-3">
-        <Link to="/" className="btn btn-primary">Return to Overview</Link>
-        <Link to="/contact" className="btn btn-ghost">Open Comms</Link>
-      </div>
-
-      <div className="mt-12 text-[10px] tracking-[0.15em] text-[#4a5a70]">
-        HVB.SIGNAL — RESEARCH OPS TERMINAL
-      </div>
+    <div className="gutter flex min-h-[78vh] items-center justify-center pb-20 pt-28 text-center">
+      <section className="glass-panel max-w-2xl p-8 md:p-10">
+        <div className="eyebrow justify-center">404</div>
+        <h1 className="mt-5 text-5xl md:text-6xl">This route is outside the map</h1>
+        <p className="mx-auto mt-5 max-w-md text-ink-soft">
+          The page you requested is not part of the current portfolio surface.
+        </p>
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link to="/" className="button-primary">
+            <Home size={17} />
+            Home
+          </Link>
+          <Link to="/contact" className="button-secondary">
+            <Mail size={17} />
+            Contact
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Download, Menu, X } from 'lucide-react';
+import { Atom, Download, Mail, Menu, X } from 'lucide-react';
 import { navItems, profile } from '../data/resume';
 
 export default function Nav() {
@@ -9,109 +9,98 @@ export default function Nav() {
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 18);
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setOpen(false); }, [location.pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{
-        background: scrolled ? 'rgba(8,8,16,0.95)' : 'rgba(8,8,16,0.7)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: scrolled ? '1px solid #1f2a3f' : '1px solid transparent',
-      }}
-    >
-      <div className="gutter flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group">
-          <span
-            className="flex items-center justify-center w-9 h-9 rounded-lg font-mono text-[11px] font-bold text-void"
-            style={{
-              background: 'linear-gradient(135deg, #00eaff, #00b8ff)',
-              boxShadow: '0 0 16px rgba(255,77,28,0.4)',
-            }}
-          >
-            HV
-          </span>
-          <span className="font-display text-[17px] font-bold text-white tracking-tight">
-            {profile.shortName}
-          </span>
-        </Link>
+    <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3">
+      <div
+        className={`gutter nav-glass rounded-lg transition-all duration-200 ${
+          scrolled ? 'bg-[#06080c]/90' : 'bg-[#06080c]/66'
+        }`}
+      >
+        <div className="flex min-h-[64px] items-center justify-between gap-4 px-3 sm:px-4">
+          <Link to="/" className="flex min-w-0 items-center gap-3" aria-label="Go home">
+            <span className="brand-mark">
+              <Atom size={18} strokeWidth={2.2} />
+            </span>
+            <span className="min-w-0">
+              <span className="block truncate font-display text-base font-bold text-white">
+                {profile.shortName}
+              </span>
+              <span className="hidden truncate text-xs font-medium text-ink-soft sm:block">
+                Computational research systems
+              </span>
+            </span>
+          </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.href}
-              to={item.href}
-              className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="hidden items-center gap-3 md:flex">
-          <a href={`mailto:${profile.email}`} className="btn btn-ghost text-[13px]">
-            Say hello
-          </a>
-          <a
-            href="/Resume_Bhanot_HarshVardhan.pdf"
-            download
-            className="btn btn-primary text-[13px]"
-          >
-            <Download size={14} strokeWidth={2.2} />
-            Resume
-          </a>
-        </div>
-
-        <button
-          type="button"
-          aria-expanded={open}
-          aria-label="Toggle menu"
-          onClick={() => setOpen((v) => !v)}
-          className="grid h-9 w-9 place-items-center rounded-lg md:hidden"
-          style={{ border: '1px solid #2a2a3a', background: '#14141f' }}
-        >
-          {open ? <X size={16} /> : <Menu size={16} />}
-        </button>
-      </div>
-
-      {open && (
-        <div
-          className="md:hidden"
-          style={{ background: 'rgba(8,8,16,0.98)', borderTop: '1px solid #1f2a3f' }}
-        >
-          <div className="gutter py-5 flex flex-col gap-1">
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
             {navItems.map((item) => (
               <NavLink
                 key={item.href}
                 to={item.href}
-                className={({ isActive }) =>
-                  `py-3 text-[16px] font-medium ${isActive ? 'text-accent-text' : 'text-ink-soft'}`
-                }
+                className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
               >
                 {item.label}
               </NavLink>
             ))}
-            <div className="flex gap-3 mt-4">
-              <a href={`mailto:${profile.email}`} className="btn btn-ghost text-[13px] flex-1 justify-center">
-                Say hello
+          </nav>
+
+          <div className="hidden items-center gap-2 md:flex">
+            <a href={`mailto:${profile.email}`} className="button-secondary">
+              <Mail size={16} />
+              Email
+            </a>
+            <a href="/Resume_Bhanot_HarshVardhan.pdf" download className="button-primary">
+              <Download size={16} />
+              Resume
+            </a>
+          </div>
+
+          <button
+            type="button"
+            className="button-icon lg:hidden"
+            aria-label={open ? 'Close navigation' : 'Open navigation'}
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+
+        {open && (
+          <div className="border-t border-white/10 px-3 pb-4 pt-2 lg:hidden">
+            <nav className="grid gap-1" aria-label="Mobile navigation">
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.href}
+                  to={item.href}
+                  className={({ isActive }) => `nav-link justify-start ${isActive ? 'is-active' : ''}`}
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </nav>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <a href={`mailto:${profile.email}`} className="button-secondary">
+                <Mail size={16} />
+                Email
               </a>
-              <a
-                href="/Resume_Bhanot_HarshVardhan.pdf"
-                download
-                className="btn btn-primary text-[13px] flex-1 justify-center"
-              >
+              <a href="/Resume_Bhanot_HarshVardhan.pdf" download className="button-primary">
+                <Download size={16} />
                 Resume
               </a>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 }
