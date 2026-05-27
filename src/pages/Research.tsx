@@ -29,8 +29,8 @@ const relatedProjects = projects.filter(p =>
 export default function Research() {
   return (
     <div className="space-y-10">
-      <div>
-        <div className="text-xs tracking-[0.2em] text-[#4a5a70]">RESEARCH DIRECTIVES</div>
+      <div className="max-w-4xl">
+        <div className="text-xs tracking-[0.2em] text-[#4a5a70]">RESEARCH</div>
         <h1 className="text-4xl font-semibold tracking-[-0.02em] mt-1">Computational Genetics &amp; AI Systems</h1>
         <p className="text-[#8a9ab0] mt-3 max-w-2xl">
           Work at the intersection of evolutionary simulation, transformer models for research code, and the tooling that makes experiments reproducible.

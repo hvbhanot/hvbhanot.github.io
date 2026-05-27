@@ -1,6 +1,7 @@
 import { useEffect, Suspense, lazy } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import DeckLayout from './components/DeckLayout';
+import Nav from './components/Nav';
+import Foot from './components/Foot';
 
 // Lazy-loaded pages for performance (code-splitting)
 const Home = lazy(() => import('./pages/Home'));
@@ -30,7 +31,8 @@ export default function App() {
   const location = useLocation();
 
   return (
-    <DeckLayout>
+    <div className="min-h-screen bg-[#05070a] text-[#e8f0ff]">
+      <Nav />
       <ScrollToTop />
       <Suspense fallback={<RouteFallback />}>
         <Routes location={location} key={location.pathname}>
@@ -42,6 +44,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-    </DeckLayout>
+      <Foot />
+    </div>
   );
 }

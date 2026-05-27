@@ -7,7 +7,7 @@ export default function About() {
     <div className="space-y-12">
       {/* Header */}
       <div>
-        <div className="text-xs tracking-[0.2em] text-[#4a5a70] mb-1">PERSONNEL FILE</div>
+        <div className="text-xs tracking-[0.2em] text-[#4a5a70] mb-1">ABOUT</div>
         <h1 className="text-4xl font-semibold tracking-[-0.02em]">{profile.name}</h1>
         <p className="text-[#8a9ab0] mt-3 max-w-2xl">
           Undergraduate researcher working at the intersection of computational genetics, machine learning, and reproducible tooling.
