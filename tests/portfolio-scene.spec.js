@@ -3,12 +3,9 @@ import { test, expect } from '@playwright/test';
 const routes = [
   '/',
   '/about',
-  '/work',
-  '/notes',
-  '/notes/notebooks-that-survive-the-semester',
-  '/experience',
+  '/projects',
+  '/research',
   '/contact',
-  '/lab',
 ];
 
 test('all routes render and stay within viewport', async ({ page }) => {

@@ -11,14 +11,15 @@ Premium personal portfolio for Harsh Vardhan Bhanot, focused on AI/ML research, 
 - Framer Motion
 - Playwright scene verification
 
-## Routes
+## Routes (after 2026 redesign)
 
-- `/`
-- `/about`
-- `/research`
-- `/projects`
-- `/experience`
-- `/contact`
+- `/` — Home
+- `/about` — Background, toolkit, experience
+- `/projects` — Filterable project archive + detail modals
+- `/research` — Current focus areas (genetics, AI tooling, reproducibility)
+- `/contact` — Get in touch
+
+The site is now a focused 5-page "Refined Signal" redesign with improved motion (framer-motion), accessibility, and data-driven content.
 
 ## Run locally
 
@@ -43,4 +44,4 @@ npm run preview
 npm run test:scene
 ```
 
-The Playwright test checks all routes, verifies the technical hero visual on desktop and mobile, and writes screenshots into `test-results/`.
+The Playwright scene test validates the 5 core routes across desktop and mobile viewports and confirms no horizontal overflow.

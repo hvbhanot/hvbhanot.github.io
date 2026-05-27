@@ -8,6 +8,12 @@ export default {
         body: ['"DM Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'SFMono-Regular', 'Consolas', 'monospace'],
       },
+      letterSpacing: {
+        widest: '0.15em',
+      },
+      transitionTimingFunction: {
+        'signal': 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
       colors: {
         void: '#080810',
         surface: '#0f0f1a',
@@ -22,9 +28,6 @@ export default {
         accent: '#ff4d1c',
         accent2: '#00e5c0',
         warm: '#ffa552',
-      },
-      letterSpacing: {
-        widest: '0.15em',
       },
     },
   },

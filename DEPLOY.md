@@ -27,7 +27,7 @@ npm run build
 - Build command: `npm install && npm run build`
 - Start command: `npm start`
 
-The `start` script uses `serve -s` so direct React Router URLs such as `/research` and `/projects` fall back to the SPA entry.
+The `start` script uses `serve -s` so direct React Router URLs (`/projects`, `/research`, etc.) fall back to the SPA entry.
 
 ## Custom domain
 

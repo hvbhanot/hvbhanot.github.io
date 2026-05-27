@@ -1,5 +1,5 @@
 import { ExternalLink } from 'lucide-react';
-import { profile } from '../data/resume';
+import { profile, experience } from '../data/resume';
 import { skillGroups } from '../data/skills';
 
 export default function About() {
@@ -128,72 +128,26 @@ export default function About() {
             Where I've <span className="gradient-text">worked</span>
           </h2>
 
-          <div className="mt-10 space-y-0">
-            {[
-              {
-                title: 'Undergraduate Research Assistant',
-                org: 'Texas A&M University – Corpus Christi',
-                period: '2025 – present',
-                desc: 'Computational genetics and AI systems research. Forward-time evolutionary simulation in SLiM, Python analysis pipelines, and transformer fine-tuning for research-code understanding.',
-                bullets: [
-                  'Model genetic evolution, mutation dynamics, and population fitness in SLiM',
-                  'Build Python pipelines that parse simulation outputs and track mutations',
-                  'Fine-tune transformer models with Hugging Face for code understanding',
-                  'Maintain reproducible logs, codebases, and research artifacts',
-                ],
-              },
-              {
-                title: 'AI & ML Intern',
-                org: 'DataEssenceAI',
-                period: 'May 2024 – Aug 2024',
-                desc: 'Worked on PyTorch- and OpenCV-based ML models for market trend analysis.',
-                bullets: [
-                  'Developed and evaluated ML models against held-out benchmarks',
-                  'Reduced training time by ~20% through pipeline optimizations',
-                  'Improved predictive accuracy by ~10% over prior baseline',
-                ],
-              },
-              {
-                title: 'Founder & Vice President',
-                org: 'Islanders Research in AI',
-                period: 'Jan 2023 – present',
-                desc: 'Founded and led a student research organisation focused on AI and ML.',
-                bullets: [
-                  'Organised workshops on machine learning fundamentals',
-                  'Taught reproducible experimentation as a practice',
-                  'Helped students find their way into AI research topics',
-                ],
-              },
-            ].map((exp, i) => (
-              <div
-                key={i}
-                className="py-8"
-                style={{
-                  borderTop: '1px solid #1e1e2e',
-                  borderBottom: i === 2 ? '1px solid #1e1e2e' : 'none',
-                }}
-              >
+          <div className="mt-10 divide-y divide-[#1e1e2e]">
+            {experience.map((exp, i) => (
+              <div key={i} className="py-8 first:pt-0 last:pb-0">
                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
                       <span className="tag text-[#ff4d1c]">0{i + 1}</span>
                       <span className="tag">{exp.period}</span>
                     </div>
-                    <h3 className="mt-3 font-display text-[22px] font-bold text-white" style={{ letterSpacing: '-0.01em' }}>
+                    <h3 className="mt-3 font-display text-[22px] font-bold tracking-[-0.01em] text-white">
                       {exp.title}
                     </h3>
-                    <p className="mt-1 text-[14px] italic" style={{ color: '#8888a0' }}>
-                      {exp.org}
-                    </p>
-                    <p className="mt-3 text-[15px] leading-relaxed" style={{ color: '#ededf0', opacity: 0.75 }}>
-                      {exp.desc}
-                    </p>
+                    <p className="mt-1 text-[14px] italic text-[#8888a0]">{exp.org}</p>
+                    <p className="mt-3 text-[15px] leading-relaxed text-[#ededf0] opacity-80">{exp.desc}</p>
                   </div>
                   <div className="md:max-w-[320px]">
                     <ul className="space-y-2">
                       {exp.bullets.map((b) => (
-                        <li key={b} className="flex items-start gap-3 text-[14px]" style={{ color: '#8888a0' }}>
-                          <span style={{ color: '#ff4d1c', marginTop: '3px' }}>—</span>
+                        <li key={b} className="flex items-start gap-3 text-[14px] text-[#8888a0]">
+                          <span className="mt-1 text-[#ff4d1c]">—</span>
                           <span>{b}</span>
                         </li>
                       ))}
