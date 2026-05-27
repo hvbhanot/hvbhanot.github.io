@@ -41,8 +41,8 @@ export default function Research() {
         {/* Focus areas */}
         <div className="mt-14 space-y-12">
           {focusAreas.map((area, idx) => (
-            <div key={idx} className="rounded-2xl border border-[#1e1e2e] bg-[#14141f] p-8">
-              <div className="text-xs font-mono tracking-[0.12em] text-[#ff4d1c]">0{idx + 1}</div>
+            <div key={idx} className="rounded-2xl border border-[#1f2a3f] bg-[#14141f] p-8">
+              <div className="text-xs font-mono tracking-[0.12em] text-[#00eaff]">0{idx + 1}</div>
               <h3 className="mt-3 font-display text-[26px] font-semibold tracking-[-0.015em]">{area.title}</h3>
               <p className="mt-3 text-[15.5px] leading-relaxed text-[#ededf0] opacity-90">{area.desc}</p>
 
@@ -56,7 +56,7 @@ export default function Research() {
         </div>
 
         {/* Why it matters */}
-        <div className="mt-16 border-l-2 border-[#ff4d1c] pl-6">
+        <div className="mt-16 border-l-2 border-[#00eaff] pl-6">
           <p className="max-w-3xl text-[17px] italic text-[#8888a0]">
             “The thing I care about most: building things that make research easier to audit, repeat, and explain — and leaving behind notebooks that still make sense a year later.”
           </p>
@@ -71,16 +71,16 @@ export default function Research() {
                 <Link
                   key={i}
                   to="/projects"
-                  className="rounded-xl border border-[#1e1e2e] p-5 text-left transition hover:border-[#ff4d1c]"
+                  className="rounded-xl border border-[#1f2a3f] p-5 text-left transition hover:border-[#00eaff]"
                 >
-                  <div className="tag text-[#ff4d1c]">{p.catalog}</div>
+                  <div className="tag text-[#00eaff]">{p.catalog}</div>
                   <div className="mt-3 font-medium tracking-tight">{p.title}</div>
                   <div className="mt-1 text-sm text-[#8888a0] line-clamp-2">{p.subtitle}</div>
                 </Link>
               ))}
             </div>
             <div className="mt-4 text-right">
-              <Link to="/projects" className="inline-flex items-center gap-1 text-sm text-[#ff4d1c]">
+              <Link to="/projects" className="inline-flex items-center gap-1 text-sm text-[#00eaff]">
                 Explore the full archive <ArrowRight size={15} />
               </Link>
             </div>

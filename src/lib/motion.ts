@@ -7,7 +7,7 @@ const prefersReducedMotion =
 
 export const spring: Transition = prefersReducedMotion
   ? { duration: 0.01 }
-  : { type: 'spring', stiffness: 260, damping: 24, mass: 0.8 };
+  : { type: 'spring', stiffness: 380, damping: 28, mass: 0.6 };
 
 export const fadeUp: Variants = prefersReducedMotion
   ? {
@@ -15,11 +15,11 @@ export const fadeUp: Variants = prefersReducedMotion
       visible: { opacity: 1 },
     }
   : {
-      hidden: { opacity: 0, y: 24 },
+      hidden: { opacity: 0, y: 18 },
       visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+        transition: { duration: 0.38, ease: [0.2, 0.95, 0.3, 1] },
       },
     };
 
@@ -28,15 +28,15 @@ export const staggerContainer: Variants = prefersReducedMotion
   : {
       hidden: {},
       visible: {
-        transition: { staggerChildren: 0.06, delayChildren: 0.04 },
+        transition: { staggerChildren: 0.045, delayChildren: 0.03 },
       },
     };
 
 export const cardHover = prefersReducedMotion
   ? {}
   : {
-      whileHover: { y: -4, transition: { duration: 0.2 } },
-      whileTap: { scale: 0.985 },
+      whileHover: { y: -3, transition: { duration: 0.14 } },
+      whileTap: { scale: 0.98 },
     };
 
 export { motion, AnimatePresence };

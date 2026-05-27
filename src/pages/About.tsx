@@ -44,7 +44,7 @@ export default function About() {
 
         <div
           className="mt-16 h-px w-full"
-          style={{ background: 'linear-gradient(90deg, #ff4d1c, transparent)' }}
+          style={{ background: 'linear-gradient(90deg, #00eaff, transparent)' }}
         />
 
         {/* ── BIO ────────────────────────────────────────────── */}
@@ -100,7 +100,7 @@ export default function About() {
               <div
                 key={group.category}
                 className="p-6 rounded-xl"
-                style={{ background: '#14141f', border: '1px solid #1e1e2e' }}
+                style={{ background: '#14141f', border: '1px solid #1f2a3f' }}
               >
                 <h3
                   className="font-display text-[18px] font-bold text-white"
@@ -128,13 +128,13 @@ export default function About() {
             Where I've <span className="gradient-text">worked</span>
           </h2>
 
-          <div className="mt-10 divide-y divide-[#1e1e2e]">
+          <div className="mt-10 divide-y divide-[#1f2a3f]">
             {experience.map((exp, i) => (
               <div key={i} className="py-8 first:pt-0 last:pb-0">
                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
-                      <span className="tag text-[#ff4d1c]">0{i + 1}</span>
+                      <span className="tag text-[#00eaff]">0{i + 1}</span>
                       <span className="tag">{exp.period}</span>
                     </div>
                     <h3 className="mt-3 font-display text-[22px] font-bold tracking-[-0.01em] text-white">
@@ -147,7 +147,7 @@ export default function About() {
                     <ul className="space-y-2">
                       {exp.bullets.map((b) => (
                         <li key={b} className="flex items-start gap-3 text-[14px] text-[#8888a0]">
-                          <span className="mt-1 text-[#ff4d1c]">—</span>
+                          <span className="mt-1 text-[#00eaff]">—</span>
                           <span>{b}</span>
                         </li>
                       ))}

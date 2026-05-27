@@ -7,7 +7,7 @@ export default function Foot() {
   return (
     <footer
       className="mt-auto"
-      style={{ borderTop: '1px solid #1e1e2e', background: '#080810' }}
+      style={{ borderTop: '1px solid #1f2a3f', background: '#080810' }}
     >
       <div
         className="h-px w-full"
@@ -23,7 +23,7 @@ export default function Foot() {
               <span
                 className="flex items-center justify-center w-8 h-8 rounded-lg font-mono text-[10px] font-bold text-void"
                 style={{
-                  background: 'linear-gradient(135deg, #ff4d1c, #ffa552)',
+                  background: 'linear-gradient(135deg, #00eaff, #00b8ff)',
                 }}
               >
                 HV
@@ -59,7 +59,7 @@ export default function Foot() {
 
         <div
           className="mt-10 flex flex-col items-start justify-between gap-4 pt-6 sm:flex-row sm:items-center"
-          style={{ borderTop: '1px solid #1e1e2e' }}
+          style={{ borderTop: '1px solid #1f2a3f' }}
         >
           <p className="tag text-[10px]">
             &copy; {year} {profile.shortName}

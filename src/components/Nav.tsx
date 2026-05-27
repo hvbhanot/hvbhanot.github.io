@@ -23,7 +23,7 @@ export default function Nav() {
         background: scrolled ? 'rgba(8,8,16,0.95)' : 'rgba(8,8,16,0.7)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: scrolled ? '1px solid #1e1e2e' : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid #1f2a3f' : '1px solid transparent',
       }}
     >
       <div className="gutter flex h-16 items-center justify-between">
@@ -31,7 +31,7 @@ export default function Nav() {
           <span
             className="flex items-center justify-center w-9 h-9 rounded-lg font-mono text-[11px] font-bold text-void"
             style={{
-              background: 'linear-gradient(135deg, #ff4d1c, #ffa552)',
+              background: 'linear-gradient(135deg, #00eaff, #00b8ff)',
               boxShadow: '0 0 16px rgba(255,77,28,0.4)',
             }}
           >
@@ -83,7 +83,7 @@ export default function Nav() {
       {open && (
         <div
           className="md:hidden"
-          style={{ background: 'rgba(8,8,16,0.98)', borderTop: '1px solid #1e1e2e' }}
+          style={{ background: 'rgba(8,8,16,0.98)', borderTop: '1px solid #1f2a3f' }}
         >
           <div className="gutter py-5 flex flex-col gap-1">
             {navItems.map((item) => (

@@ -33,7 +33,7 @@ export default function Projects() {
         </p>
 
         {/* Filters */}
-        <div className="mt-9 flex flex-wrap items-center gap-2.5 border-b border-[#1e1e2e] pb-6">
+        <div className="mt-9 flex flex-wrap items-center gap-2.5 border-b border-[#1f2a3f] pb-6">
           {(['all', 'ongoing', 'active', 'archived'] as const).map(s => (
             <button
               key={s}
@@ -44,7 +44,7 @@ export default function Projects() {
             </button>
           ))}
 
-          <div className="mx-3 h-4 w-px bg-[#1e1e2e]" />
+          <div className="mx-3 h-4 w-px bg-[#1f2a3f]" />
 
           {allTech.slice(0, 7).map(tech => (
             <button
@@ -57,7 +57,7 @@ export default function Projects() {
           ))}
 
           {(statusFilter !== 'all' || techFilter) && (
-            <button onClick={clearFilters} className="ml-3 text-xs text-[#8888a0] hover:text-[#ff4d1c]">
+            <button onClick={clearFilters} className="ml-3 text-xs text-[#8888a0] hover:text-[#00eaff]">
               Clear filters
             </button>
           )}
@@ -77,13 +77,13 @@ export default function Projects() {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <span className="tag text-[#ff4d1c]">{p.catalog}</span>
+                  <span className="tag text-[#00eaff]">{p.catalog}</span>
                   <span className={`status-pill status-${p.status}`}>{p.status}</span>
                 </div>
-                {p.href && <ExternalLink size={15} className="text-[#44445a] group-hover:text-[#ff4d1c]" />}
+                {p.href && <ExternalLink size={15} className="text-[#44445a] group-hover:text-[#00eaff]" />}
               </div>
 
-              <h3 className="mt-5 font-display text-[22px] font-semibold tracking-[-0.015em] text-white group-hover:text-[#ff4d1c]">
+              <h3 className="mt-5 font-display text-[22px] font-semibold tracking-[-0.015em] text-white group-hover:text-[#00eaff]">
                 {p.title}
               </h3>
               <p className="mt-1 text-[14px] italic text-[#8888a0]">{p.subtitle}</p>
@@ -97,7 +97,7 @@ export default function Projects() {
                   <span key={t} className="chip">{t}</span>
                 ))}
               </div>
-              <div className="mt-5 text-xs font-medium text-[#ff4d1c] opacity-70 group-hover:opacity-100">
+              <div className="mt-5 text-xs font-medium text-[#00eaff] opacity-70 group-hover:opacity-100">
                 View details <ArrowRight size={13} className="inline" />
               </div>
             </button>
@@ -122,11 +122,11 @@ export default function Projects() {
               exit={{ opacity: 0, y: 20, scale: 0.985 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
               onClick={e => e.stopPropagation()}
-              className="w-full max-w-2xl overflow-hidden rounded-2xl border border-[#1e1e2e] bg-[#0f0f1a]"
+              className="w-full max-w-2xl overflow-hidden rounded-2xl border border-[#1f2a3f] bg-[#0f0f1a]"
             >
-              <div className="flex items-center justify-between border-b border-[#1e1e2e] px-7 py-4">
+              <div className="flex items-center justify-between border-b border-[#1f2a3f] px-7 py-4">
                 <div className="flex items-center gap-3">
-                  <span className="tag text-[#ff4d1c]">{selected.catalog}</span>
+                  <span className="tag text-[#00eaff]">{selected.catalog}</span>
                   <span className={`status-pill status-${selected.status}`}>{selected.status}</span>
                 </div>
                 <button onClick={() => setSelected(null)} className="rounded-full p-2 text-[#8888a0] hover:text-white">
@@ -146,7 +146,7 @@ export default function Projects() {
                     <ul className="mt-3 space-y-2 text-[14.5px] text-[#ededf0]">
                       {selected.highlights.map((h, idx) => (
                         <li key={idx} className="flex gap-3">
-                          <span className="mt-1.5 block h-px w-4 bg-[#ff4d1c]/70" /> {h}
+                          <span className="mt-1.5 block h-px w-4 bg-[#00eaff]/70" /> {h}
                         </li>
                       ))}
                     </ul>
@@ -161,13 +161,13 @@ export default function Projects() {
                 </div>
               </div>
 
-              <div className="border-t border-[#1e1e2e] bg-[#080810] px-7 py-4 text-right">
+              <div className="border-t border-[#1f2a3f] bg-[#080810] px-7 py-4 text-right">
                 {selected.href ? (
                   <a
                     href={selected.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-[#ff4d1c]"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-[#00eaff]"
                   >
                     View source <ExternalLink size={15} />
                   </a>

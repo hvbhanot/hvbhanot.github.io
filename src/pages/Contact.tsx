@@ -33,7 +33,7 @@ export default function Contact() {
 
         <div
           className="mt-10 max-w-xl rounded-2xl p-8"
-          style={{ background: '#14141f', border: '1px solid #1e1e2e' }}
+          style={{ background: '#14141f', border: '1px solid #1f2a3f' }}
         >
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid gap-5 sm:grid-cols-2">
@@ -119,19 +119,19 @@ export default function Contact() {
                 className="block p-5 rounded-xl text-center"
                 style={{
                   background: '#14141f',
-                  border: '1px solid #1e1e2e',
+                  border: '1px solid #1f2a3f',
                   transition: 'all 200ms ease',
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor = '#ff4d1c';
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = '#00eaff';
                   (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-4px)';
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor = '#1e1e2e';
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = '#1f2a3f';
                   (e.currentTarget as HTMLAnchorElement).style.transform = '';
                 }}
               >
-                <p className="tag text-[#ff4d1c] mb-2">{ch.label}</p>
+                <p className="tag text-[#00eaff] mb-2">{ch.label}</p>
                 <p className="text-[15px] font-semibold text-white flex items-center justify-center gap-1.5">
                   {ch.value}
                   <ExternalLink size={12} className="text-[#44445a]" />
@@ -146,7 +146,7 @@ export default function Contact() {
         <div className="mt-16 flex items-center gap-4">
           <div
             className="w-3 h-3 rounded-full"
-            style={{ background: '#ff4d1c', boxShadow: '0 0 10px #ff4d1c' }}
+            style={{ background: '#00eaff', boxShadow: '0 0 10px #00eaff' }}
           />
           <p className="text-[15px]" style={{ color: '#8888a0' }}>
             Based in <span className="text-white font-medium">{profile.location}</span> — open to remote collaboration worldwide.

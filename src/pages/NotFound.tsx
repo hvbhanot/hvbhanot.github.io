@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <main className="min-h-[70vh] flex items-center justify-center pt-16 pb-20">
       <div className="gutter text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#1e1e2e] px-4 py-1 text-[11px] font-mono tracking-[0.12em] text-[#8888a0]">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#1f2a3f] px-4 py-1 text-[11px] font-mono tracking-[0.12em] text-[#8888a0]">
           404 — SIGNAL LOST
         </div>
 
