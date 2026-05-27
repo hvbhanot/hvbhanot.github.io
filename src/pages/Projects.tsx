@@ -1,184 +1,170 @@
 import { useState } from 'react';
-import { X, ExternalLink, ArrowRight } from 'lucide-react';
+import { X, ExternalLink, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects, type Project } from '../data/projects';
 
 type StatusFilter = 'all' | 'ongoing' | 'active' | 'archived';
 
-const allTech = Array.from(new Set(projects.flatMap(p => p.technologies))).sort();
-
 export default function Projects() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
-  const [techFilter, setTechFilter] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<Project | null>(null);
 
   const filtered = projects.filter(p => {
     const statusOk = statusFilter === 'all' || p.status === statusFilter;
-    const techOk = !techFilter || p.technologies.includes(techFilter);
-    return statusOk && techOk;
+    const searchOk = !search || 
+      p.title.toLowerCase().includes(search.toLowerCase()) || 
+      p.description.toLowerCase().includes(search.toLowerCase());
+    return statusOk && searchOk;
   });
 
-  const clearFilters = () => {
-    setStatusFilter('all');
-    setTechFilter(null);
-  };
-
   return (
-    <main className="pt-20 pb-24">
-      <div className="gutter">
-        <div className="index-label">Archive</div>
-        <h1 className="section-title mt-3">Projects &amp; experiments.</h1>
-        <p className="section-subtitle mt-3 max-w-2xl">
-          Research code, simulation tooling, and machine learning work — all with an emphasis on reproducibility and clarity.
-        </p>
+    <div>
+      <div className="mb-8">
+        <div className="text-xs tracking-[0.2em] text-[#4a5a70]">ARCHIVE // MISSION LOGS</div>
+        <h1 className="text-4xl font-semibold tracking-[-0.02em] mt-1">Projects &amp; Experiments</h1>
+        <p className="text-[#8a9ab0] mt-2 max-w-md">Select any entry to load detailed mission parameters.</p>
+      </div>
 
-        {/* Filters */}
-        <div className="mt-9 flex flex-wrap items-center gap-2.5 border-b border-[#1f2a3f] pb-6">
+      {/* Controls */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-5">
+        <div className="flex gap-1.5">
           {(['all', 'ongoing', 'active', 'archived'] as const).map(s => (
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
-              className={`filter-chip ${statusFilter === s ? 'active' : ''}`}
+              className={`px-4 py-1.5 text-sm border transition-colors rounded ${
+                statusFilter === s 
+                  ? 'bg-[#00eaff] text-black border-[#00eaff]' 
+                  : 'border-[#1f2a3f] hover:border-[#00eaff]/50 text-[#8a9ab0]'
+              }`}
             >
-              {s === 'all' ? 'All' : s}
+              {s.toUpperCase()}
             </button>
           ))}
-
-          <div className="mx-3 h-4 w-px bg-[#1f2a3f]" />
-
-          {allTech.slice(0, 7).map(tech => (
-            <button
-              key={tech}
-              onClick={() => setTechFilter(techFilter === tech ? null : tech)}
-              className={`filter-chip ${techFilter === tech ? 'active' : ''}`}
-            >
-              {tech}
-            </button>
-          ))}
-
-          {(statusFilter !== 'all' || techFilter) && (
-            <button onClick={clearFilters} className="ml-3 text-xs text-[#8888a0] hover:text-[#00eaff]">
-              Clear filters
-            </button>
-          )}
         </div>
 
-        <div className="mt-8 text-xs text-[#8888a0]">
-          Showing {filtered.length} of {projects.length} projects
+        <div className="relative flex-1 max-w-xs">
+          <Search className="absolute left-3 top-3.5 text-[#4a5a70]" size={16} />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="SEARCH MISSIONS..."
+            className="w-full bg-[#0b0f17] border border-[#1f2a3f] pl-9 py-2 text-sm focus:outline-none focus:border-[#00eaff] rounded"
+          />
+        </div>
+      </div>
+
+      {/* Command Table */}
+      <div className="border border-[#1f2a3f] rounded-lg overflow-hidden">
+        <div className="hidden md:grid grid-cols-12 gap-4 px-5 py-3 text-xs tracking-widest text-[#4a5a70] border-b border-[#1f2a3f] bg-[#0b0f17]">
+          <div className="col-span-2">CATALOG</div>
+          <div className="col-span-5">DESIGNATION</div>
+          <div className="col-span-2">STATUS</div>
+          <div className="col-span-3">YEAR</div>
         </div>
 
-        {/* Grid */}
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
-          {filtered.map((p, i) => (
+        {filtered.length > 0 ? (
+          filtered.map((p, index) => (
             <button
-              key={i}
+              key={index}
               onClick={() => setSelected(p)}
-              className="project-card group text-left"
+              className="w-full text-left md:grid md:grid-cols-12 gap-4 px-5 py-4 border-b border-[#1f2a3f] last:border-b-0 hover:bg-[#0f141f] transition-colors group"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="tag text-[#00eaff]">{p.catalog}</span>
-                  <span className={`status-pill status-${p.status}`}>{p.status}</span>
-                </div>
-                {p.href && <ExternalLink size={15} className="text-[#44445a] group-hover:text-[#00eaff]" />}
+              <div className="font-mono text-[#00eaff] text-sm col-span-2 mb-1 md:mb-0">{p.catalog}</div>
+              <div className="col-span-5">
+                <div className="font-medium tracking-tight group-hover:text-[#00eaff] transition-colors">{p.title}</div>
+                <div className="text-[#8a9ab0] text-sm">{p.subtitle}</div>
               </div>
-
-              <h3 className="mt-5 font-display text-[22px] font-semibold tracking-[-0.015em] text-white group-hover:text-[#00eaff]">
-                {p.title}
-              </h3>
-              <p className="mt-1 text-[14px] italic text-[#8888a0]">{p.subtitle}</p>
-
-              <p className="mt-4 line-clamp-3 text-[15px] leading-relaxed text-[#ededf0] opacity-85">
-                {p.description}
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {p.technologies.slice(0, 4).map(t => (
-                  <span key={t} className="chip">{t}</span>
-                ))}
+              <div className="col-span-2">
+                <span className={`inline-block text-xs px-2 py-px rounded uppercase tracking-wider ${
+                  p.status === 'ongoing' ? 'bg-[#00eaff]/10 text-[#00eaff]' : 
+                  p.status === 'active' ? 'bg-[#00b8ff]/10 text-[#00b8ff]' : 'bg-[#4a5a70]/20 text-[#8a9ab0]'
+                }`}>
+                  {p.status}
+                </span>
               </div>
-              <div className="mt-5 text-xs font-medium text-[#00eaff] opacity-70 group-hover:opacity-100">
-                View details <ArrowRight size={13} className="inline" />
+              <div className="col-span-3 text-[#8a9ab0] text-sm mt-1 md:mt-0 flex items-center justify-between">
+                <span>{p.year}</span>
+                <span className="text-[#00eaff] text-xs opacity-0 group-hover:opacity-100 transition">VIEW DETAILS →</span>
               </div>
             </button>
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
-          <div className="mt-12 text-center text-[#8888a0]">No projects match the current filters.</div>
+          ))
+        ) : (
+          <div className="px-5 py-12 text-center text-[#4a5a70]">No missions match current filters.</div>
         )}
       </div>
 
-      {/* Detail Modal */}
+      {/* Detail Drawer */}
       <AnimatePresence>
         {selected && (
-          <div
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 p-4"
-            onClick={() => setSelected(null)}
-          >
+          <>
+            <div 
+              className="fixed inset-0 bg-black/60 z-[60]" 
+              onClick={() => setSelected(null)} 
+            />
             <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.985 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.985 }}
-              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              onClick={e => e.stopPropagation()}
-              className="w-full max-w-2xl overflow-hidden rounded-2xl border border-[#1f2a3f] bg-[#0f0f1a]"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="fixed right-0 top-0 bottom-0 w-full max-w-lg z-[70] bg-[#05070a] border-l border-[#1f2a3f] overflow-auto"
             >
-              <div className="flex items-center justify-between border-b border-[#1f2a3f] px-7 py-4">
-                <div className="flex items-center gap-3">
-                  <span className="tag text-[#00eaff]">{selected.catalog}</span>
-                  <span className={`status-pill status-${selected.status}`}>{selected.status}</span>
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <div className="font-mono text-[#00eaff] text-sm">{selected.catalog}</div>
+                    <h2 className="text-2xl font-semibold tracking-tight pr-8">{selected.title}</h2>
+                  </div>
+                  <button onClick={() => setSelected(null)} className="text-[#8a9ab0] hover:text-white p-1">
+                    <X size={20} />
+                  </button>
                 </div>
-                <button onClick={() => setSelected(null)} className="rounded-full p-2 text-[#8888a0] hover:text-white">
-                  <X size={18} />
-                </button>
-              </div>
 
-              <div className="p-7">
-                <h3 className="font-display text-[26px] font-semibold tracking-[-0.02em]">{selected.title}</h3>
-                <p className="mt-1 text-[15px] italic text-[#8888a0]">{selected.subtitle} · {selected.year}</p>
+                <div className="flex gap-2 mb-6">
+                  <span className="text-xs px-3 py-1 rounded border border-[#1f2a3f]">{selected.year}</span>
+                  <span className={`text-xs px-3 py-1 rounded uppercase tracking-widest ${
+                    selected.status === 'ongoing' ? 'bg-[#00eaff] text-black' : 'border border-[#1f2a3f]'
+                  }`}>{selected.status}</span>
+                </div>
 
-                <p className="mt-5 text-[15.5px] leading-relaxed text-[#ededf0]">{selected.description}</p>
+                <p className="text-[#e8f0ff] leading-relaxed mb-8">{selected.description}</p>
 
                 {selected.highlights.length > 0 && (
-                  <div className="mt-7">
-                    <div className="text-xs font-semibold tracking-[0.08em] text-[#8888a0]">HIGHLIGHTS</div>
-                    <ul className="mt-3 space-y-2 text-[14.5px] text-[#ededf0]">
-                      {selected.highlights.map((h, idx) => (
-                        <li key={idx} className="flex gap-3">
-                          <span className="mt-1.5 block h-px w-4 bg-[#00eaff]/70" /> {h}
-                        </li>
+                  <div className="mb-8">
+                    <div className="uppercase text-xs tracking-[0.15em] text-[#4a5a70] mb-3">KEY FINDINGS</div>
+                    <ul className="space-y-3 text-sm">
+                      {selected.highlights.map((h, i) => (
+                        <li key={i} className="pl-4 border-l-2 border-[#00eaff]/40">{h}</li>
                       ))}
                     </ul>
                   </div>
                 )}
 
-                <div className="mt-7">
-                  <div className="text-xs font-semibold tracking-[0.08em] text-[#8888a0]">STACK</div>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {selected.technologies.map(t => <span key={t} className="chip">{t}</span>)}
+                <div>
+                  <div className="uppercase text-xs tracking-[0.15em] text-[#4a5a70] mb-3">STACK</div>
+                  <div className="flex flex-wrap gap-2">
+                    {selected.technologies.map(t => (
+                      <span key={t} className="px-3 py-1 text-sm border border-[#1f2a3f] rounded">{t}</span>
+                    ))}
                   </div>
                 </div>
               </div>
 
-              <div className="border-t border-[#1f2a3f] bg-[#080810] px-7 py-4 text-right">
+              <div className="border-t border-[#1f2a3f] p-6 mt-4">
                 {selected.href ? (
-                  <a
-                    href={selected.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-[#00eaff]"
-                  >
-                    View source <ExternalLink size={15} />
+                  <a href={selected.href} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[#00eaff]">
+                    OPEN SOURCE REPOSITORY <ExternalLink size={15} />
                   </a>
                 ) : (
-                  <span className="text-xs text-[#44445a]">Internal research artifact</span>
+                  <span className="text-sm text-[#4a5a70]">Internal research artifact — not publicly released</span>
                 )}
               </div>
             </motion.div>
-          </div>
+          </>
         )}
       </AnimatePresence>
-    </main>
+    </div>
   );
 }

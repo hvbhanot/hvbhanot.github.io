@@ -6,23 +6,23 @@ export type SkillGroup = {
 
 export const skillGroups: SkillGroup[] = [
   {
-    category: 'Languages',
-    caption: 'Primary languages used in research and systems work.',
+    category: 'Programming Languages',
+    caption: 'Core languages for research systems and tooling.',
     skills: ['Python', 'Go', 'C++', 'Bash', 'SQL'],
   },
   {
-    category: 'Machine Learning',
+    category: 'ML & AI',
     caption: 'Modeling, fine-tuning, and evaluation stack.',
-    skills: ['PyTorch', 'Hugging Face Transformers', 'scikit-learn', 'LoRA / adapters', 'Evaluation pipelines'],
+    skills: ['PyTorch', 'Hugging Face', 'scikit-learn', 'Parameter-efficient fine-tuning (LoRA/adapters)'],
   },
   {
     category: 'Scientific Computing',
     caption: 'Simulation, analysis, and experiment automation.',
-    skills: ['SLiM', 'NumPy', 'pandas', 'Jupyter', 'Simulation analysis'],
+    skills: ['SLiM', 'NumPy', 'pandas', 'Simulation analysis', 'Reproducibility tooling'],
   },
   {
-    category: 'Infrastructure',
-    caption: 'Day-to-day environment and collaboration tools.',
-    skills: ['Linux', 'Git', 'GitHub', 'REST APIs', 'JSON'],
+    category: 'Systems & Tools',
+    caption: 'Environment, collaboration, and infrastructure.',
+    skills: ['Linux / macOS / Windows', 'Git', 'REST APIs', 'JWT', 'JSON'],
   },
 ];

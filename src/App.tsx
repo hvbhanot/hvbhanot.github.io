@@ -1,7 +1,6 @@
 import { useEffect, Suspense, lazy } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Nav from './components/Nav';
-import Foot from './components/Foot';
+import DeckLayout from './components/DeckLayout';
 
 // Lazy-loaded pages for performance (code-splitting)
 const Home = lazy(() => import('./pages/Home'));
@@ -21,8 +20,8 @@ function ScrollToTop() {
 
 function RouteFallback() {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center pt-20">
-      <div className="tag tracking-[0.2em]">LOADING SIGNAL…</div>
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="font-mono text-xs tracking-[0.3em] text-[#4a5a70]">INITIALIZING INTERFACE…</div>
     </div>
   );
 }
@@ -31,9 +30,8 @@ export default function App() {
   const location = useLocation();
 
   return (
-    <div className="shell">
+    <DeckLayout>
       <ScrollToTop />
-      <Nav />
       <Suspense fallback={<RouteFallback />}>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
@@ -44,7 +42,6 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-      <Foot />
-    </div>
+    </DeckLayout>
   );
 }

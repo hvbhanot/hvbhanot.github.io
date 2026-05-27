@@ -3,39 +3,25 @@ import { ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <main className="min-h-[70vh] flex items-center justify-center pt-16 pb-20">
-      <div className="gutter text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#1f2a3f] px-4 py-1 text-[11px] font-mono tracking-[0.12em] text-[#8888a0]">
-          404 — SIGNAL LOST
-        </div>
-
-        <h1 className="mt-6 font-display text-[72px] font-bold leading-none tracking-[-0.04em] md:text-[96px]">
-          Page not found.
-        </h1>
-        <p className="mx-auto mt-4 max-w-md text-[17px]" style={{ color: '#8888a0' }}>
-          The transmission you’re looking for either moved or never existed.
-          Let’s get you back to the main signal.
-        </p>
-
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <Link
-            to="/"
-            className="btn btn-primary inline-flex items-center gap-2"
-          >
-            <ArrowLeft size={16} /> Return home
-          </Link>
-          <Link
-            to="/contact"
-            className="btn btn-ghost"
-          >
-            Get in touch
-          </Link>
-        </div>
-
-        <div className="mt-16 text-[11px] font-mono tracking-[0.1em] text-[#44445a]">
-          HVB.SIGNAL — RESEARCH DESK
-        </div>
+    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+      <div className="inline-flex items-center gap-2 border border-[#1f2a3f] px-4 py-1 text-[11px] font-mono tracking-[0.2em] text-[#4a5a70] mb-6">
+        ERROR 404 — SIGNAL LOST
       </div>
-    </main>
+
+      <h1 className="text-6xl md:text-7xl font-semibold tracking-[-0.03em]">Page not found</h1>
+      
+      <p className="max-w-sm mt-4 text-[#8a9ab0]">
+        The requested module could not be located in the current operations manifest.
+      </p>
+
+      <div className="mt-8 flex gap-3">
+        <Link to="/" className="btn btn-primary">Return to Overview</Link>
+        <Link to="/contact" className="btn btn-ghost">Open Comms</Link>
+      </div>
+
+      <div className="mt-12 text-[10px] tracking-[0.15em] text-[#4a5a70]">
+        HVB.SIGNAL — RESEARCH OPS TERMINAL
+      </div>
+    </div>
   );
 }

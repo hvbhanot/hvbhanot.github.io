@@ -1,220 +1,159 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, ExternalLink } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowRight, Activity, Users, Target, FolderOpen } from 'lucide-react';
 import { profile } from '../data/resume';
 import { projects } from '../data/projects';
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-};
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.08 } },
-};
-
 export default function Home() {
-  // Show first 4 projects on home (teaser)
-  const featured = projects.slice(0, 4);
+  const activeProjects = projects.filter(p => p.status !== 'archived').slice(0, 3);
+  const totalProjects = projects.length;
 
   return (
-    <main className="pt-16">
-      {/* ── HERO (JARVIS Interface) ───────────────────────────── */}
-      <section className="relative min-h-[92vh] flex items-center overflow-hidden border-b border-[#1f2a3f]">
-        {/* HUD grid + holographic radials */}
-        <div className="absolute inset-0 bg-grid-subtle pointer-events-none" aria-hidden />
-        <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          {/* Cyan holographic glows */}
-          <div
-            className="absolute top-1/4 -right-20 w-[580px] h-[580px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(0,234,255,0.08) 0%, transparent 70%)' }}
-          />
-          <div
-            className="absolute bottom-1/3 -left-24 w-[440px] h-[440px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(0,184,255,0.06) 0%, transparent 72%)' }}
-          />
-          {/* Central HUD crosshair lines */}
-          <div className="absolute top-1/2 left-1/2 h-px w-[760px] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#00eaff]/25 to-transparent" />
-          <div className="absolute top-1/2 left-1/2 w-px h-[260px] -translate-x-1/2 bg-gradient-to-b from-transparent via-[#00eaff]/20 to-transparent" />
+    <div className="space-y-8">
+      {/* System Header */}
+      <div>
+        <div className="flex items-center gap-2 text-[#4a5a70] text-xs font-mono tracking-[0.2em] mb-2">
+          <Activity size={14} /> LIVE SYSTEM STATUS
         </div>
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.02em]">
+          Good morning, Commander.<br />
+          <span className="text-[#00eaff]">All systems nominal.</span>
+        </h1>
+      </div>
 
-        {/* Corner HUD brackets */}
-        <div className="absolute top-8 left-8 hidden h-8 w-8 border-l border-t border-[#00eaff]/30 lg:block" />
-        <div className="absolute top-8 right-8 hidden h-8 w-8 border-r border-t border-[#00eaff]/30 lg:block" />
-        <div className="absolute bottom-8 left-8 hidden h-8 w-8 border-l border-b border-[#00eaff]/30 lg:block" />
-        <div className="absolute bottom-8 right-8 hidden h-8 w-8 border-r border-b border-[#00eaff]/30 lg:block" />
-
-        <div className="gutter relative z-10 w-full">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={stagger}
-            className="max-w-3xl"
-          >
-            <div className="index-label mb-8">HVB.SIGNAL — {new Date().getFullYear()}</div>
-
-            <h1 className="font-display leading-[0.92] tracking-[-0.04em]" style={{ fontSize: 'clamp(52px, 9.4vw, 118px)' }}>
-              <span className="block text-[#e8f0ff]">Harsh</span>
-              <span className="block bg-gradient-to-r from-[#00eaff] via-[#4dc4ff] to-[#00b8ff] bg-clip-text text-transparent">
-                Bhanot
-              </span>
-            </h1>
-
-            <p className="mt-7 max-w-[46ch] text-[18px] leading-relaxed" style={{ color: '#8a9ab0' }}>
-              {profile.bio}
-            </p>
-
-            <div className="mt-7 flex flex-wrap gap-2.5">
-              {profile.tagline.split(' · ').map((t, i) => (
-                <span key={i} className="chip">{t}</span>
-              ))}
+      {/* Status Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Profile Summary */}
+        <div className="border border-[#1f2a3f] bg-[#0b0f17] p-6 rounded-lg">
+          <div className="text-[#4a5a70] text-xs tracking-[0.15em] mb-4">SUBJECT // PERSONNEL FILE</div>
+          <div className="text-2xl font-medium tracking-tight mb-1">{profile.name}</div>
+          <div className="text-[#8a9ab0] mb-4">{profile.role}</div>
+          
+          <div className="space-y-1 text-sm">
+            <div className="flex justify-between border-b border-[#1f2a3f] pb-1">
+              <span className="text-[#4a5a70]">AFFILIATION</span>
+              <span>{profile.university.split('–')[0].trim()}</span>
             </div>
-
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Link to="/projects" className="btn btn-primary group">
-                View projects
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-              </Link>
-              <Link to="/contact" className="btn btn-ghost">
-                Start a conversation
-              </Link>
+            <div className="flex justify-between border-b border-[#1f2a3f] pb-1">
+              <span className="text-[#4a5a70]">CLEARANCE</span>
+              <span>RESEARCHER — LEVEL 4</span>
             </div>
-          </motion.div>
-
-          {/* HUD status badge */}
-          <div className="absolute bottom-14 right-0 hidden items-center gap-3 rounded border border-[#1f2a3f] bg-[#0f141f] px-5 py-3 lg:flex">
-            <div className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: '#00eaff', boxShadow: '0 0 10px #00eaff' }} />
-            <span className="tag text-[11px]">{profile.location} — ONLINE</span>
+            <div className="flex justify-between">
+              <span className="text-[#4a5a70]">LOCATION</span>
+              <span>{profile.location}</span>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* ── MARQUEE (JARVIS data stream) ───────────────────────── */}
-      <div className="overflow-hidden border-b border-[#1f2a3f] bg-[#0b0f17] py-4">
-        <div className="flex animate-marquee whitespace-nowrap">
-          {[...Array(2)].map((_, mi) =>
-            ['Computational genetics', 'SLiM simulation', 'Transformer fine-tuning', 'Python pipelines', 'LoRA adapters', 'Reproducible research', 'Population modeling', 'Scientific computing', 'AI systems'].map((item, i) => (
-              <span key={`${mi}-${i}`} className="mx-9 flex items-center gap-3 text-[13px] font-medium text-[#8a9ab0]">
-                <span className="inline-block h-1 w-1 rounded-full" style={{ background: mi === 0 ? '#00eaff' : '#00b8ff' }} />
-                {item}
-              </span>
-            ))
-          )}
+        {/* Current Focus + Upcoming */}
+        <div className="border border-[#1f2a3f] bg-[#0b0f17] p-6 rounded-lg md:col-span-2">
+          <div className="flex items-center gap-2 text-[#4a5a70] text-xs tracking-[0.15em] mb-4">
+            <Target size={14} /> CURRENT DIRECTIVE
+          </div>
+          <div className="text-lg leading-tight mb-4">
+            Building reproducible systems at the intersection of computational genetics and machine learning for scientific discovery.
+          </div>
+
+          <div className="mt-6 pt-5 border-t border-[#1f2a3f]">
+            <div className="text-[#4a5a70] text-xs tracking-[0.15em] mb-2">UPCOMING</div>
+            <div className="font-medium">{profile.upcoming?.degree}</div>
+            <div className="text-[#00eaff]">{profile.upcoming?.institution} · {profile.upcoming?.start}</div>
+          </div>
         </div>
       </div>
 
-      {/* ── SELECTED WORK ──────────────────────────────────────── */}
-      <section className="py-24">
-        <div className="gutter">
-          <div className="index-label">Selected work</div>
-          <h2 className="section-title mt-3">
-            Things I’ve <span className="gradient-text">built</span>
-          </h2>
-          <p className="section-subtitle mt-4">
-            A focused selection spanning AI systems, computational genetics, and research tooling.
-          </p>
+      {/* Metrics Row */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          { label: "ACTIVE PROJECTS", value: activeProjects.length, icon: Activity },
+          { label: "TOTAL ARCHIVE", value: totalProjects, icon: FolderOpen },
+          { label: "YEARS RESEARCH", value: "4+", icon: Users },
+          { label: "GRADUATION", value: profile.graduation, icon: Target },
+        ].map((stat, index) => {
+          const Icon = stat.icon;
+          return (
+            <div key={index} className="border border-[#1f2a3f] bg-[#0b0f17] p-5 rounded-lg">
+              <div className="flex items-center gap-2 text-[#4a5a70] text-xs mb-3">
+                <Icon size={14} /> {stat.label}
+              </div>
+              <div className="text-4xl font-medium tracking-tighter text-[#00eaff]">{stat.value}</div>
+            </div>
+          );
+        })}
+      </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {featured.map((p, idx) => (
-              <a
-                key={idx}
-                href={p.href || '#'}
-                target={p.href ? '_blank' : undefined}
-                rel={p.href ? 'noreferrer' : undefined}
-                className="project-card group block"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="tag text-[#00eaff]">{p.catalog}</span>
-                    <span className={`status-pill status-${p.status}`}>{p.status}</span>
-                  </div>
-                  {p.href && (
-                    <ExternalLink size={15} className="text-[#44445a] transition-colors group-hover:text-[#00eaff]" />
-                  )}
-                </div>
-
-                <h3 className="project-title mt-5 font-display text-[23px] font-semibold tracking-[-0.015em] text-white transition-colors group-hover:text-[#00eaff]">
-                  {p.title}
-                </h3>
-                <p className="mt-1 text-[14px] italic text-[#8888a0]">{p.subtitle}</p>
-
-                <p className="mt-4 text-[15px] leading-relaxed text-[#ededf0] opacity-85">
-                  {p.description}
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {p.technologies.slice(0, 4).map((t) => (
-                    <span key={t} className="chip">{t}</span>
-                  ))}
-                </div>
-              </a>
-            ))}
+      {/* Active Projects */}
+      <div>
+        <div className="flex items-baseline justify-between mb-4">
+          <div>
+            <div className="text-xs tracking-[0.2em] text-[#4a5a70]">PRIORITY QUEUE</div>
+            <div className="text-xl font-medium">Active Operations</div>
           </div>
-
-          <div className="mt-10 text-center">
-            <Link to="/projects" className="btn btn-ghost inline-flex items-center gap-2">
-              Browse full archive <ArrowRight size={15} />
-            </Link>
-          </div>
+          <Link to="/projects" className="text-sm text-[#00eaff] hover:underline flex items-center gap-1">
+            VIEW ALL <ArrowRight size={14} />
+          </Link>
         </div>
-      </section>
 
-      {/* ── STATS (with subtle motion) ─────────────────────────── */}
-      <section className="border-y border-[#1f2a3f] bg-[#0b0f17] py-16">
-        <div className="gutter">
-          <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-4">
-            {[
-              { value: projects.length, label: 'Projects', accent: '#00eaff' },
-              { value: '4+', label: 'Years research', accent: '#00b8ff' },
-              { value: '3+', label: 'Languages', accent: '#00b8ff' },
-              { value: profile.graduation, label: 'Graduation', accent: '#8888a0' },
-            ].map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.03 }}
-                className="text-center"
-              >
-                <div className="font-display text-[52px] font-bold leading-none tracking-[-0.02em]" style={{ color: s.accent }}>
-                  {s.value}
-                </div>
-                <div className="tag mt-2.5">{s.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ──────────────────────────────────────────── */}
-      <section className="py-24 text-center">
-        <div className="gutter">
-          <div className="font-display text-[110px] font-bold leading-none tracking-[-0.05em] text-transparent" style={{ WebkitTextStroke: '1px #2a2a3a' }}>HV</div>
-
-          <h2 className="section-title mt-1">
-            Let’s build something <span className="gradient-text2">together</span>.
-          </h2>
-          <p className="section-subtitle mx-auto mt-4">
-            Open to research collaborations, interesting problems, and conversations about AI, genetics, or tooling.
-          </p>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className="btn btn-primary px-8 py-3.5 text-[15px]">
-              Start a conversation <ArrowRight size={16} />
-            </Link>
-            <a
-              href="https://github.com/hvbhanot"
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-ghost px-6"
+        <div className="border border-[#1f2a3f] divide-y divide-[#1f2a3f] rounded-lg overflow-hidden">
+          {activeProjects.map((project, index) => (
+            <Link 
+              key={index} 
+              to="/projects" 
+              className="flex flex-col md:flex-row md:items-center justify-between px-5 py-4 hover:bg-[#0f141f] transition-colors group"
             >
-              GitHub <ExternalLink size={14} />
-            </a>
+              <div>
+                <div className="font-medium tracking-tight group-hover:text-[#00eaff] transition-colors">{project.title}</div>
+                <div className="text-sm text-[#8a9ab0]">{project.subtitle}</div>
+              </div>
+              <div className="mt-2 md:mt-0 flex items-center gap-3 text-xs">
+                <span className="font-mono px-2 py-px border border-[#1f2a3f] rounded text-[#00eaff]">{project.catalog}</span>
+                <span className={`px-2 py-px rounded text-xs uppercase tracking-wider ${
+                  project.status === 'ongoing' ? 'bg-[#00eaff]/10 text-[#00eaff]' : 'bg-[#00b8ff]/10 text-[#00b8ff]'
+                }`}>
+                  {project.status}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Trajectory Panel - New Education Path */}
+      <div className="border border-[#1f2a3f] bg-[#0b0f17] p-6 rounded-lg">
+        <div className="flex items-center gap-2 text-[#4a5a70] text-xs tracking-[0.15em] mb-3">
+          <Target size={14} /> TRAJECTORY
+        </div>
+        <div className="text-lg font-medium mb-1">Next Deployment</div>
+        <div className="text-[#00eaff] text-xl">{profile.upcoming?.degree}</div>
+        <div className="text-[#8a9ab0] mt-1">{profile.upcoming?.institution} • {profile.upcoming?.start}</div>
+        <div className="mt-4 text-sm text-[#4a5a70]">
+          Transitioning from undergraduate research at Texas A&M–Corpus Christi into advanced graduate work focused on statistics and computational methods.
+        </div>
+      </div>
+
+      {/* Skills Snapshot + Quick Actions */}
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="border border-[#1f2a3f] bg-[#0b0f17] p-6 rounded-lg">
+          <div className="text-[#4a5a70] text-xs tracking-[0.15em] mb-3">SKILLS SNAPSHOT</div>
+          <div className="flex flex-wrap gap-2">
+            {['Python', 'PyTorch', 'SLiM', 'Hugging Face', 'Reproducibility', 'C++', 'Go'].map(skill => (
+              <span key={skill} className="chip">{skill}</span>
+            ))}
+          </div>
+          <div className="mt-4 text-xs text-[#4a5a70]">
+            Full skill matrix available in Personnel File.
           </div>
         </div>
-      </section>
-    </main>
+
+        <div className="border border-[#1f2a3f] bg-[#0b0f17] p-6 rounded-lg">
+          <div className="text-[#4a5a70] text-xs tracking-[0.15em] mb-3">QUICK ACCESS</div>
+          <div className="flex flex-col gap-2 text-sm">
+            <Link to="/research" className="hover:text-[#00eaff] transition-colors flex items-center gap-2">→ Explore Research Directives</Link>
+            <Link to="/about" className="hover:text-[#00eaff] transition-colors flex items-center gap-2">→ Review Full Personnel Record</Link>
+            <a href={`mailto:${profile.email}`} className="hover:text-[#00eaff] transition-colors flex items-center gap-2">→ Open Secure Comms Channel</a>
+            <a href={profile.github} target="_blank" rel="noreferrer" className="hover:text-[#00eaff] transition-colors flex items-center gap-2">→ Access Code Archive</a>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
