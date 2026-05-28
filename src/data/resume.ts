@@ -27,11 +27,10 @@ export const profile = {
 };
 
 export const navItems: NavItem[] = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Research', href: '/research' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'About', href: '#about' },
+  { label: 'Focus', href: '#focus' },
+  { label: 'Work', href: '#work' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 export type Experience = {

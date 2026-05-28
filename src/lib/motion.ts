@@ -15,11 +15,11 @@ export const fadeUp: Variants = prefersReducedMotion
       visible: { opacity: 1 },
     }
   : {
-      hidden: { opacity: 0, y: 18 },
+      hidden: { opacity: 0, y: 22 },
       visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.38, ease: [0.2, 0.95, 0.3, 1] },
+        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
       },
     };
 
@@ -28,16 +28,17 @@ export const staggerContainer: Variants = prefersReducedMotion
   : {
       hidden: {},
       visible: {
-        transition: { staggerChildren: 0.045, delayChildren: 0.03 },
+        transition: { staggerChildren: 0.08, delayChildren: 0.04 },
       },
     };
 
-export const cardHover = prefersReducedMotion
-  ? {}
-  : {
-      whileHover: { y: -3, transition: { duration: 0.14 } },
-      whileTap: { scale: 0.98 },
-    };
+/** Props for a scroll-triggered staggered reveal of a section. */
+export const reveal = {
+  variants: staggerContainer,
+  initial: 'hidden' as const,
+  whileInView: 'visible' as const,
+  viewport: { once: true, margin: '0px 0px -12% 0px' },
+};
 
 export { motion, AnimatePresence };
 export type { Variants, Transition };

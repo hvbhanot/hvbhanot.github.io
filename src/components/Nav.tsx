@@ -1,103 +1,109 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Atom, Download, Mail, Menu, X } from 'lucide-react';
+import { Download, Menu, X } from 'lucide-react';
 import { navItems, profile } from '../data/resume';
+
+const sectionIds = navItems.map((item) => item.href.replace('#', ''));
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
+  const [active, setActive] = useState('');
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 18);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3">
+    <header className="fixed inset-x-0 top-0 z-50">
       <div
-        className={`gutter nav-glass rounded-lg transition-all duration-200 ${
-          scrolled ? 'bg-[#06080c]/90' : 'bg-[#06080c]/66'
+        className={`border-b transition-colors duration-300 ${
+          scrolled
+            ? 'border-line bg-bg/80 backdrop-blur-xl'
+            : 'border-transparent bg-transparent'
         }`}
       >
-        <div className="flex min-h-[64px] items-center justify-between gap-4 px-3 sm:px-4">
-          <Link to="/" className="flex min-w-0 items-center gap-3" aria-label="Go home">
-            <span className="brand-mark">
-              <Atom size={18} strokeWidth={2.2} />
+        <div className="shell flex min-h-[68px] items-center justify-between gap-6">
+          <a href="#top" className="flex items-center gap-3" aria-label="Back to top">
+            <span className="grid h-9 w-9 place-items-center rounded-lg border border-line-strong font-mono text-xs font-semibold text-accent">
+              {profile.initials}
             </span>
-            <span className="min-w-0">
-              <span className="block truncate font-display text-base font-bold text-white">
-                {profile.shortName}
-              </span>
-              <span className="hidden truncate text-xs font-medium text-ink-soft sm:block">
-                Computational research systems
-              </span>
+            <span className="hidden font-display text-base font-medium text-ink sm:block">
+              {profile.shortName}
             </span>
-          </Link>
+          </a>
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
             {navItems.map((item) => (
-              <NavLink
+              <a
                 key={item.href}
-                to={item.href}
-                className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
+                href={item.href}
+                className={`nav-link ${active === item.href.slice(1) ? 'is-active' : ''}`}
               >
                 {item.label}
-              </NavLink>
+              </a>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2 md:flex">
-            <a href={`mailto:${profile.email}`} className="button-secondary">
-              <Mail size={16} />
-              Email
-            </a>
-            <a href="/Resume_Bhanot_HarshVardhan.pdf" download className="button-primary">
-              <Download size={16} />
+          <div className="hidden items-center gap-3 md:flex">
+            <a href="/Resume_Bhanot_HarshVardhan.pdf" download className="btn-accent !min-h-[40px] !px-4 text-[13px]">
+              <Download size={15} />
               Resume
             </a>
           </div>
 
           <button
             type="button"
-            className="button-icon lg:hidden"
-            aria-label={open ? 'Close navigation' : 'Open navigation'}
+            className="btn-icon !h-10 !w-10 md:hidden"
+            aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => setOpen((v) => !v)}
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
 
         {open && (
-          <div className="border-t border-white/10 px-3 pb-4 pt-2 lg:hidden">
-            <nav className="grid gap-1" aria-label="Mobile navigation">
+          <div className="border-t border-line bg-bg/95 backdrop-blur-xl md:hidden">
+            <nav className="shell grid gap-1 py-4" aria-label="Mobile">
               {navItems.map((item) => (
-                <NavLink
+                <a
                   key={item.href}
-                  to={item.href}
-                  className={({ isActive }) => `nav-link justify-start ${isActive ? 'is-active' : ''}`}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="nav-link py-2 text-sm"
                 >
                   {item.label}
-                </NavLink>
+                </a>
               ))}
-            </nav>
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <a href={`mailto:${profile.email}`} className="button-secondary">
-                <Mail size={16} />
-                Email
-              </a>
-              <a href="/Resume_Bhanot_HarshVardhan.pdf" download className="button-primary">
-                <Download size={16} />
+              <a
+                href="/Resume_Bhanot_HarshVardhan.pdf"
+                download
+                className="btn-accent mt-3 w-full"
+                onClick={() => setOpen(false)}
+              >
+                <Download size={15} />
                 Resume
               </a>
-            </div>
+            </nav>
           </div>
         )}
       </div>
