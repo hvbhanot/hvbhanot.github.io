@@ -48,8 +48,8 @@ export default function Nav() {
               <span className="block font-display text-base font-semibold text-ink">
                 {profile.shortName}
               </span>
-              <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
-                Specimen HVB-2026
+              <span className="block font-mono text-[10px] tracking-[0.12em] text-ink-faint">
+                ~/research $
               </span>
             </span>
           </a>
@@ -78,7 +78,7 @@ export default function Nav() {
               className="btn-accent !min-h-[40px] !px-4 !text-[11px]"
             >
               <Download size={14} />
-              Resume
+              resume.pdf
             </a>
           </div>
 

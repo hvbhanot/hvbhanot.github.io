@@ -27,7 +27,7 @@ export default function Contact() {
       <div className="shell">
         <SectionHead
           index="06"
-          label="Correspondence"
+          label="mail --compose"
           title={
             <>
               Open a research <span className="ink-mark">channel</span>

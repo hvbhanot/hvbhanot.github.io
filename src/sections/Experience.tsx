@@ -8,7 +8,7 @@ export default function Experience() {
       <div className="shell">
         <SectionHead
           index="03"
-          label="Field record"
+          label="tail -f experience.log"
           title={
             <>
               From the bench to the <span className="ink-mark">build</span>

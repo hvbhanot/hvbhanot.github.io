@@ -4,32 +4,32 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Bricolage Grotesque"', 'Georgia', 'serif'],
-        body: ['"Spline Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['"Spline Sans Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        display: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        body: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        crt: ['"VT323"', '"IBM Plex Mono"', 'monospace'],
       },
       transitionTimingFunction: {
         ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       colors: {
-        // Light "lab paper" theme
-        bg: '#f3efe6',
-        elevated: '#ece7db',
-        card: '#faf7f0',
-        surface: '#ece7db',
-        'surface-2': '#e4ded0',
-        line: 'rgba(26, 24, 19, 0.15)',
-        'line-strong': 'rgba(26, 24, 19, 0.30)',
+        // Green-phosphor CRT terminal
+        bg: '#030603',
+        elevated: '#07100a',
+        card: '#081109',
+        surface: '#0a160d',
+        line: 'rgba(45, 255, 106, 0.16)',
+        'line-strong': 'rgba(45, 255, 106, 0.34)',
         ink: {
-          DEFAULT: '#1a1813',
-          muted: '#545147',
-          faint: '#8c897d',
+          DEFAULT: '#5af08a',
+          muted: '#2f9d5d',
+          faint: '#1c6b40',
         },
         accent: {
-          DEFAULT: '#e0401d',
-          bright: '#ff5a33',
+          DEFAULT: '#2dff6a',
+          bright: '#b6ffce',
         },
-        data: '#1f6f6b',
+        data: '#1fae6b',
       },
     },
   },

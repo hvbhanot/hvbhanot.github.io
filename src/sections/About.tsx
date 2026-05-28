@@ -9,7 +9,7 @@ export default function About() {
       <div className="shell">
         <SectionHead
           index="01"
-          label="Dossier"
+          label="cat ~/about.md"
           title={
             <>
               Building systems that keep <span className="ink-mark">science</span> honest

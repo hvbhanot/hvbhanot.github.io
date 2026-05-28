@@ -23,7 +23,7 @@ export default function Work() {
       <div className="shell">
         <SectionHead
           index="04"
-          label="Specimens"
+          label="ls ~/projects/"
           title={
             <>
               Experiments, tools, and <span className="ink-mark">systems</span>

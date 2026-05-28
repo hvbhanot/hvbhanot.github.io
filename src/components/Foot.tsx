@@ -63,7 +63,7 @@ export default function Foot() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 mono-meta sm:flex-row sm:items-center sm:justify-between">
           <span>
-            © {year} {profile.shortName} — Specimen HVB-2026
+            © {year} {profile.shortName} · exit 0
           </span>
           <a
             href="/Resume_Bhanot_HarshVardhan.pdf"

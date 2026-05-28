@@ -8,7 +8,7 @@ export default function Focus() {
       <div className="shell">
         <SectionHead
           index="02"
-          label="Research focus"
+          label="ls ~/focus/"
           title={
             <>
               Three threads, one <span className="ink-mark">discipline</span>

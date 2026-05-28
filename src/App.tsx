@@ -11,7 +11,8 @@ import Contact from './sections/Contact';
 export default function App() {
   return (
     <div className="site-root">
-      {/* Printed-datasheet registration frame */}
+      {/* CRT flicker + terminal window frame */}
+      <div className="crt-overlay" aria-hidden="true" />
       <div className="frame" aria-hidden="true">
         <span className="crop crop-tl" />
         <span className="crop crop-tr" />
@@ -19,10 +20,10 @@ export default function App() {
         <span className="crop crop-br" />
       </div>
       <span className="frame-label frame-label-left" aria-hidden="true">
-        Research Field Guide — Specimen HVB
+        user@hvbhanot:~/research $ session --live
       </span>
       <span className="frame-label frame-label-right" aria-hidden="true">
-        Corpus Christi · TX — 2026
+        tty1 · corpus-christi.tx · 2026
       </span>
 
       <Nav />

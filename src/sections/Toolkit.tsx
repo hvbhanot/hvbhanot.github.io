@@ -8,7 +8,7 @@ export default function Toolkit() {
       <div className="shell">
         <SectionHead
           index="05"
-          label="Apparatus"
+          label="which --all"
           title={
             <>
               From question to <span className="ink-mark">artifact</span>
