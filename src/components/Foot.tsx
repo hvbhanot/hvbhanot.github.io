@@ -5,17 +5,19 @@ export default function Foot() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto border-t border-line bg-elevated">
+    <footer className="mt-auto border-t border-line-strong bg-elevated">
       <div className="shell py-14">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-start">
           <div>
             <a href="#top" className="inline-flex items-center gap-3">
-              <span className="grid h-9 w-9 place-items-center rounded-lg border border-line-strong font-mono text-xs font-semibold text-accent">
+              <span className="grid h-9 w-9 place-items-center border border-line-strong font-mono text-xs font-semibold text-accent">
                 {profile.initials}
               </span>
               <span>
-                <span className="block font-display text-lg font-medium">{profile.shortName}</span>
-                <span className="block font-mono text-xs text-ink-faint">{profile.role}</span>
+                <span className="block font-display text-lg font-semibold">
+                  {profile.shortName}
+                </span>
+                <span className="block mono-meta">{profile.role}</span>
               </span>
             </a>
             <p className="mt-6 max-w-md leading-7 text-ink-muted">
@@ -33,21 +35,36 @@ export default function Foot() {
               ))}
             </nav>
             <div className="grid content-start gap-3">
-              <a href={`mailto:${profile.email}`} className="nav-link inline-flex items-center gap-2">
+              <a
+                href={`mailto:${profile.email}`}
+                className="nav-link inline-flex items-center gap-2"
+              >
                 <Mail size={14} /> Email
               </a>
-              <a href={profile.github} target="_blank" rel="noreferrer" className="nav-link inline-flex items-center gap-2">
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noreferrer"
+                className="nav-link inline-flex items-center gap-2"
+              >
                 <Github size={14} /> GitHub
               </a>
-              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="nav-link inline-flex items-center gap-2">
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="nav-link inline-flex items-center gap-2"
+              >
                 <Linkedin size={14} /> LinkedIn
               </a>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 font-mono text-xs text-ink-faint sm:flex-row sm:items-center sm:justify-between">
-          <span>© {year} {profile.shortName}</span>
+        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 mono-meta sm:flex-row sm:items-center sm:justify-between">
+          <span>
+            © {year} {profile.shortName} — Specimen HVB-2026
+          </span>
           <a
             href="/Resume_Bhanot_HarshVardhan.pdf"
             download

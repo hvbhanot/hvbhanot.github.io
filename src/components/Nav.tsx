@@ -35,37 +35,49 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div
-        className={`border-b transition-colors duration-300 ${
-          scrolled
-            ? 'border-line bg-bg/80 backdrop-blur-xl'
-            : 'border-transparent bg-transparent'
+        className={`transition-colors duration-300 ${
+          scrolled ? 'bg-bg/85 backdrop-blur-xl' : 'bg-transparent'
         }`}
       >
-        <div className="shell flex min-h-[68px] items-center justify-between gap-6">
-          <a href="#top" className="flex items-center gap-3" aria-label="Back to top">
-            <span className="grid h-9 w-9 place-items-center rounded-lg border border-line-strong font-mono text-xs font-semibold text-accent">
+        <div className="shell flex min-h-[72px] items-center justify-between gap-6">
+          <a href="#top" className="group flex items-center gap-3" aria-label="Back to top">
+            <span className="grid h-9 w-9 place-items-center border border-line-strong font-mono text-xs font-semibold text-accent transition-colors group-hover:border-accent">
               {profile.initials}
             </span>
-            <span className="hidden font-display text-base font-medium text-ink sm:block">
-              {profile.shortName}
+            <span className="hidden leading-tight sm:block">
+              <span className="block font-display text-base font-semibold text-ink">
+                {profile.shortName}
+              </span>
+              <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
+                Specimen HVB-2026
+              </span>
             </span>
           </a>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
-            {navItems.map((item) => (
+            {navItems.map((item, i) => (
               <a
                 key={item.href}
                 href={item.href}
-                className={`nav-link ${active === item.href.slice(1) ? 'is-active' : ''}`}
+                className={`nav-link flex items-center gap-2 ${
+                  active === item.href.slice(1) ? 'is-active' : ''
+                }`}
               >
+                <span className="text-[10px] opacity-50">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
                 {item.label}
               </a>
             ))}
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
-            <a href="/Resume_Bhanot_HarshVardhan.pdf" download className="btn-accent !min-h-[40px] !px-4 text-[13px]">
-              <Download size={15} />
+            <a
+              href="/Resume_Bhanot_HarshVardhan.pdf"
+              download
+              className="btn-accent !min-h-[40px] !px-4 !text-[11px]"
+            >
+              <Download size={14} />
               Resume
             </a>
           </div>
@@ -82,7 +94,7 @@ export default function Nav() {
         </div>
 
         {open && (
-          <div className="border-t border-line bg-bg/95 backdrop-blur-xl md:hidden">
+          <div className="border-y border-line bg-bg/95 backdrop-blur-xl md:hidden">
             <nav className="shell grid gap-1 py-4" aria-label="Mobile">
               {navItems.map((item) => (
                 <a

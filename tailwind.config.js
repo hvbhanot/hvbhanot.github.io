@@ -4,29 +4,32 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Fraunces"', 'Georgia', 'serif'],
-        body: ['"Hanken Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        display: ['"Bricolage Grotesque"', 'Georgia', 'serif'],
+        body: ['"Spline Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"Spline Sans Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       transitionTimingFunction: {
         ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       colors: {
-        bg: '#0b0c0e',
-        elevated: '#0e0f12',
-        surface: '#131519',
-        'surface-2': '#171a1f',
-        line: 'rgba(236, 238, 242, 0.09)',
-        'line-strong': 'rgba(236, 238, 242, 0.17)',
+        // Light "lab paper" theme
+        bg: '#f3efe6',
+        elevated: '#ece7db',
+        card: '#faf7f0',
+        surface: '#ece7db',
+        'surface-2': '#e4ded0',
+        line: 'rgba(26, 24, 19, 0.15)',
+        'line-strong': 'rgba(26, 24, 19, 0.30)',
         ink: {
-          DEFAULT: '#edeef1',
-          muted: '#9aa0a9',
-          faint: '#61666f',
+          DEFAULT: '#1a1813',
+          muted: '#545147',
+          faint: '#8c897d',
         },
         accent: {
-          DEFAULT: '#e2a65a',
-          bright: '#f0c084',
+          DEFAULT: '#e0401d',
+          bright: '#ff5a33',
         },
+        data: '#1f6f6b',
       },
     },
   },

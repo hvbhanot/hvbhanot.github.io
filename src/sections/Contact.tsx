@@ -27,10 +27,10 @@ export default function Contact() {
       <div className="shell">
         <SectionHead
           index="06"
-          label="Contact"
+          label="Correspondence"
           title={
             <>
-              Open a research <span className="accent-italic">channel</span>
+              Open a research <span className="ink-mark">channel</span>
             </>
           }
           lede="Reach out for research collaborations, simulation and model-evaluation tooling, or projects where computational rigor and usable software need to meet."
@@ -40,12 +40,12 @@ export default function Contact() {
           <motion.div variants={fadeUp}>
             <a
               href={`mailto:${profile.email}`}
-              className="link-line break-safe font-display text-[clamp(1.6rem,4vw,2.6rem)] font-normal italic leading-tight"
+              className="link-line break-safe font-display text-[clamp(1.6rem,4vw,2.6rem)] font-semibold leading-tight tracking-[-0.02em]"
             >
               {profile.email}
             </a>
 
-            <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-line bg-line">
+            <div className="mt-10 grid gap-px overflow-hidden border border-line-strong bg-line">
               {channels.map((c) => {
                 const Icon = c.icon;
                 return (
@@ -54,13 +54,13 @@ export default function Contact() {
                     href={c.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="group flex items-center justify-between gap-4 bg-bg px-5 py-4 transition-colors hover:bg-elevated"
+                    className="group flex items-center justify-between gap-4 bg-card px-5 py-4 transition-colors hover:bg-elevated"
                   >
                     <span className="flex items-center gap-4">
                       <Icon size={18} className="text-ink-faint" />
                       <span>
                         <span className="block text-sm font-medium text-ink">{c.label}</span>
-                        <span className="block font-mono text-xs text-ink-faint">{c.value}</span>
+                        <span className="block mono-meta normal-case">{c.value}</span>
                       </span>
                     </span>
                     <ArrowUpRight
@@ -72,18 +72,16 @@ export default function Contact() {
               })}
             </div>
 
-            <div className="mt-6 flex items-center gap-3 font-mono text-sm text-ink-faint">
+            <div className="mt-6 flex items-center gap-3 mono-meta normal-case">
               <MapPin size={16} />
               {profile.location} · open to remote collaboration
             </div>
           </motion.div>
 
-          <motion.form variants={fadeUp} onSubmit={handleSubmit} className="panel p-7 md:p-8">
+          <motion.form variants={fadeUp} onSubmit={handleSubmit} className="plate p-7 md:p-9">
             <div className="grid gap-5 sm:grid-cols-2">
               <label className="grid gap-2">
-                <span className="font-mono text-xs uppercase tracking-[0.1em] text-ink-faint">
-                  Name
-                </span>
+                <span className="mono-meta">Name</span>
                 <input
                   type="text"
                   required
@@ -94,9 +92,7 @@ export default function Contact() {
                 />
               </label>
               <label className="grid gap-2">
-                <span className="font-mono text-xs uppercase tracking-[0.1em] text-ink-faint">
-                  Email
-                </span>
+                <span className="mono-meta">Email</span>
                 <input
                   type="email"
                   required
@@ -109,9 +105,7 @@ export default function Contact() {
             </div>
 
             <label className="mt-5 grid gap-2">
-              <span className="font-mono text-xs uppercase tracking-[0.1em] text-ink-faint">
-                Message
-              </span>
+              <span className="mono-meta">Message</span>
               <textarea
                 required
                 placeholder="What are you working on?"
@@ -127,7 +121,7 @@ export default function Contact() {
               ) : (
                 <>
                   Send message
-                  <Send size={16} />
+                  <Send size={15} />
                 </>
               )}
             </button>
