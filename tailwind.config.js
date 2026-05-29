@@ -22,6 +22,7 @@ export default {
         'line-strong': 'rgba(45, 255, 106, 0.34)',
         ink: {
           DEFAULT: '#5af08a',
+          bright: '#b6ffce',
           muted: '#2f9d5d',
           faint: '#1c6b40',
         },

@@ -1,12 +1,4 @@
-import Nav from './components/Nav';
-import Foot from './components/Foot';
-import Hero from './sections/Hero';
-import About from './sections/About';
-import Focus from './sections/Focus';
-import Experience from './sections/Experience';
-import Work from './sections/Work';
-import Toolkit from './sections/Toolkit';
-import Contact from './sections/Contact';
+import Terminal from './components/Terminal';
 
 export default function App() {
   return (
@@ -26,17 +18,13 @@ export default function App() {
         tty1 · corpus-christi.tx · 2026
       </span>
 
-      <Nav />
-      <main className="site-main">
-        <Hero />
-        <About />
-        <Focus />
-        <Experience />
-        <Work />
-        <Toolkit />
-        <Contact />
-      </main>
-      <Foot />
+      {/* SEO / a11y heading (visually hidden) */}
+      <h1 className="sr-only">
+        Harsh Vardhan Bhanot — undergraduate researcher in computational genetics, AI systems, and
+        reproducible research tooling. Interactive terminal portfolio.
+      </h1>
+
+      <Terminal />
     </div>
   );
 }
