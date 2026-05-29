@@ -8,37 +8,37 @@
   :root {
     color-scheme: dark;
 
-    /* Deep CRT black with a faint green cast */
-    --bg: #030603;
-    --bg-elevated: #07100a;
-    --card: #081109;
-    --surface: #0a160d;
+    /* Pure black & white terminal */
+    --bg: #000000;
+    --bg-elevated: #0b0b0b;
+    --card: #0c0c0c;
+    --surface: #111111;
 
-    /* Single-phosphor green hierarchy (brightness, not hue) */
-    --green: #2dff6a; /* the phosphor — fills, marks, prompts */
-    --green-bright: #b6ffce; /* white-green emphasis */
-    --text: #5af08a; /* body */
-    --muted: #2f9d5d;
-    --faint: #1c6b40;
+    /* Greyscale hierarchy (brightness, not hue) */
+    --green: #ffffff; /* prompts, marks, emphasis */
+    --green-bright: #ffffff; /* brightest white */
+    --text: #d0d0d0; /* body */
+    --muted: #8c8c8c;
+    --faint: #5a5a5a;
 
-    --line: rgba(45, 255, 106, 0.16);
-    --line-strong: rgba(45, 255, 106, 0.34);
+    --line: rgba(255, 255, 255, 0.14);
+    --line-strong: rgba(255, 255, 255, 0.24);
 
-    --accent: #2dff6a;
-    --accent-bright: #b6ffce;
-    --accent-soft: rgba(45, 255, 106, 0.12);
-    --accent-line: rgba(45, 255, 106, 0.55);
-    --data: #1fae6b;
+    --accent: #ffffff;
+    --accent-bright: #ffffff;
+    --accent-soft: rgba(255, 255, 255, 0.10);
+    --accent-line: rgba(255, 255, 255, 0.45);
+    --data: #9a9a9a;
 
-    --glow: 0 0 6px rgba(45, 255, 106, 0.45);
-    --glow-soft: 0 0 10px rgba(45, 255, 106, 0.22);
+    --glow: 0 0 0 rgba(0, 0, 0, 0);
+    --glow-soft: 0 0 0 rgba(0, 0, 0, 0);
 
     --font-display: 'IBM Plex Mono', ui-monospace, monospace;
     --font-body: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
     --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
     --font-crt: 'VT323', 'IBM Plex Mono', monospace;
 
-    --shadow: 0 0 0 1px rgba(45, 255, 106, 0.3), 0 30px 80px -30px rgba(45, 255, 106, 0.25);
+    --shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 30px 80px -30px rgba(0, 0, 0, 0.8);
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
     --gutter: 18px; /* terminal window frame inset */
@@ -69,7 +69,7 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Vignette + phosphor bloom */
+  /* Vignette */
   body::before {
     content: '';
     position: fixed;
@@ -77,8 +77,8 @@
     z-index: -2;
     pointer-events: none;
     background:
-      radial-gradient(90% 70% at 50% 0%, rgba(45, 255, 106, 0.07), transparent 55%),
-      radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.65) 100%);
+      radial-gradient(90% 70% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 55%),
+      radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.72) 100%);
   }
 
   /* CRT scanlines */
@@ -137,8 +137,8 @@
   }
 
   ::selection {
-    background: var(--green);
-    color: #021004;
+    background: #ffffff;
+    color: #000000;
     text-shadow: none;
   }
 
@@ -168,7 +168,7 @@
     inset: 0;
     z-index: 55;
     pointer-events: none;
-    background: rgba(45, 255, 106, 0.015);
+    background: rgba(255, 255, 255, 0.01);
     animation: flicker 4.5s infinite steps(60);
     mix-blend-mode: screen;
   }
@@ -193,7 +193,7 @@
     position: absolute;
     inset: var(--gutter);
     border: 1px solid var(--line-strong);
-    box-shadow: inset 0 0 30px rgba(45, 255, 106, 0.05);
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.05);
   }
 
   .crop {
@@ -203,7 +203,7 @@
     border-color: var(--green);
     border-style: solid;
     border-width: 0;
-    filter: drop-shadow(0 0 4px rgba(45, 255, 106, 0.5));
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
   }
 
   .crop-tl { top: calc(var(--gutter) - 6px); left: calc(var(--gutter) - 6px); border-top-width: 1.5px; border-left-width: 1.5px; }
@@ -343,14 +343,14 @@
     background: var(--green);
     color: #021004;
     border: 1px solid var(--green);
-    box-shadow: 0 0 14px rgba(45, 255, 106, 0.3);
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.3);
   }
 
   .btn-accent:hover {
     transform: translateY(-2px);
     background: var(--green-bright);
     border-color: var(--green-bright);
-    box-shadow: 0 0 24px rgba(45, 255, 106, 0.55);
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.55);
   }
 
   .btn-ghost {
@@ -420,7 +420,7 @@
     padding: 0 10px;
     border: 1px solid var(--line);
     border-radius: 0;
-    background: rgba(45, 255, 106, 0.03);
+    background: rgba(255, 255, 255, 0.03);
     color: var(--muted);
     font-family: var(--font-mono);
     font-size: 11.5px;
@@ -593,23 +593,25 @@
 
   /* ===================== TERMINAL (full-page) ===================== */
   .term-wrap {
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
-    padding: calc(var(--gutter) + 16px) calc(var(--gutter) + 16px) calc(var(--gutter) + 16px);
+    padding: clamp(12px, 2vw, 28px);
     cursor: text;
+    overflow: hidden;
   }
 
   .term-shell {
     width: 100%;
     flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
   }
 
   .term-bar {
-    position: sticky;
-    top: calc(var(--gutter) + 12px);
+    flex: none;
     z-index: 40;
     display: flex;
     align-items: center;
@@ -636,20 +638,26 @@
 
   .term-body {
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
     border: 1px solid var(--line-strong);
     border-top: none;
-    background: rgba(4, 10, 5, 0.45);
+    background: rgba(0, 0, 0, 0.55);
     padding: 20px clamp(16px, 2.4vw, 30px) 30px;
     font-family: var(--font-mono);
     font-size: 13.5px;
     line-height: 1.72;
     color: var(--text);
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
   }
 
-  /* pushes the scrollback + prompt to the bottom while content is short */
-  .term-spacer { flex: 1 1 auto; min-height: 0; }
+  .term-body::-webkit-scrollbar { width: 10px; }
+  .term-body::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border: 3px solid var(--bg);
+  }
+  .term-body::-webkit-scrollbar-track { background: transparent; }
 
   .term-out { margin: 3px 0 12px; }
 

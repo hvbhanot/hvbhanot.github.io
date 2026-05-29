@@ -676,9 +676,8 @@ export default function Terminal() {
           </div>
         </div>
 
-        {/* scrollback — spacer keeps the prompt anchored to the bottom */}
+        {/* scrollback — content flows top-down like a real terminal */}
         <div ref={scrollRef} className="term-body" role="log" aria-live="polite">
-          <div className="term-spacer" aria-hidden="true" />
           {lines.map((l) => (
             <div key={l.id}>{l.node}</div>
           ))}

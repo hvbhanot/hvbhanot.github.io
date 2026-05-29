@@ -30,9 +30,9 @@ export default function GenerativeField({ className }: { className?: string }) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const css = getComputedStyle(document.documentElement);
-    const ink = css.getPropertyValue('--ink').trim() || '#1a1813';
-    const accent = css.getPropertyValue('--accent').trim() || '#e0401d';
-    const data = css.getPropertyValue('--data').trim() || '#1f6f6b';
+    const ink = css.getPropertyValue('--text').trim() || '#d0d0d0';
+    const accent = css.getPropertyValue('--accent').trim() || '#ffffff';
+    const data = css.getPropertyValue('--data').trim() || '#9a9a9a';
 
     let w = 0;
     let h = 0;
