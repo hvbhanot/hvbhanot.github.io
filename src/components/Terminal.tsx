@@ -160,15 +160,15 @@ export default function Terminal() {
           <div className="text-ink-muted">available commands — click or type:</div>
           <div className="mt-2 grid gap-1">
             {[
-              ['about', 'who I am'],
+              ['projects', 'selected work · then `open <n>`'],
               ['now', "what I'm building right now"],
               ['focus', 'focus areas'],
-              ['projects', 'list selected work · then `open <n>`'],
-              ['experience', 'work + research history'],
+              ['experience', 'work history'],
               ['skills', 'toolkit'],
+              ['about', 'short bio'],
               ['education', 'degrees'],
               ['contact', 'how to reach me'],
-              ['graph', 'live evolution simulation'],
+              ['graph', 'live process graph'],
               ['resume', 'download résumé (pdf)'],
               ['clear', 'clear the screen'],
             ].map(([c, d]) => (
@@ -568,8 +568,8 @@ export default function Terminal() {
       <div className="h-2" />,
       <Banner />,
       <div className="mt-2 text-ink-muted">
-        welcome. type <Chip cmd="help" /> to list commands, or try{' '}
-        <Chip cmd="about" /> <Chip cmd="now" /> <Chip cmd="projects" />.
+        type <Chip cmd="help" /> for all commands — or jump in:{' '}
+        <Chip cmd="projects" /> <Chip cmd="now" /> <Chip cmd="open 1" />.
       </div>,
     ];
 
@@ -597,10 +597,15 @@ export default function Terminal() {
     return () => window.clearInterval(t);
   }, []);
 
-  /* keep latest line in view */
+  /* keep latest line / prompt in view after each command */
+  const scrollToEnd = useCallback(() => {
+    requestAnimationFrame(() => {
+      endRef.current?.scrollIntoView({ block: 'end', behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+  }, []);
   useEffect(() => {
-    endRef.current?.scrollIntoView({ block: 'end', behavior: reduceMotion ? 'auto' : 'smooth' });
-  }, [lines]);
+    scrollToEnd();
+  }, [lines, scrollToEnd]);
 
   /* ---------- input handlers ---------- */
   const onSubmit = (e: React.FormEvent) => {
@@ -610,6 +615,7 @@ export default function Terminal() {
     if (value.trim()) setHistory((h) => [...h, value.trim()]);
     setHistIdx(-1);
     setInput('');
+    scrollToEnd();
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -670,8 +676,9 @@ export default function Terminal() {
           </div>
         </div>
 
-        {/* scrollback */}
+        {/* scrollback — spacer keeps the prompt anchored to the bottom */}
         <div ref={scrollRef} className="term-body" role="log" aria-live="polite">
+          <div className="term-spacer" aria-hidden="true" />
           {lines.map((l) => (
             <div key={l.id}>{l.node}</div>
           ))}
@@ -703,24 +710,23 @@ export default function Terminal() {
   );
 }
 
-/* ---------- ASCII banner (computed for guaranteed alignment) ---------- */
+/* ---------- ASCII-art banner (figlet "HVB"; String.raw keeps backslashes) ---------- */
 function Banner() {
-  const W = 46;
-  const bar = `+${'-'.repeat(W)}+`;
-  const row = (t: string) => `|${` ${t}`.padEnd(W)}|`;
   const art = [
-    bar,
-    row(''),
-    row('HARSH  VARDHAN  BHANOT'),
-    row('llm agents / automl / ml engineering'),
-    row(''),
-    row('>> interactive research terminal'),
-    row(''),
-    bar,
+    String.raw` _   _  __     __ ____  `,
+    String.raw`| | | | \ \   / /| __ ) `,
+    String.raw`| |_| |  \ \ / / |  _ \ `,
+    String.raw`|  _  |   \ V /  | |_) |`,
+    String.raw`|_| |_|    \_/   |____/ `,
   ].join('\n');
   return (
-    <pre className="term-banner" aria-hidden="true">
-      {art}
-    </pre>
+    <div className="term-banner-wrap">
+      <pre className="term-banner" aria-hidden="true">
+        {art}
+      </pre>
+      <div className="term-banner-sub">
+        harsh vardhan bhanot — <span className="text-ink-muted">llm agents · automl · ml engineering</span>
+      </div>
+    </div>
   );
 }
