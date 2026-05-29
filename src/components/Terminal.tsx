@@ -161,7 +161,8 @@ export default function Terminal() {
           <div className="mt-2 grid gap-1">
             {[
               ['about', 'who I am'],
-              ['focus', 'research focus areas'],
+              ['now', "what I'm building right now"],
+              ['focus', 'focus areas'],
               ['projects', 'list selected work · then `open <n>`'],
               ['experience', 'work + research history'],
               ['skills', 'toolkit'],
@@ -200,7 +201,7 @@ export default function Terminal() {
               'education.md',
               'contact.card',
               'resume.pdf',
-              'population.slim',
+              'now.md',
             ].map((f) => (
               <span
                 key={f}
@@ -237,6 +238,31 @@ export default function Terminal() {
       ),
     };
     reg.whoami = { desc: 'short bio', hidden: true, run: () => reg.about.run([]) };
+
+    reg.now = {
+      desc: 'what I am building now',
+      run: () => (
+        <div className="term-out">
+          <Heading>now.md — currently building</Heading>
+          <div className="text-ink-muted">
+            <span className="text-accent">+</span> <span className="text-ink-bright">TorchPilot</span>{' '}
+            — LLM-driven AutoML for tabular PyTorch
+          </div>
+          <div className="text-ink-muted">
+            <span className="text-accent">+</span> <span className="text-ink-bright">CTF-Agent</span>{' '}
+            — multi-agent LLM that solves CTF challenges autonomously
+          </div>
+          <div className="text-ink-muted">
+            <span className="text-accent">+</span> <span className="text-ink-bright">tuxtrainer</span>{' '}
+            — PDF → fine-tuned small LLM → Ollama, in one pipeline
+          </div>
+          <div className="mt-2 text-ink-faint">
+            focus: agentic systems · local LLM tooling · reproducible ML. run{' '}
+            <Chip cmd="projects" /> for the full archive.
+          </div>
+        </div>
+      ),
+    };
 
     reg.focus = {
       desc: 'research focus',
@@ -387,7 +413,7 @@ export default function Terminal() {
       desc: 'live evolution simulation',
       run: () => (
         <div className="term-out">
-          <div className="text-ink-faint">proc · population.slim — forward-time drift</div>
+          <div className="text-ink-faint">proc · search-space.live — agents exploring</div>
           <div className="mt-1 plate plate-ticked">
             <div className="relative h-64 w-full max-w-[640px]">
               <GenerativeField className="absolute inset-0 h-full w-full" />
@@ -439,7 +465,7 @@ export default function Terminal() {
           'skills.txt': 'skills',
           'education.md': 'education',
           'contact.card': 'contact',
-          'population.slim': 'graph',
+          'now.md': 'now',
         };
         if (f === 'resume.pdf') return reg.resume.run([]);
         if (map[f]) return reg[map[f]].run([]);
@@ -537,13 +563,13 @@ export default function Terminal() {
       </div>,
       <div>
         <span className="text-accent">[ ok ]</span>{' '}
-        <span className="text-ink-muted">simulation kernel ready · SLiM 4</span>
+        <span className="text-ink-muted">inference runtime ready · ollama</span>
       </div>,
       <div className="h-2" />,
       <Banner />,
       <div className="mt-2 text-ink-muted">
         welcome. type <Chip cmd="help" /> to list commands, or try{' '}
-        <Chip cmd="about" /> <Chip cmd="projects" /> <Chip cmd="graph" />.
+        <Chip cmd="about" /> <Chip cmd="now" /> <Chip cmd="projects" />.
       </div>,
     ];
 
@@ -686,7 +712,7 @@ function Banner() {
     bar,
     row(''),
     row('HARSH  VARDHAN  BHANOT'),
-    row('computational genetics / ai / research tools'),
+    row('llm agents / automl / ml engineering'),
     row(''),
     row('>> interactive research terminal'),
     row(''),

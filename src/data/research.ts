@@ -6,25 +6,25 @@ export type FocusArea = {
 
 export const focusAreas: FocusArea[] = [
   {
-    title: 'Computational genetics',
-    desc: 'Forward-time evolutionary simulations in SLiM for mutation dynamics, population fitness, and selection pressure at scale.',
-    methods: ['SLiM 4', 'Python pipelines', 'Parameter sweeps'],
+    title: 'LLM agents & systems',
+    desc: 'Multi-agent architectures with ReAct reasoning, tool use, scratchpad memory, and verification loops — built to run locally on open models.',
+    methods: ['Ollama', 'ReAct', 'Tool integration'],
   },
   {
-    title: 'AI for research code',
-    desc: 'Transformer fine-tuning on curated scientific code so models can summarize, navigate, and reason about unfamiliar repositories.',
-    methods: ['Hugging Face', 'LoRA adapters', 'Eval harnesses'],
+    title: 'AutoML & fine-tuning',
+    desc: 'LLM-in-the-loop model search and fine-tuning pipelines — proposing, training, and revising models, plus QLoRA/LoRA training that ships to a registry.',
+    methods: ['PyTorch', 'Unsloth', 'LoRA / QLoRA'],
   },
   {
-    title: 'Reproducible tooling',
-    desc: 'Parsers, artifact writers, sweep runners, and notebooks designed to survive handoffs and semester boundaries.',
-    methods: ['pandas / NumPy', 'Jupyter', 'Git audit trails'],
+    title: 'ML engineering & reproducibility',
+    desc: 'First-principles models, honest evaluation, and tooling — parsers, APIs, and experiment artifacts designed to survive handoffs and reruns.',
+    methods: ['NumPy', 'FastAPI', 'Git audit trails'],
   },
 ];
 
 export const methodStatement = {
   heading: 'Make the experiment legible before optimizing it',
-  body: 'I care about the trail from hypothesis to artifact: parameters, code, model behavior, outputs, and the notes that let someone else reproduce the run.',
+  body: 'I care about the trail from idea to artifact: the model, the parameters, the behavior, the outputs, and the notes that let someone else reproduce the run.',
 };
 
 export const researchQuote =
