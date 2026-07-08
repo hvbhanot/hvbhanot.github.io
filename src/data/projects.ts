@@ -13,6 +13,23 @@ export type Project = {
 export const projects: Project[] = [
   {
     catalog: '№ 001',
+    title: 'Relay',
+    subtitle: 'Local-first multi-model router',
+    year: '2026',
+    status: 'active',
+    description:
+      'A local-first model router: a local model plans and decomposes each request, subtasks run locally unless routing policy says a cloud model is genuinely needed, results are collected concurrently, and the local model synthesizes the final answer — with a browser UI and a one-command launcher.',
+    highlights: [
+      'Plan locally → route conservatively → synthesize locally',
+      'Cloud models only for current-knowledge, cloud-only-capability, or low-confidence subtasks',
+      'Concurrent subtask execution with a localhost browser UI',
+      'pip-installable CLI (`relay serve`) over Ollama',
+    ],
+    technologies: ['Python', 'Ollama', 'LLM routing'],
+    href: 'https://github.com/hvbhanot/Relay',
+  },
+  {
+    catalog: '№ 002',
     title: 'TorchPilot',
     subtitle: 'LLM-driven AutoML for tabular PyTorch',
     year: '2026',
@@ -29,7 +46,7 @@ export const projects: Project[] = [
     href: 'https://github.com/hvbhanot/TorchPilot',
   },
   {
-    catalog: '№ 002',
+    catalog: '№ 003',
     title: 'CTF-Agent',
     subtitle: 'Agentic LLM for autonomous CTF solving',
     year: '2026',
@@ -44,23 +61,6 @@ export const projects: Project[] = [
     ],
     technologies: ['Python', 'LLM agents', 'ReAct', 'Ollama'],
     href: 'https://github.com/hvbhanot/CTF-Agent',
-  },
-  {
-    catalog: '№ 003',
-    title: 'tuxtrainer',
-    subtitle: 'Fine-tune small LLMs on your PDFs → Ollama',
-    year: '2026',
-    status: 'active',
-    description:
-      'A Colab-optimized pipeline that turns PDFs into a fine-tuned small LLM: extract and chunk, a master model picks hyperparameters, Unsloth runs QLoRA (~2× faster), and the result is converted to a single GGUF and pushed to the Ollama registry — then pullable on any device.',
-    highlights: [
-      'PDF → extract & chunk → hyperparameter selection → QLoRA → GGUF → Ollama',
-      'Unsloth QLoRA for ~2× faster training on free Colab GPUs',
-      'One-call GGUF export (merge adapter + dequantize + llama.cpp quantize)',
-      'pip-installable; pull the model anywhere with `ollama pull`',
-    ],
-    technologies: ['Python', 'Unsloth', 'QLoRA', 'Ollama'],
-    href: 'https://github.com/hvbhanot/tuxtrainer',
   },
   {
     catalog: '№ 004',
@@ -81,6 +81,23 @@ export const projects: Project[] = [
   },
   {
     catalog: '№ 005',
+    title: 'OI Browser Agent',
+    subtitle: 'Vision browser control for Open WebUI',
+    year: '2026',
+    status: 'active',
+    description:
+      'A Chrome extension that puts Open WebUI in the browser side panel and gives it vision-based control of the page: screenshot capture, screenshot-driven navigation, and on-page automation — paired with a companion Browser Agent tool published on the Open WebUI community.',
+    highlights: [
+      'Side-panel Open WebUI alongside whatever you are browsing',
+      'Vision-based navigation from screenshots, Claude-for-Chrome style',
+      'On-page automation (e.g. quiz solving: select answer, click next)',
+      'Companion Browser Agent tool published on openwebui.com',
+    ],
+    technologies: ['JavaScript', 'Chrome extension', 'Open WebUI', 'Vision LLMs'],
+    href: 'https://github.com/hvbhanot/OI-Browser-Agent',
+  },
+  {
+    catalog: '№ 006',
     title: 'AskAI',
     subtitle: 'Ask a generative model from your terminal',
     year: '2025',
@@ -96,7 +113,7 @@ export const projects: Project[] = [
     href: 'https://github.com/hvbhanot/askai',
   },
   {
-    catalog: '№ 006',
+    catalog: '№ 007',
     title: 'nnNode',
     subtitle: 'Multi-node neural net for Iris (PyTorch)',
     year: '2025',
@@ -112,7 +129,7 @@ export const projects: Project[] = [
     href: 'https://github.com/hvbhanot/nnNode',
   },
   {
-    catalog: '№ 007',
+    catalog: '№ 008',
     title: 'Clutch-Call',
     subtitle: 'High-pressure decision modeling for sports',
     year: '2024',
@@ -128,7 +145,7 @@ export const projects: Project[] = [
     href: 'https://github.com/JustinSu11/clutch-call',
   },
   {
-    catalog: '№ 008',
+    catalog: '№ 009',
     title: 'Event REST API',
     subtitle: 'Go + Gin · JWT auth · SQLite',
     year: '2024',
@@ -144,7 +161,7 @@ export const projects: Project[] = [
     href: 'https://github.com/hvbhanot/RestAPI',
   },
   {
-    catalog: '№ 009',
+    catalog: '№ 010',
     title: 'Blockchain',
     subtitle: 'Proof-of-work chain in Python / Flask',
     year: '2024',

@@ -4,33 +4,25 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
-        body: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        crt: ['"VT323"', '"IBM Plex Mono"', 'monospace'],
+        display: ['Anton', 'Inter', 'system-ui', 'sans-serif'],
+        body: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       transitionTimingFunction: {
         ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       colors: {
-        // Black & white terminal
-        bg: '#000000',
-        elevated: '#0b0b0b',
-        card: '#0c0c0c',
-        surface: '#111111',
-        line: 'rgba(255, 255, 255, 0.14)',
-        'line-strong': 'rgba(255, 255, 255, 0.24)',
+        // Monochrome instrument — keep in sync with :root variables in src/index.css
+        bg: {
+          DEFAULT: '#0b0b0a',
+          raise: '#141412',
+        },
+        line: 'rgba(233, 230, 223, 0.14)',
         ink: {
-          DEFAULT: '#d0d0d0',
-          bright: '#ffffff',
-          muted: '#8c8c8c',
-          faint: '#5a5a5a',
+          DEFAULT: '#e9e6df',
+          dim: 'rgba(233, 230, 223, 0.62)',
+          faint: 'rgba(233, 230, 223, 0.36)',
         },
-        accent: {
-          DEFAULT: '#ffffff',
-          bright: '#ffffff',
-        },
-        data: '#9a9a9a',
       },
     },
   },

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const BASE = 'http://127.0.0.1:4321';
-const sections = ['top', 'about', 'focus', 'experience', 'work', 'toolkit', 'contact'];
+const sections = ['top', 'about', 'experience', 'work', 'toolkit', 'contact'];
 
 test('single-page portfolio renders all sections within the viewport', async ({ page }) => {
   for (const viewport of [
