@@ -170,14 +170,16 @@ function Hero() {
 /* ------------------------------------------------------------------ */
 
 function About() {
-  const facts: Array<{ label: string; value: string; href?: string }> = [
+  const facts: Array<{ label: string; value: string; detail?: string; href?: string }> = [
     {
       label: 'EDU',
-      value: `${profile.degree}, ${profile.concentration} · Minor in ${profile.minor} — ${profile.university}, ${profile.graduation}`,
+      value: `${profile.degree} — ${profile.university}`,
+      detail: `${profile.concentration} · Minor in ${profile.minor} · Class of 2026`,
     },
     {
       label: 'NEXT',
-      value: `${profile.upcoming.degree} — ${profile.upcoming.institution}, ${profile.upcoming.start}`,
+      value: profile.upcoming.degree,
+      detail: `${profile.upcoming.institution} · ${profile.upcoming.start}`,
     },
     { label: 'RANK', value: profile.tensortonic },
     { label: 'CERT', value: profile.certification },
@@ -210,7 +212,10 @@ function About() {
             {facts.map((fact) => (
               <div key={fact.label}>
                 <dt>[{fact.label}]</dt>
-                <dd>{fact.href ? <a href={fact.href}>{fact.value}</a> : fact.value}</dd>
+                <dd>
+                  {fact.href ? <a href={fact.href}>{fact.value}</a> : fact.value}
+                  {fact.detail && <span className="fact-detail">{fact.detail}</span>}
+                </dd>
               </div>
             ))}
           </dl>

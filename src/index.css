@@ -13,7 +13,7 @@
   --bg-raise: #141412;
   --ink: #e9e6df;
   --ink-rgb: 233, 230, 223;
-  --ink-dim: rgba(233, 230, 223, 0.62);
+  --ink-dim: rgba(233, 230, 223, 0.72);
   --ink-faint: rgba(233, 230, 223, 0.36);
   --line: rgba(233, 230, 223, 0.14);
   --grid: rgba(233, 230, 223, 0.05);
@@ -112,9 +112,10 @@ a {
 
 .section-copy {
   margin-top: 28px;
-  max-width: 56ch;
-  font-size: 17px;
-  color: var(--ink-dim);
+  max-width: 54ch;
+  font-size: 18px;
+  line-height: 1.75;
+  color: rgba(233, 230, 223, 0.88);
 }
 
 .eq {
@@ -404,7 +405,8 @@ a {
 
 .focus-line p {
   margin-top: 10px;
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--ink-dim);
   max-width: 52ch;
 }
@@ -413,7 +415,7 @@ a {
   display: grid;
   grid-template-columns: 68px 1fr;
   gap: 18px;
-  padding: 15px 0;
+  padding: 16px 0;
   border-top: 1px solid var(--line);
 }
 
@@ -421,12 +423,20 @@ a {
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: 0.08em;
-  color: var(--ink-faint);
-  padding-top: 2px;
+  color: var(--ink-dim);
+  padding-top: 3px;
 }
 
 .about-facts dd {
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.fact-detail {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
   color: var(--ink-dim);
 }
 
