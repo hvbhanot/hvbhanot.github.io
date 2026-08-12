@@ -15,7 +15,7 @@ import {
   easeOut,
 } from './lib/motion';
 import ScrollProgress from './components/nav/ScrollProgress';
-import { profile, experience, navItems, citationMetrics } from './data/resume';
+import { profile, experience, navItems, citationMetrics, openWebuiResult } from './data/resume';
 import { projects, isFeatured, researchTags, type Project } from './data/projects';
 import { focusAreas, methodStatement, researchQuote, sectionEquations } from './data/research';
 import { skillGroups } from './data/skills';
@@ -148,6 +148,9 @@ function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) 
             <a href={profile.linkedin} target="_blank" rel="noreferrer">
               LinkedIn ↗
             </a>
+            <a href={profile.openwebui} target="_blank" rel="noreferrer">
+              Open WebUI ↗
+            </a>
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
           </div>
         </motion.div>
@@ -205,7 +208,10 @@ function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.35, duration: 0.65 }}
         >
-          Dual M.S. Statistics &amp; Computer Science · Texas Tech · TensorTonic № 42
+          Dual M.S. Statistics &amp; Computer Science · Texas Tech
+          <span className="hero-sub-marks">
+            TensorTonic № 42 · Open WebUI top {openWebuiResult.rank}
+          </span>
         </motion.p>
         <motion.nav
           className="hero-ctas"
@@ -215,6 +221,9 @@ function Hero() {
           transition={{ delay: 0.5, duration: 0.5 }}
         >
           <a href="#research">Research</a>
+          <a href={openWebuiResult.href} target="_blank" rel="noreferrer" className="hero-cta-mark">
+            Open WebUI
+          </a>
           <a href="#stats">Experiments</a>
           <a href={profile.github} target="_blank" rel="noreferrer">
             GitHub
@@ -334,18 +343,76 @@ function About() {
           </motion.div>
         </motion.div>
 
+        <motion.a
+          className="result-plate"
+          href={openWebuiResult.href}
+          target="_blank"
+          rel="noreferrer"
+          variants={fadeUp}
+          initial={reduced ? false : 'hidden'}
+          whileInView="visible"
+          viewport={{ once: true, margin: '0px 0px -8% 0px' }}
+          whileHover={reduced ? undefined : { y: -2 }}
+        >
+          <span className="result-kicker">
+            Corollary {openWebuiResult.n} · Community
+          </span>
+          <span className="result-head">
+            <span className="result-rank">
+              <strong>{openWebuiResult.rank}</strong>
+              <span>{openWebuiResult.rankLabel}</span>
+            </span>
+            <span className="result-copy">
+              <strong>{openWebuiResult.title}</strong>
+              <span>{openWebuiResult.lede}</span>
+            </span>
+          </span>
+          <span className="result-foot">
+            <span className="result-stats">
+              {openWebuiResult.stats.map((stat) => (
+                <span key={stat.label}>
+                  <strong>{stat.value}</strong> {stat.label}
+                </span>
+              ))}
+            </span>
+            <span className="result-go">
+              openwebui.com/u/hvbhanot
+              <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
+            </span>
+          </span>
+        </motion.a>
+
         <motion.div className="citation-row" {...revealFast}>
-          {citationMetrics.map((m) => (
-            <motion.div
-              key={m.label}
-              className="citation-chip"
-              variants={scaleIn}
-              whileHover={reduced ? undefined : { y: -3, borderColor: 'rgba(74,163,242,0.45)' }}
-            >
-              <span>{m.label}</span>
-              <strong>{m.value}</strong>
-            </motion.div>
-          ))}
+          {citationMetrics.map((m) => {
+            const className = `citation-chip${m.featured ? ' citation-chip-featured' : ''}`;
+            const hover = reduced ? undefined : { y: -3 };
+            const inner = (
+              <>
+                <span>{m.label}</span>
+                <strong>{m.value}</strong>
+              </>
+            );
+            if (m.href) {
+              return (
+                <motion.a
+                  key={m.label}
+                  href={m.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={className}
+                  variants={scaleIn}
+                  whileHover={hover}
+                >
+                  {inner}
+                </motion.a>
+              );
+            }
+            return (
+              <motion.div key={m.label} className={className} variants={scaleIn} whileHover={hover}>
+                {inner}
+              </motion.div>
+            );
+          })}
         </motion.div>
 
         <motion.div className="about-timeline" variants={fadeUp}>
@@ -500,7 +567,7 @@ function Research({ onOpen }: { onOpen: (project: Project) => void }) {
             <motion.button
               key={project.title}
               type="button"
-              className="work-row research-card"
+              className={`work-row research-card${project.spotlight ? ' spotlight' : ''}`}
               onClick={() => onOpen(project)}
               layout
               variants={filterItem}
@@ -513,6 +580,7 @@ function Research({ onOpen }: { onOpen: (project: Project) => void }) {
             >
               <span className="research-card-meta">
                 <span className="work-no">{project.catalog}</span>
+                {project.badge && <span className="research-badge">{project.badge}</span>}
                 <span className="work-year">
                   {project.year}
                   <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
@@ -710,6 +778,9 @@ Collaboration at the intersection of statistical learning and AI systems.
             <a href={profile.linkedin} target="_blank" rel="noreferrer">
               LinkedIn ↗
             </a>
+            <a href={profile.openwebui} target="_blank" rel="noreferrer">
+              Open WebUI ↗
+            </a>
           </span>
         </div>
       </div>
@@ -835,7 +906,7 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
 
             {project.href && (
               <a href={project.href} target="_blank" rel="noreferrer" className="modal-link">
-                View source <ArrowUpRight size={16} aria-hidden="true" />
+                {project.hrefLabel ?? 'View source'} <ArrowUpRight size={16} aria-hidden="true" />
               </a>
             )}
           </motion.div>

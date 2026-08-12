@@ -19,11 +19,12 @@ export const profile = {
   phone: '(361) 742-6865',
   linkedin: 'https://linkedin.com/in/hvbhanot',
   github: 'https://github.com/hvbhanot',
+  openwebui: 'https://openwebui.com/u/hvbhanot',
   tensortonic: '№ 42 worldwide on TensorTonic',
   bio: 'Dual M.S. student in Statistics and Computer Science at Texas Tech University (Lubbock). B.S. Computer Science from Texas A&M University–Corpus Christi (2026). I treat models as statistical objects — likelihoods, estimators, and optimization paths — then ship them as systems: agents, fine-tuning loops, and tooling that another person can re-run without faith.',
   tagline: 'AI Systems Built on Mathematics.',
   subline:
-    'Dual M.S. · Statistics & Computer Science · Texas Tech · TensorTonic Rank 42',
+    'Dual M.S. · Statistics & Computer Science · Texas Tech · TensorTonic Rank 42 · Open WebUI top 0.8%',
   /** Current graduate program (primary academic status). */
   masters: {
     degree: 'M.S. Statistics + M.S. Computer Science (concurrent)',
@@ -94,8 +95,38 @@ export const experience: Experience[] = [
   },
 ];
 
-export const citationMetrics = [
+export type CitationMetric = {
+  label: string;
+  value: string;
+  href?: string;
+  featured?: boolean;
+};
+
+export const citationMetrics: CitationMetric[] = [
+  {
+    label: 'Open WebUI',
+    value: '1,415 downloads · top 0.8%',
+    href: 'https://openwebui.com/u/hvbhanot',
+    featured: true,
+  },
   { label: 'TensorTonic', value: '№ 42 worldwide' },
   { label: 'Program', value: 'Dual M.S. · Texas Tech' },
-  { label: 'Prior', value: 'B.S. CS · TAMU-CC' },
 ];
+
+/** Community standing — treated as a checkable result, not a social link. */
+export const openWebuiResult = {
+  n: '1.5',
+  title: 'Open WebUI',
+  href: 'https://openwebui.com/u/hvbhanot',
+  handle: '@hvbhanot',
+  rank: '0.8%',
+  rankLabel: 'contribution rank',
+  lede:
+    'Functions and tools published to a 470k-member self-hosted AI community — Deep Research, OI Browser Agent, and the rest of the @hvbhanot catalog.',
+  stats: [
+    { value: '1,415', label: 'downloads' },
+    { value: '15', label: 'contributions' },
+    { value: '8', label: 'published works' },
+    { value: '38', label: 'points · top 4%' },
+  ],
+};

@@ -14,6 +14,9 @@ export type Project = {
   highlights: string[];
   technologies: string[];
   href?: string;
+  hrefLabel?: string;
+  spotlight?: boolean;
+  badge?: string;
   tags?: string[];
   abstract?: string;
   abstractTex?: string;
@@ -31,6 +34,42 @@ export function isFeatured(p: Project): boolean {
 }
 
 export const projects: Project[] = [
+  {
+    catalog: '№ 014',
+    title: 'Deep Research',
+    subtitle: 'Agentic web-research toggle for Open WebUI',
+    year: '2026',
+    status: 'active',
+    featured: true,
+    spotlight: true,
+    badge: '696 downloads · top 0.8%',
+    tags: ['agents', 'systems'],
+    abstract:
+      'A chat-input toggle that reuses Open WebUI’s configured search engine and runs a think → search → read loop, then injects cited evidence so the selected model writes the report.',
+    abstractTex:
+      '\\mathrm{report} = f\\!\\left(q,\\,\\{s_i\\}_{i=1}^{k}\\right)',
+    problem:
+      'Chat models answer from a stale cutoff. Built-in web search is one-shot; long research needs a loop that plans, reads, and comes back with citations — without extra API keys.',
+    method:
+      'Filter function with a message-bar toggle. Each round the model reasons about gaps, issues sub-queries through Open WebUI’s own search_web, optionally fetches pages, and stops when evidence is sufficient. Date-aware prompts keep local models from searching last year’s web.',
+    result:
+      'Published on the Open WebUI community as Deep Research v3.11.2 — 696 downloads. No extra keys — it inherits the instance’s search engine and the chat’s selected model.',
+    description:
+      'An Open WebUI filter that adds a Deep Research toggle to the chat input. When on, it plans queries, searches, reads pages, and injects numbered sources so the model you already selected writes a cited report.',
+    highlights: [
+      'Toggle in the message bar — off means ordinary chat',
+      'Per-round reasoning with visible “why this search” status',
+      'Reuses the instance web-search engine; no extra API keys',
+      'Date-stamped prompts so local models don’t search a remembered year',
+    ],
+    technologies: ['Python', 'Open WebUI', 'Web search', 'LLM agents'],
+    metrics: [
+      { label: 'downloads', value: '696', tone: 'success' },
+      { label: 'loop', value: 'think → search → read', tone: 'neutral' },
+    ],
+    href: 'https://openwebui.com/f/hvbhanot/deep_research',
+    hrefLabel: 'Open on Open WebUI',
+  },
   {
     catalog: '№ 001',
     title: 'Relay',
@@ -193,6 +232,7 @@ export const projects: Project[] = [
     subtitle: 'Vision browser control for Open WebUI',
     year: '2026',
     status: 'active',
+    badge: '239 downloads',
     tags: ['agents', 'vision'],
     abstract:
       'Chrome extension pairing Open WebUI side panel with screenshot-driven navigation and on-page automation.',
@@ -202,7 +242,7 @@ export const projects: Project[] = [
     method:
       'Side-panel Open WebUI, screenshot capture, vision-based navigation, and companion Browser Agent tool on the Open WebUI community.',
     result:
-      'A vision-capable browser agent loop for everyday browsing tasks, published as extension + community tool.',
+      'A vision-capable browser agent loop for everyday browsing tasks, published as extension + community tool — 239 downloads on Open WebUI.',
     description:
       'A Chrome extension that puts Open WebUI in the browser side panel and gives it vision-based control of the page: screenshot capture, screenshot-driven navigation, and on-page automation — paired with a companion Browser Agent tool published on the Open WebUI community.',
     highlights: [
@@ -212,6 +252,9 @@ export const projects: Project[] = [
       'Companion Browser Agent tool published on openwebui.com',
     ],
     technologies: ['JavaScript', 'Chrome extension', 'Open WebUI', 'Vision LLMs'],
+    metrics: [
+      { label: 'downloads', value: '239', tone: 'success' },
+    ],
     href: 'https://github.com/hvbhanot/OI-Browser-Agent',
   },
   {

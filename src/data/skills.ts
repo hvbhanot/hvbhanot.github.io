@@ -33,6 +33,7 @@ export const skillGroups: SkillGroup[] = [
       'FastAPI',
       'REST APIs · JWT',
       'Ollama (self-hosted inference)',
+      'Open WebUI',
     ],
   },
   {

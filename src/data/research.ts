@@ -10,7 +10,7 @@ export const focusAreas: FocusArea[] = [
   {
     title: 'LLM agents & systems',
     desc: 'Multi-agent architectures as structured inference: ReAct traces, tool use, scratchpad memory, and verification loops — with local models so the experiment stays reproducible.',
-    methods: ['Ollama', 'ReAct', 'Tool integration'],
+    methods: ['Ollama', 'Open WebUI', 'ReAct', 'Tool integration'],
     tex: '\\mathrm{act}_t \\sim \\pi(\\cdot \\mid s_t, \\mathcal{M})',
   },
   {
