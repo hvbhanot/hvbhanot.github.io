@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Anton', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['"STIX Two Text"', 'Libertinus Serif', 'Georgia', 'serif'],
         body: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
@@ -12,16 +12,22 @@ export default {
         ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       colors: {
-        // Monochrome instrument — keep in sync with :root variables in src/index.css
+        // Living research notebook — keep in sync with :root in src/index.css
         bg: {
-          DEFAULT: '#0b0b0a',
-          raise: '#141412',
+          DEFAULT: '#0B0C10',
+          raise: '#15161A',
         },
-        line: 'rgba(233, 230, 223, 0.14)',
+        line: 'rgba(232, 232, 232, 0.12)',
         ink: {
-          DEFAULT: '#e9e6df',
-          dim: 'rgba(233, 230, 223, 0.62)',
-          faint: 'rgba(233, 230, 223, 0.36)',
+          DEFAULT: '#E8E8E8',
+          dim: '#8B8D93',
+          faint: 'rgba(232, 232, 232, 0.36)',
+        },
+        accent: {
+          prob: '#4AA3F2',
+          gd: '#F2994A',
+          proof: '#27AE60',
+          math: '#BB86FC',
         },
       },
     },

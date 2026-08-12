@@ -1,22 +1,38 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Harsh Vardhan Bhanot - AI systems built on mathematics: LLM agents, fine-tuning pipelines, and statistical research tooling."
+      content="Harsh Vardhan Bhanot — AI Systems Built on Mathematics. Dual M.S. student in Statistics & Computer Science at Texas Tech. Research and interactive stats experiments."
     />
-    <meta name="theme-color" content="#0b0b0a" />
-    <meta property="og:title" content="Harsh Vardhan Bhanot - AI Systems Built on Mathematics" />
+    <meta name="theme-color" content="#0B0C10" />
+    <meta property="og:title" content="Harsh Vardhan Bhanot — AI Systems Built on Mathematics" />
     <meta
       property="og:description"
-      content="LLM agents, fine-tuning pipelines, and statistical research tooling - engineered to be reproduced, not just demoed."
+      content="Living research notebook: LLM agents, fine-tuning, statistical research tooling — reproducible by design."
     />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('hvb-theme');
+          var lightOk = false; // VITE_ENABLE_LIGHT_THEME gates runtime; boot stays dark-safe
+          if (t === 'light' && lightOk) document.documentElement.setAttribute('data-theme', 'light');
+          else document.documentElement.setAttribute('data-theme', 'dark');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
     <title>Harsh Vardhan Bhanot — AI Systems Built on Mathematics</title>
   </head>
   <body>

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const BASE = 'http://127.0.0.1:4321';
-const sections = ['top', 'about', 'experience', 'work', 'toolkit', 'contact'];
+const sections = ['top', 'about', 'research', 'stats', 'contact'];
 
 test('single-page portfolio renders all sections within the viewport', async ({ page }) => {
   for (const viewport of [
@@ -18,6 +18,11 @@ test('single-page portfolio renders all sections within the viewport', async ({ 
       await expect(page.locator(`#${id}`)).toHaveCount(1);
     }
 
+    // Legacy section ids must be gone
+    for (const legacy of ['experience', 'work', 'toolkit']) {
+      await expect(page.locator(`#${legacy}`)).toHaveCount(0);
+    }
+
     const overflow = await page.evaluate(() => {
       const root = document.documentElement;
       return { scrollWidth: root.scrollWidth, clientWidth: root.clientWidth };
@@ -26,13 +31,15 @@ test('single-page portfolio renders all sections within the viewport', async ({ 
   }
 });
 
-test('selecting a work row opens and closes the project modal', async ({ page }) => {
+test('selecting a research card opens and closes the project modal', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(BASE, { waitUntil: 'networkidle' });
 
-  await page.locator('.work-row').first().click();
-  await expect(page.getByText('Highlights')).toBeVisible();
+  await page.locator('.research-card, .work-row').first().click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  // P/M/R or Overview — Relay has Problem
+  await expect(page.getByRole('heading', { name: /Problem|Overview/i })).toBeVisible();
 
   await page.getByRole('button', { name: 'Close' }).click();
-  await expect(page.getByText('Highlights')).toHaveCount(0);
+  await expect(page.getByRole('dialog')).toHaveCount(0);
 });

@@ -55,10 +55,10 @@ export default function MathDial() {
         ctx.stroke();
       };
 
-      ring(R, 0.42);
-      ring(R * 0.9, 0.14);
-      ring(R * 0.66, 0.22);
-      ring(R * 0.1, 0.18);
+      ring(R, 0.55);
+      ring(R * 0.9, 0.2);
+      ring(R * 0.66, 0.28);
+      ring(R * 0.1, 0.24);
 
       // Protractor ticks on the outer ring; every tenth tick is major.
       const rot = t * 0.3;
@@ -69,7 +69,7 @@ export default function MathDial() {
         ctx.beginPath();
         ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0);
         ctx.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R);
-        ctx.strokeStyle = `rgba(${ink}, ${major ? 0.5 : 0.24})`;
+        ctx.strokeStyle = `rgba(${ink}, ${major ? 0.62 : 0.3})`;
         ctx.lineWidth = 1;
         ctx.stroke();
       }
@@ -85,7 +85,7 @@ export default function MathDial() {
         ctx.save();
         ctx.translate(cx + Math.cos(a) * R * 0.78, cy + Math.sin(a) * R * 0.78);
         ctx.rotate(a + Math.PI / 2);
-        ctx.fillStyle = `rgba(${ink}, 0.55)`;
+        ctx.fillStyle = `rgba(${ink}, 0.68)`;
         ctx.fillText(ch, 0, 0);
         ctx.restore();
       });
@@ -104,8 +104,8 @@ export default function MathDial() {
         if (i === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
-      ctx.strokeStyle = `rgba(${ink}, 0.45)`;
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = `rgba(${ink}, 0.62)`;
+      ctx.lineWidth = 1.15;
       ctx.stroke();
 
       // Center mark.

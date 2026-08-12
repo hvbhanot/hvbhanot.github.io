@@ -2,30 +2,55 @@ export type FocusArea = {
   title: string;
   desc: string;
   methods: string[];
+  /** Optional KaTeX for lemma-style cards */
+  tex?: string;
 };
 
 export const focusAreas: FocusArea[] = [
   {
     title: 'LLM agents & systems',
-    desc: 'Multi-agent architectures with ReAct reasoning, tool use, scratchpad memory, and verification loops — built to run locally on open models.',
+    desc: 'Multi-agent architectures as structured inference: ReAct traces, tool use, scratchpad memory, and verification loops — with local models so the experiment stays reproducible.',
     methods: ['Ollama', 'ReAct', 'Tool integration'],
+    tex: '\\mathrm{act}_t \\sim \\pi(\\cdot \\mid s_t, \\mathcal{M})',
   },
   {
     title: 'AutoML & fine-tuning',
-    desc: 'LLM-in-the-loop model search and fine-tuning pipelines — proposing, training, and revising models, plus QLoRA/LoRA training that ships to a registry.',
+    desc: 'Search over architectures and adapters as model selection: propose θ, train, read learning curves, revise — LoRA/QLoRA as low-rank capacity knobs, not magic switches.',
     methods: ['PyTorch', 'Unsloth', 'LoRA / QLoRA'],
+    tex: '\\Delta W = BA,\\; \\mathrm{rank}(B)=r',
   },
   {
-    title: 'ML engineering & reproducibility',
-    desc: 'First-principles models, honest evaluation, and tooling — parsers, APIs, and experiment artifacts designed to survive handoffs and reruns.',
-    methods: ['NumPy', 'FastAPI', 'Git audit trails'],
+    title: 'Statistical ML & evaluation',
+    desc: 'First-principles estimators, honest loss surfaces, and audit trails — from NumPy primitives to experiment logs that survive handoffs and re-runs.',
+    methods: ['NumPy', 'scikit-learn', 'Git audit trails'],
+    tex: '\\hat{\\theta}_n = \\arg\\min_\\theta \\, \\widehat{\\mathcal{L}}_n(\\theta)',
   },
 ];
 
 export const methodStatement = {
-  heading: 'Make the experiment legible before optimizing it',
-  body: 'I care about the trail from idea to artifact: the model, the parameters, the behavior, the outputs, and the notes that let someone else reproduce the run.',
+  heading: 'Specify the estimator before you optimize it',
+  body: 'I care about the map from data to decision: likelihood or loss, the parameter path, the sampling variability, and the artifacts that let someone else reproduce the run.',
 };
 
 export const researchQuote =
-  'The goal is not just to get a result. The goal is to leave behind a system that makes the result inspectable, repeatable, and useful to the next person.';
+  'A result without a reproducible experiment is an anecdote. A system without inspectable state is a black box. Prefer both to be measurable.';
+
+/** Section identities — numbered like a paper, not corner decoration */
+export const sectionEquations = {
+  about: {
+    tex: 'P(\\theta \\mid D) = \\frac{P(D \\mid \\theta)\\,P(\\theta)}{P(D)}',
+    n: '1.1',
+  },
+  research: {
+    tex: '\\mathcal{L}(\\theta) = \\mathbb{E}_{(x,y)\\sim \\mathcal{D}}\\,[\\ell(f_\\theta(x), y)]',
+    n: '2.1',
+  },
+  stats: {
+    tex: '\\sqrt{n}\\,(\\bar{X}_n - \\mu) \\xrightarrow{d} \\mathcal{N}(0,\\sigma^2)',
+    n: '3.1',
+  },
+  contact: {
+    tex: '\\mathrm{Corr}(X,Y) = \\frac{\\mathrm{Cov}(X,Y)}{\\sigma_X \\sigma_Y}',
+    n: '4.1',
+  },
+};

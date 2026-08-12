@@ -7,34 +7,36 @@ export const profile = {
   name: 'Harsh Vardhan Bhanot',
   shortName: 'Harsh Bhanot',
   initials: 'HVB',
-  role: 'AI systems — agents, fine-tuning, statistics',
+  role: 'AI systems built on mathematics',
   university: 'Texas A&M University – Corpus Christi',
   degree: 'B.S. Computer Science',
   concentration: 'Cyber Security / Infrastructure',
   minor: 'Applied Mathematics',
   graduation: 'Jul 2026',
-  location: 'Corpus Christi, TX',
-  coordinates: '27.8006° N, 97.3964° W',
+  location: 'Lubbock, TX',
+  coordinates: '33.5779° N, 101.8552° W',
   email: 'hvbhanot1@gmail.com',
   phone: '(361) 742-6865',
   linkedin: 'https://linkedin.com/in/hvbhanot',
   github: 'https://github.com/hvbhanot',
   tensortonic: '№ 42 worldwide on TensorTonic',
-  certification: 'CFI FinTech Industry Professional (FTIP)',
-  bio: 'Computer science graduate (TAMU-CC, 2026) heading into concurrent M.S. degrees in Statistics and Computer Science at Texas Tech. I build AI systems — LLM agents, fine-tuning pipelines, and research tooling — and hold them to the standard of a proof: reproducible, inspectable, and runnable by someone who is not me.',
-  tagline: 'AI agents · fine-tuning · statistical research',
-  upcoming: {
+  bio: 'Dual M.S. student in Statistics and Computer Science at Texas Tech University (Lubbock). B.S. Computer Science from Texas A&M University–Corpus Christi (2026). I treat models as statistical objects — likelihoods, estimators, and optimization paths — then ship them as systems: agents, fine-tuning loops, and tooling that another person can re-run without faith.',
+  tagline: 'AI Systems Built on Mathematics.',
+  subline:
+    'Dual M.S. · Statistics & Computer Science · Texas Tech · TensorTonic Rank 42',
+  /** Current graduate program (primary academic status). */
+  masters: {
     degree: 'M.S. Statistics + M.S. Computer Science (concurrent)',
     institution: 'Texas Tech University',
-    start: 'Fall 2026',
+    period: '2026 – present',
+    status: 'In progress',
   },
 };
 
 export const navItems: NavItem[] = [
   { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Work', href: '#work' },
-  { label: 'Toolkit', href: '#toolkit' },
+  { label: 'Research', href: '#research' },
+  { label: 'Stats', href: '#stats' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -53,10 +55,10 @@ export const experience: Experience[] = [
     period: '2025 – Jul 2026',
     desc: 'AI systems research — fine-tuning, agent workflows, and reproducible tooling, applied to evolutionary-simulation data.',
     bullets: [
-      'Fine-tune transformer-based code models with parameter-efficient methods (LoRA / QLoRA adapters) on domain-specific corpora',
-      'Build Python pipelines that parse SLiM evolutionary-simulation outputs and track mutations across generations',
-      'Design lightweight agent-based workflows that automate simulation parameter sweeps and comparative analysis',
-      'Keep everything reproducible: version-controlled codebases with structured experiment logs',
+      'Fine-tuned transformer-based code models with parameter-efficient methods (LoRA / QLoRA adapters) on domain-specific corpora',
+      'Built Python pipelines that parse SLiM evolutionary-simulation outputs and track mutations across generations',
+      'Designed lightweight agent-based workflows that automate simulation parameter sweeps and comparative analysis',
+      'Kept everything reproducible: version-controlled codebases with structured experiment logs',
     ],
   },
   {
@@ -76,7 +78,7 @@ export const experience: Experience[] = [
     period: 'Jan 2024 – Jul 2026',
     desc: 'Technical support for hardware and software issues serving 3,000+ students and faculty.',
     bullets: [
-      'Provide hardware and software support across a 3,000+ person campus community',
+      'Provided hardware and software support across a 3,000+ person campus community',
       'Implemented a ticketing-workflow change that improved resolution times by 15%',
     ],
   },
@@ -84,10 +86,16 @@ export const experience: Experience[] = [
     title: 'Founder & Vice President',
     org: 'Islanders Research in AI',
     period: 'Jan 2023 – Jul 2026',
-    desc: 'Founded and lead a 30+ member student research organization focused on AI and machine learning.',
+    desc: 'Founded and led a 30+ member student research organization focused on AI and machine learning.',
     bullets: [
-      'Organize workshops on ML fundamentals and reproducible experimentation',
-      'Lead outreach and secured specialized computing resources for member research',
+      'Organized workshops on ML fundamentals and reproducible experimentation',
+      'Led outreach and secured specialized computing resources for member research',
     ],
   },
+];
+
+export const citationMetrics = [
+  { label: 'TensorTonic', value: '№ 42 worldwide' },
+  { label: 'Program', value: 'Dual M.S. · Texas Tech' },
+  { label: 'Prior', value: 'B.S. CS · TAMU-CC' },
 ];
