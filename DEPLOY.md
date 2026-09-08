@@ -41,3 +41,7 @@ Point `hvbhanot.pro` and `www.hvbhanot.pro` to the deployed service, then verify
 ```bash
 curl -I https://hvbhanot.pro
 ```
+
+## Private redesign review (Sites)
+
+The existing GitHub Pages and Railway builds are unchanged. For the private Sites review, run `npm run build:sites`. It packages the same Vite app under `dist/client` with a minimal static asset Worker under `dist/server`. The selected private review project is recorded in `.openai/hosting.json`. Run `npm run build` again to restore the standard GitHub Pages output.

@@ -4,30 +4,42 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"STIX Two Text"', 'Libertinus Serif', 'Georgia', 'serif'],
-        body: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+        body: [
+          '"Space Grotesk"',
+          'Inter',
+          'system-ui',
+          '-apple-system',
+          'sans-serif',
+        ],
+        mono: [
+          '"IBM Plex Mono"',
+          'ui-monospace',
+          'SFMono-Regular',
+          'Menlo',
+          'monospace',
+        ],
       },
       transitionTimingFunction: {
         ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       colors: {
-        // Living research notebook — keep in sync with :root in src/index.css
+        // Computational geometry — keep in sync with :root in src/index.css
         bg: {
-          DEFAULT: '#0B0C10',
-          raise: '#15161A',
+          DEFAULT: '#08090c',
+          raise: '#101217',
         },
-        line: 'rgba(232, 232, 232, 0.12)',
+        line: 'rgba(240, 242, 246, 0.15)',
         ink: {
-          DEFAULT: '#E8E8E8',
-          dim: '#8B8D93',
-          faint: 'rgba(232, 232, 232, 0.36)',
+          DEFAULT: '#f0f2f6',
+          dim: '#a4aab7',
+          faint: '#878e9e',
         },
         accent: {
-          prob: '#4AA3F2',
-          gd: '#F2994A',
-          proof: '#27AE60',
-          math: '#BB86FC',
+          prob: '#668eff',
+          gd: '#668eff',
+          proof: '#86c7bd',
+          math: '#bc9bfa',
         },
       },
     },

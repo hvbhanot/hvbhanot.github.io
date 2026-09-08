@@ -1,3 +1,5 @@
+import { communityStats } from './community';
+
 export type NavItem = {
   label: string;
   href: string;
@@ -20,11 +22,10 @@ export const profile = {
   linkedin: 'https://linkedin.com/in/hvbhanot',
   github: 'https://github.com/hvbhanot',
   openwebui: 'https://openwebui.com/u/hvbhanot',
-  tensortonic: '№ 42 worldwide on TensorTonic',
-  bio: 'Dual M.S. student in Statistics and Computer Science at Texas Tech University (Lubbock). B.S. Computer Science from Texas A&M University–Corpus Christi (2026). I treat models as statistical objects — likelihoods, estimators, and optimization paths — then ship them as systems: agents, fine-tuning loops, and tooling that another person can re-run without faith.',
-  tagline: 'AI Systems Built on Mathematics.',
-  subline:
-    'Dual M.S. · Statistics & Computer Science · Texas Tech · TensorTonic Rank 42 · Open WebUI top 0.8%',
+  tensortonic: `${communityStats.tensorTonic.solved} verified ML problems solved on TensorTonic`,
+  bio: 'I’m pursuing concurrent master’s degrees in Statistics and Computer Science at Texas Tech, after a B.S. at Texas A&M–Corpus Christi. My work ranges from fine-tuning code models for population genetics to building agents that use tools and verify their work. I care about the assumptions behind a model, the evidence for a result, and the code that connects them.',
+  tagline: 'Think in math. Build in code.',
+  subline: `Dual M.S. · Statistics & Computer Science · Texas Tech · ${communityStats.tensorTonic.solved} ML problems solved`,
   /** Current graduate program (primary academic status). */
   masters: {
     degree: 'M.S. Statistics + M.S. Computer Science (concurrent)',
@@ -35,9 +36,9 @@ export const profile = {
 };
 
 export const navItems: NavItem[] = [
-  { label: 'About', href: '#about' },
   { label: 'Research', href: '#research' },
-  { label: 'Stats', href: '#stats' },
+  { label: 'About', href: '#about' },
+  { label: 'Playground', href: '#stats' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -94,39 +95,3 @@ export const experience: Experience[] = [
     ],
   },
 ];
-
-export type CitationMetric = {
-  label: string;
-  value: string;
-  href?: string;
-  featured?: boolean;
-};
-
-export const citationMetrics: CitationMetric[] = [
-  {
-    label: 'Open WebUI',
-    value: '1,415 downloads · top 0.8%',
-    href: 'https://openwebui.com/u/hvbhanot',
-    featured: true,
-  },
-  { label: 'TensorTonic', value: '№ 42 worldwide' },
-  { label: 'Program', value: 'Dual M.S. · Texas Tech' },
-];
-
-/** Community standing — treated as a checkable result, not a social link. */
-export const openWebuiResult = {
-  n: '1.5',
-  title: 'Open WebUI',
-  href: 'https://openwebui.com/u/hvbhanot',
-  handle: '@hvbhanot',
-  rank: '0.8%',
-  rankLabel: 'contribution rank',
-  lede:
-    'Functions and tools published to a 470k-member self-hosted AI community — Deep Research, OI Browser Agent, and the rest of the @hvbhanot catalog.',
-  stats: [
-    { value: '1,415', label: 'downloads' },
-    { value: '15', label: 'contributions' },
-    { value: '8', label: 'published works' },
-    { value: '38', label: 'points · top 4%' },
-  ],
-};

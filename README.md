@@ -1,47 +1,45 @@
-# Harsh Vardhan Bhanot Portfolio
+# Harsh Vardhan Bhanot — mathematics × systems
 
-Premium personal portfolio for Harsh Vardhan Bhanot, focused on AI/ML research, computational genetics, scientific computing, and reproducible research tooling.
+A personal research portfolio built around statistical learning, AI systems, and reproducible experiments. The September 2026 redesign uses a computational geometry identity: black and electric blue, oversized geometric typography, interactive parametric surfaces, and a contrasting light project gallery.
 
 ## Stack
 
-- React + Vite
-- TypeScript
-- Tailwind CSS
-- React Router
-- Framer Motion
-- Playwright scene verification
+React 19, TypeScript, Vite, Tailwind CSS, Framer Motion, KaTeX, and native canvas. The site is one document with hash navigation; it does not use a router.
 
-## Routes (after 2026 redesign)
+## Sections
 
-- `/` — Home
-- `/about` — Background, toolkit, experience
-- `/projects` — Filterable project archive + detail modals
-- `/research` — Current focus areas (genetics, AI tooling, reproducibility)
-- `/contact` — Get in touch
+- `#top` — introduction and rotatable 3D parametric surfaces: torus, Möbius strip, and saddle. Select a surface, adjust its radius/width/curvature, pause, or rotate with pointer/arrow keys (Home resets orientation).
+- `#research` — filterable visual project gallery, mathematical concept sketches, complete project dialogs, and an archive.
+- `#community` — dated public-source metrics, with a direct source link for every number.
+- `#about` — background with a statistics/computer-science Venn diagram, education, expandable experience, research threads, and toolkit.
+- `#stats` — seven lazy-loaded experiments in a keyboard-operable workbench.
+- `#contact` — email, copy action, and public profiles.
 
-The site is now a focused 5-page "Refined Signal" redesign with improved motion (framer-motion), accessibility, and data-driven content.
+Legacy anchors still redirect through `src/lib/legacyHash.ts`. Native dialogs contain keyboard focus and restore it when closed. Reduced-motion preferences pause the hero and remove entrance motion. The existing optional light-theme flag remains supported.
 
-## Run locally
+## Development
 
 ```bash
 npm install
-npm run dev
-```
-
-The dev server runs at `http://localhost:4321`.
-
-## Build
-
-```bash
+npm run dev             # http://localhost:4321
 npm run typecheck
+npm run test:stats
+npm run test:math
 npm run build
-npm run preview
 ```
 
-## Verify the site
+`npm run test:scene` runs the existing Playwright checks against a server already running on port 4321. It checks desktop/mobile overflow and project dialogs.
+
+## Refresh public stats
 
 ```bash
-npm run test:scene
+npm run stats:refresh
 ```
 
-The Playwright scene test validates the 5 core routes across desktop and mobile viewports and confirms no horizontal overflow.
+The refresh reads the public Open WebUI profile, the Deep Research and Browser Agent listings, and the TensorTonic verified badge. It updates `src/data/community.ts` only after all four sources pass validation. Missing fields, unexpected profile identities, invalid numbers, or inconsistent difficulty totals fail without replacing the existing snapshot.
+
+The page and project descriptions derive their numbers from that one snapshot. Updating it does not publish the site; rebuild and deploy through the existing workflow. No visitor-side API calls, credentials, or third-party stats widgets are needed.
+
+## Deployment
+
+GitHub Pages and Railway remain supported; see [DEPLOY.md](DEPLOY.md). Shared-link metadata uses the existing production domain, `https://hvbhanot.pro`, and the custom `public/og-geometry.png` artwork.

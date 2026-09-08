@@ -1,3 +1,5 @@
+import { communityStats, numberFormat } from './community';
+
 export type ProjectMetric = {
   label: string;
   value: string;
@@ -42,7 +44,7 @@ export const projects: Project[] = [
     status: 'active',
     featured: true,
     spotlight: true,
-    badge: '696 downloads · top 0.8%',
+    badge: `${numberFormat.format(communityStats.deepResearch.downloads)} downloads`,
     tags: ['agents', 'systems'],
     abstract:
       'A chat-input toggle that reuses Open WebUI’s configured search engine and runs a think → search → read loop, then injects cited evidence so the selected model writes the report.',
@@ -52,8 +54,7 @@ export const projects: Project[] = [
       'Chat models answer from a stale cutoff. Built-in web search is one-shot; long research needs a loop that plans, reads, and comes back with citations — without extra API keys.',
     method:
       'Filter function with a message-bar toggle. Each round the model reasons about gaps, issues sub-queries through Open WebUI’s own search_web, optionally fetches pages, and stops when evidence is sufficient. Date-aware prompts keep local models from searching last year’s web.',
-    result:
-      'Published on the Open WebUI community as Deep Research v3.11.2 — 696 downloads. No extra keys — it inherits the instance’s search engine and the chat’s selected model.',
+    result: `Published on the Open WebUI community as Deep Research v3.11.2 — ${numberFormat.format(communityStats.deepResearch.downloads)} downloads. It inherits the instance’s search engine and the chat’s selected model.`,
     description:
       'An Open WebUI filter that adds a Deep Research toggle to the chat input. When on, it plans queries, searches, reads pages, and injects numbered sources so the model you already selected writes a cited report.',
     highlights: [
@@ -64,7 +65,11 @@ export const projects: Project[] = [
     ],
     technologies: ['Python', 'Open WebUI', 'Web search', 'LLM agents'],
     metrics: [
-      { label: 'downloads', value: '696', tone: 'success' },
+      {
+        label: 'downloads',
+        value: numberFormat.format(communityStats.deepResearch.downloads),
+        tone: 'success',
+      },
       { label: 'loop', value: 'think → search → read', tone: 'neutral' },
     ],
     href: 'https://openwebui.com/f/hvbhanot/deep_research',
@@ -112,24 +117,27 @@ export const projects: Project[] = [
     tags: ['statistics', 'deep-learning'],
     abstract:
       'A growing library of verified TensorTonic problem solutions — losses, optimizers, linear algebra, and classical ML — implemented carefully in NumPy/Python.',
-    abstractTex: '\\mathrm{rank}_{\\mathrm{TT}} = 42',
+    abstractTex: '\\hat{\\theta} = \\arg\\min_{\\theta} \\mathcal{L}(\\theta)',
     problem:
       'Interview- and research-grade ML requires re-deriving core operations (batch norm, focal loss, PCA, KL, attention masks) without treating frameworks as oracles.',
     method:
       'Implement each TensorTonic problem against its numerical contract: stable logs, zero-vector edge cases, closed-form regressions, pooling, activations, and schedulers. Solutions are tracked in a public repo with a live verified badge.',
-    result:
-      'Public solution set supporting worldwide rank № 42 on TensorTonic — a reproducible trail of first-principles implementations.',
+    result: `${communityStats.tensorTonic.solved} verified solutions on TensorTonic — ${communityStats.tensorTonic.easy} easy, ${communityStats.tensorTonic.medium} medium, and ${communityStats.tensorTonic.hard} hard problems, with a public implementation trail.`,
     description:
       'Verified machine learning implementations completed on TensorTonic: angle between vectors, batch norm, focal loss, causal masking, covariance, PCA, gradient descent, and dozens more primitives.',
     highlights: [
       'Verified solutions across linear algebra, losses, and training primitives',
       'NumPy-first implementations with numerical stability in mind',
       'Public badge + problem index linked to TensorTonic',
-      'Supports rank № 42 worldwide',
+      `${communityStats.tensorTonic.solved} platform-verified problems solved`,
     ],
     technologies: ['Python', 'NumPy', 'ML fundamentals'],
     metrics: [
-      { label: 'rank', value: '№ 42', tone: 'success' },
+      {
+        label: 'solved',
+        value: String(communityStats.tensorTonic.solved),
+        tone: 'success',
+      },
       { label: 'platform', value: 'TensorTonic', tone: 'neutral' },
     ],
     href: 'https://github.com/hvbhanot/TensorTonic-Solutions',
@@ -143,7 +151,8 @@ export const projects: Project[] = [
     tags: ['automl', 'deep-learning'],
     abstract:
       'Point it at a CSV and an Ollama Cloud model iteratively proposes architectures, hyperparameters, and preprocessing — train, diagnose, revise.',
-    abstractTex: '\\theta^{\\star} = \\arg\\min_{\\theta} \\mathcal{L}(\\theta; \\mathcal{D})',
+    abstractTex:
+      '\\theta^{\\star} = \\arg\\min_{\\theta} \\mathcal{L}(\\theta; \\mathcal{D})',
     problem:
       'Tabular AutoML still requires architecture and hyperparameter search that is tedious to run by hand and hard to keep reproducible across experiments.',
     method:
@@ -174,7 +183,8 @@ export const projects: Project[] = [
     tags: ['agents', 'security'],
     abstract:
       'A multi-agent CTF solver using ReAct reasoning, a 44-tool registry, persistent scratchpad memory, and verification loops — fully local via Ollama (COSC 6338).',
-    abstractTex: '\\mathrm{Planner} \\rightarrow \\mathrm{Specialist} \\rightarrow \\mathrm{Verifier}',
+    abstractTex:
+      '\\mathrm{Planner} \\rightarrow \\mathrm{Specialist} \\rightarrow \\mathrm{Verifier}',
     problem:
       'Beginner-to-intermediate CTF challenges require tool use, memory, and verification. Single-shot LLM answers fail on multi-step exploit chains and cannot call nmap, gdb, or hashcat coherently without structure.',
     method:
@@ -205,7 +215,8 @@ export const projects: Project[] = [
     tags: ['teaching', 'systems'],
     abstract:
       'A FastAPI teaching assistant with Guided Learning and constrained Recall Mode over lecture-uploaded RAG context.',
-    abstractTex: '\\pi(\\mathrm{hint}\\mid \\mathrm{lecture},\\,\\mathrm{mode})',
+    abstractTex:
+      '\\pi(\\mathrm{hint}\\mid \\mathrm{lecture},\\,\\mathrm{mode})',
     problem:
       'Cybersecurity courses need practice modes that teach step-by-step without turning into unrestricted exam assistance.',
     method:
@@ -221,9 +232,7 @@ export const projects: Project[] = [
       'Ollama-compatible model backends',
     ],
     technologies: ['Python', 'FastAPI', 'Ollama', 'RAG'],
-    metrics: [
-      { label: 'modes', value: 'guided + recall', tone: 'neutral' },
-    ],
+    metrics: [{ label: 'modes', value: 'guided + recall', tone: 'neutral' }],
     href: 'https://github.com/hvbhanot/ProfessorTux',
   },
   {
@@ -232,7 +241,7 @@ export const projects: Project[] = [
     subtitle: 'Vision browser control for Open WebUI',
     year: '2026',
     status: 'active',
-    badge: '239 downloads',
+    badge: `${numberFormat.format(communityStats.browserAgent.downloads)} downloads`,
     tags: ['agents', 'vision'],
     abstract:
       'Chrome extension pairing Open WebUI side panel with screenshot-driven navigation and on-page automation.',
@@ -241,8 +250,7 @@ export const projects: Project[] = [
       'Browser agents need grounded visual state; chat-only agents cannot see the page they claim to control.',
     method:
       'Side-panel Open WebUI, screenshot capture, vision-based navigation, and companion Browser Agent tool on the Open WebUI community.',
-    result:
-      'A vision-capable browser agent loop for everyday browsing tasks, published as extension + community tool — 239 downloads on Open WebUI.',
+    result: `A vision-capable browser agent loop for everyday browsing tasks, published as extension + community tool — ${numberFormat.format(communityStats.browserAgent.downloads)} downloads on Open WebUI.`,
     description:
       'A Chrome extension that puts Open WebUI in the browser side panel and gives it vision-based control of the page: screenshot capture, screenshot-driven navigation, and on-page automation — paired with a companion Browser Agent tool published on the Open WebUI community.',
     highlights: [
@@ -251,9 +259,18 @@ export const projects: Project[] = [
       'On-page automation (e.g. quiz solving: select answer, click next)',
       'Companion Browser Agent tool published on openwebui.com',
     ],
-    technologies: ['JavaScript', 'Chrome extension', 'Open WebUI', 'Vision LLMs'],
+    technologies: [
+      'JavaScript',
+      'Chrome extension',
+      'Open WebUI',
+      'Vision LLMs',
+    ],
     metrics: [
-      { label: 'downloads', value: '239', tone: 'success' },
+      {
+        label: 'downloads',
+        value: numberFormat.format(communityStats.browserAgent.downloads),
+        tone: 'success',
+      },
     ],
     href: 'https://github.com/hvbhanot/OI-Browser-Agent',
   },
@@ -285,7 +302,8 @@ export const projects: Project[] = [
     tags: ['deep-learning', 'statistics'],
     abstract:
       'Custom multi-node layers whose parallel sub-networks are concatenated — applied to Iris classification as an architecture study.',
-    abstractTex: 'h = [\\phi_1(x)\\,\\|\\,\\phi_2(x)\\,\\|\\,\\ldots\\,\\|\\,\\phi_k(x)]',
+    abstractTex:
+      'h = [\\phi_1(x)\\,\\|\\,\\phi_2(x)\\,\\|\\,\\ldots\\,\\|\\,\\phi_k(x)]',
     problem:
       'How does layer shape — parallel processing nodes whose outputs are concatenated — affect learning on a small classical dataset?',
     method:
@@ -313,7 +331,8 @@ export const projects: Project[] = [
     year: '2024',
     status: 'archived',
     tags: ['statistics'],
-    abstract: 'Collaborative ML pipeline for late-game sports decision contexts.',
+    abstract:
+      'Collaborative ML pipeline for late-game sports decision contexts.',
     description:
       'A collaborative ML project modeling decision-making in late-game, high-leverage sports scenarios. Built the data preprocessing, feature engineering, and model-evaluation pipeline alongside collaborators.',
     highlights: [
@@ -387,7 +406,8 @@ export const projects: Project[] = [
     year: '2024',
     status: 'archived',
     tags: ['systems'],
-    abstract: 'Genesis block, PoW mining, chain validation, and Flask endpoints.',
+    abstract:
+      'Genesis block, PoW mining, chain validation, and Flask endpoints.',
     description:
       'A basic blockchain implementation: a genesis block, proof-of-work mining, chain validation, and a small Flask web interface to mine blocks, fetch the chain, and verify its integrity.',
     highlights: [

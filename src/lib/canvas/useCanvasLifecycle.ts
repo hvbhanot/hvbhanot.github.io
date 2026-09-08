@@ -8,7 +8,8 @@ export type CanvasColors = {
 
 export function readColors(): CanvasColors {
   const cs = getComputedStyle(document.documentElement);
-  const rgb = (name: string, fb: string) => cs.getPropertyValue(name).trim() || fb;
+  const rgb = (name: string, fb: string) =>
+    cs.getPropertyValue(name).trim() || fb;
   return {
     ink: rgb('--ink-rgb', '232, 232, 232'),
     accents: {
@@ -21,7 +22,12 @@ export function readColors(): CanvasColors {
 }
 
 export type UseCanvasLifecycleOptions = {
-  draw: (ctx: CanvasRenderingContext2D, t: number, colors: CanvasColors, size: { w: number; h: number }) => void;
+  draw: (
+    ctx: CanvasRenderingContext2D,
+    t: number,
+    colors: CanvasColors,
+    size: { w: number; h: number },
+  ) => void;
   /** When true, request exclusive autoplay lock for continuous rAF */
   autoplay?: boolean;
   lockId?: string;
@@ -46,7 +52,9 @@ export function useCanvasLifecycle(
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
     let raf = 0;
     let running = false;
     let visible = false;
@@ -81,6 +89,10 @@ export function useCanvasLifecycle(
     };
 
     const start = () => {
+      if (!autoplay) {
+        paint();
+        return;
+      }
       if (running || prefersReduced || !visible) return;
       if (autoplay && !canAutoplay()) {
         paint();
@@ -106,7 +118,9 @@ export function useCanvasLifecycle(
 
     const visibility = new IntersectionObserver(
       ([entry]) => {
-        visible = entry.isIntersecting && entry.intersectionRatio >= (autoplay ? 0.5 : 0.01);
+        visible =
+          entry.isIntersecting &&
+          entry.intersectionRatio >= (autoplay ? 0.5 : 0.01);
         if (visible && !prefersReduced) start();
         else {
           stop();

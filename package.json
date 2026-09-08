@@ -9,7 +9,11 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "start": "serve -s dist -l tcp://0.0.0.0:${PORT:-4321}",
-    "test:scene": "playwright test tests/portfolio-scene.spec.js"
+    "test:scene": "playwright test tests/portfolio-scene.spec.js",
+    "stats:refresh": "node scripts/refresh-stats.mjs",
+    "test:stats": "node --test tests/community-stats.test.mjs",
+    "build:sites": "npm run build && node scripts/package-sites-build.mjs",
+    "test:math": "node --test tests/parametric-surfaces.test.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.0.0",
