@@ -9,9 +9,13 @@ import {
 } from 'react';
 import { motion, reveal, fadeUp, reduced, easeOut } from './lib/motion';
 import {
-  ArrowDown,
   ArrowUpRight,
   ArrowUp,
+  Github,
+  FlaskConical,
+  Sparkles,
+  Terminal,
+  GraduationCap,
   Check,
   Copy,
   Pause,
@@ -20,6 +24,8 @@ import {
   X,
 } from 'lucide-react';
 import ScrollProgress from './components/nav/ScrollProgress';
+import MagnetTabs from './components/ui/MagnetTabs';
+import ArrowFillButton from './components/ui/ArrowFillButton';
 import ThemeToggle from './components/nav/ThemeToggle';
 import HeroCanvas, {
   surfaces,
@@ -110,7 +116,7 @@ function Clock() {
 }
 
 function TopBar({ onMenu }: { onMenu: () => void }) {
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState('#top');
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -119,7 +125,7 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
       },
       { rootMargin: '-10% 0px -65% 0px' },
     );
-    navItems.forEach((item) => {
+    [{ href: '#top' }, ...navItems].forEach((item) => {
       const section = document.querySelector(item.href);
       if (section) observer.observe(section);
     });
@@ -132,29 +138,19 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
         className="wordmark"
         aria-label="Harsh Vardhan Bhanot — home"
       >
-        <span className="logo-bracket">[</span>hvb
-        <span className="logo-bracket">]</span>
-        <span className="wordmark-note">
-          INDEPENDENT THINKING.
-          <br />
-          APPLIED MATHEMATICS.
+        <Terminal className="wordmark-icon" size={20} strokeWidth={1.5} aria-hidden="true" />
+        <span className="wordmark-name">
+          {profile.name}
+          <span>Statistics / Computer Science</span>
         </span>
       </a>
       <nav className="topbar-nav" aria-label="Primary">
-        {navItems.map((item, i) => (
-          <a
-            key={item.href}
-            href={item.href}
-            aria-current={active === item.href ? 'location' : undefined}
-          >
-            <span>0{i + 1}</span>
-            {item.label}
-          </a>
-        ))}
+        <MagnetTabs slug="primary" label="Navigate portfolio" activeTab={active} onSelect={setActive}
+          options={[{ id: '#top', href: '#top', label: 'Home' }, ...navItems.map(item => ({ id: item.href, ...item }))]} />
       </nav>
       <div className="topbar-actions">
-        <Clock />
         <ThemeToggle />
+        <a className="header-contact" href={`mailto:${profile.email}`}>Let’s talk <ArrowUpRight size={15} /></a>
         <button
           className="menu-button"
           aria-haspopup="dialog"
@@ -241,45 +237,32 @@ function Hero() {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero-topline">
-        <span>
-          <span className="status-dot" />
-          STATISTICS × COMPUTER SCIENCE
-        </span>
-        <span>33.5779° N / 101.8552° W</span>
+        <span><span className="status-dot" /> A PERSONAL LAB FOR IDEAS THAT WORK</span>
+        <Clock />
       </div>
       <div className="hero-stage">
-        <motion.div
-          className="hero-copy"
+        <motion.div className="hero-copy"
           initial={reduced ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: easeOut }}
-        >
-          <p className="hero-intro">HARSH VARDHAN BHANOT</p>
-          <h1 id="hero-title">
-            THINK
-            <br />
-            IN <span className="outline-word">MATH.</span>
-            <br />
-            <span className="blue-word">BUILD</span>
-            <br />
-            IN CODE<span className="title-period">.</span>
-          </h1>
-          <p className="hero-sub">
-            I turn statistical ideas into AI systems.
-            <br />
-            From first principles to something you can run.
-          </p>
-          <a className="hero-cta" href="#research">
-            <span>Explore my work</span>
-            <span className="button-square">
-              <ArrowDown size={20} aria-hidden="true" />
-            </span>
-          </a>
+          animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: easeOut }}>
+          <p className="hero-intro"><span className="intro-rule" /> HARSH VARDHAN BHANOT</p>
+          <h1 id="hero-title"><span>Think in math.</span><span className="accent-word">Build in code.</span></h1>
+          <p className="hero-sub">I explore the space between statistical thinking<br className="desktop-break" /> and intelligent systems. Then I build things<br className="desktop-break" /> that make the ideas real.</p>
+          <div className="hero-links">
+            <ArrowFillButton href="#research">Explore my work</ArrowFillButton>
+            <a className="hero-secondary" href={profile.github} target="_blank" rel="noreferrer"><Github size={17} /> GitHub <ArrowUpRight size={14} /></a>
+          </div>
+          <div className="hero-academic">
+            <GraduationCap size={18} strokeWidth={1.5} aria-hidden="true" />
+            <div className="academic-details">
+              <p>M.S. Statistics <span className="degree-divider" aria-hidden="true">/</span> M.S. Computer Science</p>
+              <span>Texas Tech University · Concurrent degrees</span>
+            </div>
+          </div>
         </motion.div>
         <div className="surface-stage">
           <div className="surface-top">
-            <span>OBJECT 0{Object.keys(surfaces).indexOf(kind) + 1}</span>
-            <span>ℝ³ / PARAMETRIC GEOMETRY</span>
+            <span><span className="status-dot" /> THE SHAPE OF AN IDEA</span>
+            <span>LIVE / 0{Object.keys(surfaces).indexOf(kind) + 1}</span>
           </div>
           <HeroCanvas kind={kind} radius={radius} playing={playing} />
           <div className="surface-overlay" aria-hidden="true">
@@ -296,23 +279,9 @@ function Hero() {
             </span>
           </div>
           <div className="surface-toolbar">
-            <div
-              className="surface-selector"
-              role="group"
-              aria-label="Mathematical surface"
-            >
-              {(Object.keys(surfaces) as SurfaceKind[]).map((surface, i) => (
-                <button
-                  type="button"
-                  key={surface}
-                  aria-pressed={kind === surface}
-                  onClick={() => setKind(surface)}
-                >
-                  <span>0{i + 1}</span>
-                  {surfaces[surface].label}
-                </button>
-              ))}
-            </div>
+            <MagnetTabs slug="surface" className="surface-selector" label="Mathematical surface"
+              activeTab={kind} onSelect={(value) => setKind(value as SurfaceKind)}
+              options={(Object.keys(surfaces) as SurfaceKind[]).map(id => ({ id, label: surfaces[id].label }))} />
             <button
               className="surface-pause"
               type="button"
@@ -353,18 +322,9 @@ function Hero() {
         </div>
       </div>
       <div className="hero-bottom">
-        <p>
-          DUAL M.S. STUDENT
-          <span>Statistics + Computer Science / Texas Tech University</span>
-        </p>
-        <p className="hero-domain">
-          MODEL THE PROBLEM.
-          <br />
-          <span>MAKE THE SYSTEM WORK.</span>
-        </p>
-        <a href="#stats" className="hero-lab-link">
-          Enter the math lab <ArrowUpRight size={16} />
-        </a>
+        <p><span className="bottom-label">CURRENTLY EXPLORING</span></p>
+        <div className="interest-list"><span>Agentic systems</span><span>Statistical learning</span><span>Scientific computing</span></div>
+        <a href="#stats" className="hero-lab-link"><FlaskConical size={15} /> A little less theory. Try the lab. <ArrowUpRight size={14} /></a>
       </div>
     </section>
   );
@@ -408,52 +368,20 @@ function Research({ onOpen }: { onOpen: (project: Project) => void }) {
       className="section research-section"
       aria-labelledby="research-title"
     >
-      <SectionLabel number="01">Applied thinking</SectionLabel>
+      <SectionLabel number="01">Selected work</SectionLabel>
       <div className="section-heading">
-        <h2 id="research-title">
-          SELECTED
-          <br />
-          <span className="heading-offset">
-            SYSTEMS<span className="heading-period">.</span>
-          </span>
-        </h2>
-        <p>
-          Questions, translated into working software.
-          <br />
-          Agents, learning systems, scientific tools.
-          <br />
-          <span>Open the project. Inspect the method.</span>
-        </p>
+        <h2 id="research-title">Ideas, put to work<span className="accent-word">.</span></h2>
+        <p>Open-source systems. Research in progress.<br />A few things I’ve been thinking about and building.</p>
       </div>
       <div className="research-toolbar">
-        <div
-          className="tag-filter"
-          role="group"
-          aria-label="Filter research by tag"
-        >
-          <button
-            type="button"
-            aria-pressed={!tag}
-            onClick={() => setTag(null)}
-          >
-            All <span>({featured.length})</span>
-          </button>
-          {researchTags.map((t) => (
-            <button
-              type="button"
-              key={t}
-              aria-pressed={tag === t}
-              onClick={() => setTag(t)}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
+        <MagnetTabs slug="research" className="tag-filter" label="Filter research by tag"
+          activeTab={tag ?? 'all'} onSelect={(value) => setTag(value === 'all' ? null : value)}
+          options={[{ id: 'all', label: `All work (${featured.length})` }, ...researchTags.filter(t => featured.some(p => p.tags?.includes(t))).map(t => ({ id: t, label: t === 'deep-learning' ? 'Deep learning' : t.charAt(0).toUpperCase() + t.slice(1) }))]} />
         <span className="toolbar-note">
           {String(filtered.length).padStart(2, '0')} PROJECTS
         </span>
       </div>
-      <div className="research-index" id="research-index">
+      <div className="research-index" id="research-index" aria-live="polite">
         {visible.map((project) => {
           const kind = plotKinds[featured.indexOf(project) % plotKinds.length];
           return (
@@ -465,12 +393,13 @@ function Research({ onOpen }: { onOpen: (project: Project) => void }) {
               aria-haspopup="dialog"
             >
               <span className="project-art">
+                <span className="card-glow" aria-hidden="true" />
                 <span className="art-topline">
                   <span>
                     {project.catalog} / {project.year}
                   </span>
                   <span>
-                    {project.spotlight ? 'FEATURED' : 'CONCEPT STUDY'}
+                    {project.spotlight ? '✦ FEATURED' : 'CONCEPT STUDY'}
                   </span>
                 </span>
                 <ProjectPlot kind={kind} />
@@ -487,7 +416,7 @@ function Research({ onOpen }: { onOpen: (project: Project) => void }) {
                       }[kind]
                     }
                   </span>
-                  <span>+</span>
+                  <span className="project-open">Explore <ArrowUpRight size={13} /></span>
                 </span>
               </span>
               <span className="project-copy">
@@ -580,9 +509,9 @@ function Community() {
     >
       <div className="community-heading">
         <h2 id="community-title">
-          A FEW
+          Built in the open.
           <br />
-          REAL NUMBERS.
+          Used in the real world.
         </h2>
         <a
           href={openWebui.href}
@@ -618,7 +547,7 @@ function Community() {
       </div>
       <p className="source-note">
         <span>PUBLICLY VERIFIABLE / SOURCE LINKS ABOVE</span>
-        <span>LAST CHECKED {statsCheckedLabel.toUpperCase()}</span>
+        <span>LAST CHECKED {statsCheckedLabel.toUpperCase()} UTC</span>
       </p>
     </aside>
   );
@@ -631,23 +560,21 @@ function About() {
       className="section about-section"
       aria-labelledby="about-title"
     >
-      <SectionLabel number="02">Behind the systems</SectionLabel>
+      <SectionLabel number="02">A bit about me</SectionLabel>
       <div className="about-intro">
         <h2 id="about-title">
-          THE HUMAN
-          <br />
-          IN THE <span className="outline-word">LOOP.</span>
+          The human<br />behind the systems<span className="accent-word">.</span>
         </h2>
         <div className="about-bio">
           <p className="about-name">Harsh Vardhan Bhanot.</p>
           <p>{profile.bio}</p>
           <a
-            href="/Resume_Bhanot_HarshVardhan.pdf"
+            href={profile.linkedin}
             target="_blank"
             rel="noreferrer"
             className="text-link"
           >
-            View résumé <ArrowUpRight size={18} />
+            More about my background <ArrowUpRight size={18} />
           </a>
         </div>
       </div>
@@ -749,9 +676,7 @@ function StatsPlayground() {
       </SectionLabel>
       <motion.div className="section-heading" {...reveal}>
         <motion.h2 id="playground-title" variants={fadeUp}>
-          CHANGE A VARIABLE.
-          <br />
-          <span className="blue-word">CHANGE YOUR MIND.</span>
+          Less abstract.<br /><span className="accent-word">More hands-on.</span>
         </motion.h2>
         <motion.p variants={fadeUp}>
           A formula is a starting point.
@@ -860,12 +785,10 @@ function Contact() {
       className="section contact"
       aria-labelledby="contact-title"
     >
-      <SectionLabel number="04">Contact / An open problem</SectionLabel>
+      <SectionLabel number="04">Let’s connect</SectionLabel>
       <div className="contact-spread">
         <h2 id="contact-title">
-          LET’S SOLVE
-          <br />
-          <span className="contact-outline">SOMETHING.</span>
+          Good questions.<br /><span className="accent-word">Great conversations.</span>
         </h2>
         <div className="contact-invitation">
           <p>
@@ -904,7 +827,7 @@ function Contact() {
       </div>
       <div className="colophon">
         <span>HVB / STATISTICS × COMPUTER SCIENCE</span>
-        <span aria-hidden="true">Curiosity is the constant. ∞</span>
+        <span className="footer-note"><Sparkles size={12} aria-hidden="true" /> Curiosity is the constant.</span>
       </div>
     </footer>
   );

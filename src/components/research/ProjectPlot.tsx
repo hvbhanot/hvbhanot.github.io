@@ -11,10 +11,10 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
   useCanvasLifecycle(ref, {
     autoplay: false,
     deps: [kind],
-    draw: (ctx, _t, _colors, { w, h }) => {
+    draw: (ctx, _t, colors, { w, h }) => {
       ctx.clearRect(0, 0, w, h);
-      const blue = '#315bfc';
-      const ink = '#14171c';
+      const blue = `rgb(${colors.accents.prob})`;
+      const ink = `rgb(${colors.ink})`;
       const random = mulberry32(71);
       const cx = w / 2,
         cy = h / 2;
@@ -23,7 +23,7 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
         ay: number,
         bx: number,
         by: number,
-        color = 'rgba(20,23,28,0.16)',
+        color = `rgba(${colors.ink},0.16)`,
       ) => {
         ctx.beginPath();
         ctx.moveTo(ax, ay);
@@ -39,10 +39,10 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
         ctx.fill();
       };
       ctx.font = '9px "IBM Plex Mono", monospace';
-      ctx.fillStyle = '#707580';
+      ctx.fillStyle = `rgba(${colors.ink},.5)`;
       for (let x = 20; x < w; x += 22)
         for (let y = 18; y < h; y += 22) {
-          ctx.fillStyle = 'rgba(20,23,28,.12)';
+          ctx.fillStyle = `rgba(${colors.ink},.12)`;
           ctx.fillRect(x, y, 1, 1);
         }
       if (kind === 'network' || kind === 'tree' || kind === 'routing') {
@@ -77,7 +77,7 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
             line(a.x, a.y, p.x, p.y, blue);
           }
         });
-        ctx.fillStyle = '#707580';
+        ctx.fillStyle = `rgba(${colors.ink},.5)`;
         ctx.fillText('INPUT', w * 0.18 - 15, h - 22);
         ctx.fillText(
           kind === 'tree' ? 'VERIFIED' : 'OUTPUT',
@@ -92,7 +92,7 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
         for (let i = 0; i < count; i++)
           for (let j = 0; j < count; j++) {
             const value = Math.exp(-Math.abs(i - j) * 0.55);
-            ctx.fillStyle = `rgba(49,91,252,${0.07 + value * 0.88})`;
+            ctx.fillStyle = `rgba(${colors.accents.prob},${0.07 + value * 0.88})`;
             ctx.fillRect(left + i * cell, top + j * cell, cell - 3, cell - 3);
           }
         ctx.strokeStyle = ink;
@@ -120,7 +120,7 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
             0,
             Math.PI * 2,
           );
-          ctx.strokeStyle = 'rgba(20,23,28,.22)';
+          ctx.strokeStyle = `rgba(${colors.ink},.22)`;
           ctx.lineWidth = 0.8;
           ctx.stroke();
         }
@@ -147,7 +147,7 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
             else ctx.lineTo(x, y);
           }
           ctx.strokeStyle =
-            k === 0 ? blue : `rgba(20,23,28,${0.12 + random() * 0.18})`;
+            k === 0 ? blue : `rgba(${colors.ink},${0.12 + random() * 0.18})`;
           ctx.lineWidth = k === 0 ? 1.5 : 0.8;
           ctx.stroke();
         }

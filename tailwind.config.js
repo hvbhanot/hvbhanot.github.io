@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['"Manrope"', 'Inter', 'system-ui', 'sans-serif'],
         body: [
-          '"Space Grotesk"',
+          '"Manrope"',
           'Inter',
           'system-ui',
           '-apple-system',
@@ -24,22 +24,22 @@ export default {
         ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       colors: {
-        // Computational geometry — keep in sync with :root in src/index.css
+        // Graphite and emerald — keep in sync with :root in src/index.css
         bg: {
-          DEFAULT: '#08090c',
-          raise: '#101217',
+          DEFAULT: '#111513',
+          raise: '#191f1c',
         },
-        line: 'rgba(240, 242, 246, 0.15)',
+        line: 'rgba(232, 241, 236, 0.15)',
         ink: {
-          DEFAULT: '#f0f2f6',
-          dim: '#a4aab7',
-          faint: '#878e9e',
+          DEFAULT: '#e8f1ec',
+          dim: '#a4b5ab',
+          faint: '#8fa297',
         },
         accent: {
-          prob: '#668eff',
-          gd: '#668eff',
-          proof: '#86c7bd',
-          math: '#bc9bfa',
+          prob: '#47d7a0',
+          gd: '#47d7a0',
+          proof: '#b1e1c3',
+          math: '#6fc4bf',
         },
       },
     },
