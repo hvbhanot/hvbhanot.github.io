@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useScroll, useTransform } from 'framer-motion';
-import { ArrowDownRight, ArrowRight } from 'lucide-react';
+import { ArrowDownRight, ArrowRight, Plus } from 'lucide-react';
 import { motion, reduced } from '../lib/motion';
 import Equation from './math/Equation';
 import ProjectPlot, { type PlotKind } from './research/ProjectPlot';
@@ -59,6 +59,23 @@ export default function ThoughtTrail() {
               </article>
             ))}
           </motion.div>
+        </div>
+        <div className="thought-mobile">
+          <p className="thought-mobile-hint">Three ideas I keep coming back to. Tap to explore.</p>
+          {chapters.map((chapter, index) => (
+            <details className="thought-note" key={chapter.note} name="mobile-thoughts">
+              <summary>
+                <span className="thought-note-number">0{index + 1}</span>
+                <span>{['Start with a question', 'Learn, adjust, repeat', 'Make the pieces connect'][index]}</span>
+                <Plus size={18} aria-hidden="true" />
+              </summary>
+              <div className="thought-note-content">
+                <p>{chapter.text}</p>
+                <Equation tex={chapter.equation} display className="thought-equation" />
+                <ProjectPlot kind={chapter.kind} />
+              </div>
+            </details>
+          ))}
         </div>
         {horizontal && <div className="thought-progress" aria-hidden="true"><motion.span style={{ scaleX: scrollYProgress }} /></div>}
         <p className="thought-endnote">different rabbit holes. the same curiosity.</p>

@@ -250,7 +250,7 @@ function Hero() {
         </div>
       </div>
       <div className="hero-introduction">
-        <motion.div initial={reduced ? false : { opacity: 0, y: 18 }}
+        <motion.div className="hero-heading" initial={reduced ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: easeOut }}>
           <p className="hero-eyebrow">HARSH VARDHAN BHANOT / AN OPEN NOTEBOOK</p>
           <h1 id="hero-title">the anatomy of a<br /><em className="scribbled-title">mathematical mind.<Scribble kind="underline" className="title-underline" /></em></h1>
@@ -643,6 +643,15 @@ function StatsPlayground() {
         </motion.p>
       </motion.div>
       <div className="experiment-workbench">
+        <label className="mobile-experiment-picker" htmlFor="mobile-experiment">
+          Choose an experiment
+          <select id="mobile-experiment" value={active}
+            onChange={(event) => setActive(Number(event.target.value))}>
+            {playgroundExperiments.map((exp, index) => (
+              <option key={exp.id} value={index}>{exp.title}</option>
+            ))}
+          </select>
+        </label>
         <div
           className="experiment-index"
           role="tablist"
