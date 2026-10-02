@@ -799,3 +799,78 @@ main:focus { outline: none; }
 @media (prefers-reduced-motion: reduce) {
   .paper-button:hover { transform: none; }
 }
+
+/* Loose pen work: annotations and outlines, with readable body copy. */
+body {
+  background-image: radial-gradient(rgba(var(--ink-rgb), .04) .55px, transparent .8px);
+  background-size: 5px 5px;
+}
+.scribble-mark { display: block; pointer-events: none; }
+.wordmark-name { font-family: var(--font-hand); font-size: 39px; letter-spacing: -1px; }
+.topbar-nav { font: 19px var(--font-hand); }
+.topbar-nav a:nth-child(2n) { transform: rotate(-2deg); }
+.topbar-nav a::after { height: 5px; background: none; border-bottom: 1.4px solid; border-radius: 45%; bottom: 6px; }
+.theme-toggle,.surface-pause { border-radius: 47% 53% 46% 54% / 54% 43% 57% 46%; border-color: var(--line-strong); }
+.hero-note { font-size: 24px; }
+.note-arrow { width: 105px; height: 85px; margin: 0 0 0 -48px; transform: rotate(8deg); }
+.math-scribble { font-family: var(--font-hand); font-style: normal; font-size: 25px; }
+.scribble-one { top: 11%; left: 15%; }
+.scribble-two { right: 6%; bottom: 24%; font-size: 21px; }
+.margin-doodle { position: absolute; left: 6%; top: 30%; width: 135px; transform: rotate(-9deg); pointer-events: none; }
+.margin-tangle { width: 135px; height: 105px; }
+.margin-doodle > span { display: block; text-align: center; font: 18px var(--font-hand); color: var(--ink-faint); transform: rotate(4deg); }
+.hero-star { position: absolute; right: 10%; bottom: 9%; width: 45px; height: 49px; transform: rotate(15deg); }
+.hero h1 em { font-family: var(--font-hand); font-style: normal; font-size: .94em; letter-spacing: -.035em; line-height: 1.2; }
+.scribbled-title { display: inline-block; position: relative; max-width: 100%; padding-bottom: 9px; }
+.title-underline { position: absolute; left: -1%; bottom: -4px; width: 102%; height: 22px; }
+.paper-button { position: relative; font: 18px var(--font-hand); border-radius: 3px 11px 4px 13px / 10px 3px 12px 4px; }
+.paper-button::after { content: ''; position: absolute; inset: 3px -3px -3px 2px; border: 1px solid var(--line-strong); border-radius: 8px 3px 11px 3px / 3px 9px 4px 12px; pointer-events: none; }
+.paper-button:first-child { transform: rotate(-1.5deg); }
+.paper-button-dark { transform: rotate(1deg); }
+.paper-button:hover { transform: translateY(-3px) rotate(-1deg); }
+.hero-footnote { border-top-style: dashed; }
+.scroll-cue,.surface-settings summary { font: 16px var(--font-hand); }
+.surface-settings-content { border-radius: 7px 3px 9px 2px / 3px 9px 4px 12px; }
+.section h2 em,.thought-copy h3 em { font-family: var(--font-hand); font-style: normal; line-height: 1.15; letter-spacing: -.025em; }
+.section-label { font: 19px var(--font-hand); letter-spacing: 0; }
+.section-label > span { display: inline-grid; place-items: center; width: 30px; height: 29px; border: 1px solid var(--line-strong); border-radius: 47% 53% 43% 57% / 56% 44% 52% 48%; font: 14px var(--font-hand); transform: rotate(-8deg); }
+.thought-number { font: 16px var(--font-hand); letter-spacing: .3px; }
+.thought-figure figcaption { font-size: 23px; }
+.thought-endnote { text-decoration: underline; text-decoration-style: wavy; text-decoration-thickness: 1px; text-underline-offset: 7px; }
+.research-card { border-radius: 4px 13px 5px 17px / 14px 5px 12px 4px; border-color: var(--line-strong); background: var(--bg-sunken); box-shadow: 3px 4px 0 rgba(var(--ink-rgb),.07); }
+.research-card:nth-child(3n + 1) { transform: rotate(-.35deg); }
+.research-card:nth-child(3n + 2) { transform: rotate(.4deg); }
+.research-card:is(:hover,:focus-visible) { transform: translateY(-4px) rotate(0); }
+.project-art { background: transparent; border-bottom-style: dashed; }
+.project-open { font: 16px var(--font-hand); }
+.tag-filter .magnet-option { font: 17px var(--font-hand); }
+.tag-filter .magnet-highlight { background: transparent; border: 1px solid var(--ink-dim); border-radius: 46% 54% 48% 52% / 55% 42% 58% 45%; transform: rotate(-2deg); }
+.intersection-panel,.experiment-workbench,.index-expand { border-radius: 4px 14px 5px 9px / 13px 4px 11px 3px; }
+.venn-circle { border-radius: 49% 51% 45% 55% / 55% 43% 57% 45%; }
+.venn-circle::after { content: ''; position: absolute; inset: 2px -3px -2px 1px; border: 1px solid currentColor; border-radius: 51% 49% 53% 47% / 47% 54% 46% 53%; opacity: .3; pointer-events: none; }
+.community-section { border-block-style: dashed; }
+.contact h2 em { position: relative; text-decoration: underline; text-decoration-style: wavy; text-decoration-thickness: 1px; text-underline-offset: 9px; }
+@media (max-width: 1100px) {
+  .margin-doodle { left: 2%; width: 100px; }
+  .margin-tangle { width: 100px; height: 86px; }
+  .scribble-one { left: 9%; font-size: 21px; }
+  .hero-note { font-size: 21px; }
+}
+@media (max-width: 600px) {
+  .hero-note { font-size: 17px; }
+  .note-arrow { width: 67px; height: 53px; margin-left: -10px; }
+  .hero-star { width: 28px; height: 32px; right: 2%; bottom: 15%; }
+  .margin-doodle { width: 67px; left: 0; top: 10%; transform: rotate(-12deg); }
+  .margin-tangle { width: 67px; height: 56px; }
+  .margin-doodle > span { font-size: 12px; }
+  .scribble-two { font-size: 16px; right: 0; bottom: 63px; }
+  .paper-button { font-size: 17px; }
+  .title-underline { height: 15px; }
+  .section-label { font-size: 17px; }
+  .tag-filter .magnet-option { font-size: 15px; }
+  .research-card:nth-child(n) { transform: none; }
+  .thought-figure figcaption { font-size: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paper-button:hover,.research-card:is(:hover,:focus-visible) { transform: none; }
+}

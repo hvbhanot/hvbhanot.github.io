@@ -26,16 +26,16 @@ export default function HeroCanvas({
   const paths = useMemo(() => {
     const result: Point[][] = [];
     const tau = Math.PI * 2;
-    for (let i = 0; i <= 42; i++) {
+    for (let i = 0; i <= 22; i++) {
       const path: Point[] = [];
       for (let j = 0; j <= 92; j++)
-        path.push(surfacePoint(kind, (tau * j) / 92, (tau * i) / 42, radius));
+        path.push(surfacePoint(kind, (tau * j) / 92, (tau * i) / 22, radius));
       result.push(path);
     }
-    for (let i = 0; i <= 64; i++) {
+    for (let i = 0; i <= 30; i++) {
       const path: Point[] = [];
       for (let j = 0; j <= 38; j++)
-        path.push(surfacePoint(kind, (tau * i) / 64, (tau * j) / 38, radius));
+        path.push(surfacePoint(kind, (tau * i) / 30, (tau * j) / 38, radius));
       result.push(path);
     }
     return result;
@@ -68,15 +68,20 @@ export default function HeroCanvas({
           depth: zz,
         };
       };
-      const line = (points: Point[], color: string, width = 0.65) => {
+      const line = (points: Point[], color: string, width = 0.65, pen = 0, seed = 0) => {
         ctx.beginPath();
         points.forEach((point, i) => {
           const p = project(point);
+          // Fixed pen variation avoids random flicker while rotating or pausing.
+          p.x += pen * (Math.sin(i * .53 + seed) + .4 * Math.sin(i * 1.71));
+          p.y += pen * (Math.cos(i * .47 + seed) + .35 * Math.sin(i * 1.37));
           if (i === 0) ctx.moveTo(p.x, p.y);
           else ctx.lineTo(p.x, p.y);
         });
         ctx.strokeStyle = color;
         ctx.lineWidth = width;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
         ctx.stroke();
       };
       // A true coordinate plane establishes the object's orientation.
@@ -106,7 +111,7 @@ export default function HeroCanvas({
         line([[0, 0, 0], end], `rgba(${colors.ink},0.25)`);
         ctx.setLineDash([]);
         const p = project(end);
-        ctx.font = '10px "IBM Plex Mono", monospace';
+        ctx.font = '15px "Patrick Hand", cursive';
         ctx.fillStyle = `rgba(${colors.ink},0.55)`;
         ctx.fillText(['x', 'y', 'z'][i], p.x + 6, p.y - 7);
       });
@@ -118,8 +123,13 @@ export default function HeroCanvas({
         line(
           path,
           `rgba(${colors.accents.prob},${alpha})`,
-          i % 7 === 0 ? 1 : 0.6,
+          i % 5 === 0 ? 1.15 : 0.75,
+          .85,
+          i * 2.31,
         );
+        if (i % 4 === 0) {
+          line(path, `rgba(${colors.accents.prob},.19)`, .65, 1.8, i * 2.31 + 2);
+        }
       });
       const origin = project([0, 0, 0]);
       ctx.fillStyle = `rgba(${colors.ink},0.7)`;

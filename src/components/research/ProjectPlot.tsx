@@ -27,9 +27,11 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
       ) => {
         ctx.beginPath();
         ctx.moveTo(ax, ay);
-        ctx.lineTo(bx, by);
+        const pen = Math.sin(ax * .13 + by * .17) * 1.7;
+        ctx.quadraticCurveTo((ax + bx) / 2 + pen, (ay + by) / 2 - pen, bx, by);
         ctx.strokeStyle = color;
-        ctx.lineWidth = 0.8;
+        ctx.lineWidth = 1;
+        ctx.lineCap = 'round';
         ctx.stroke();
       };
       const point = (x: number, y: number, radius = 3, color = blue) => {
@@ -123,6 +125,12 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
           ctx.strokeStyle = `rgba(${colors.ink},.22)`;
           ctx.lineWidth = 0.8;
           ctx.stroke();
+          if (n % 2 === 0) {
+            ctx.beginPath();
+            ctx.ellipse(cx + 1.4, cy - .8, n * w * .034 + .8, n * h * .03 + 1, -.46, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(${colors.ink},.1)`;
+            ctx.stroke();
+          }
         }
         let x = w * 0.22,
           y = h * 0.23;
@@ -142,7 +150,8 @@ export default function ProjectPlot({ kind }: { kind: PlotKind }) {
             const x = w * 0.1 + (i / 160) * w * 0.8;
             const y =
               cy +
-              Math.sin((i / 160) * Math.PI * 4 + k * 0.35) * (h * 0.22 - k * 3);
+              Math.sin((i / 160) * Math.PI * 4 + k * 0.35) * (h * 0.22 - k * 3) +
+              Math.sin(i * .39 + k * 1.7) * .65;
             if (i === 0) ctx.moveTo(x, y);
             else ctx.lineTo(x, y);
           }

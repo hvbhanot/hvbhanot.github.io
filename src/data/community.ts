@@ -1,26 +1,26 @@
 /** Public-source snapshot. Refresh with `npm run stats:refresh`. */
 export const communityStats = {
-  "checkedAt": "2026-09-21",
+  "checkedAt": "2026-10-02",
   "openWebui": {
     "href": "https://openwebui.com/u/hvbhanot",
     "contributions": 17,
-    "contributionPercentile": 0.653,
-    "points": 42
+    "contributionPercentile": 0.651,
+    "points": 43
   },
   "deepResearch": {
     "href": "https://openwebui.com/f/hvbhanot/deep_research",
-    "downloads": 1025
+    "downloads": 1087
   },
   "browserAgent": {
     "href": "https://openwebui.com/t/hvbhanot/oi_browser_agent",
-    "downloads": 295
+    "downloads": 303
   },
   "tensorTonic": {
     "href": "https://www.tensortonic.com/api/badge/hvbhanot.svg",
-    "solved": 159,
+    "solved": 163,
     "easy": 101,
-    "medium": 49,
-    "hard": 9
+    "medium": 51,
+    "hard": 11
   }
 };
 

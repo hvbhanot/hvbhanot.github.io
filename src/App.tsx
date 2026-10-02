@@ -22,6 +22,7 @@ import {
 import ScrollProgress from './components/nav/ScrollProgress';
 import MagnetTabs from './components/ui/MagnetTabs';
 import ThoughtTrail from './components/ThoughtTrail';
+import Scribble from './components/Scribble';
 import ThemeToggle from './components/nav/ThemeToggle';
 import HeroCanvas, {
   surfaces,
@@ -230,7 +231,9 @@ function Hero() {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero-drawing">
-        <p className="margin-note hero-note">a few things on my mind.<br />all somehow connected.<span aria-hidden="true">↙</span></p>
+        <p className="margin-note hero-note">a few things on my mind.<br />all somehow connected.<Scribble kind="arrow" className="note-arrow" /></p>
+        <div className="margin-doodle" aria-hidden="true"><Scribble className="margin-tangle" /><span>the first draft</span></div>
+        <Scribble kind="star" className="hero-star" />
         <span className="math-scribble scribble-one" aria-hidden="true">∫ curiosity dx</span>
         <span className="math-scribble scribble-two" aria-hidden="true">P(idea | coffee) ≈ 1</span>
         <span className="figure-label">FIG. 01 / A THOUGHT, TAKING SHAPE</span>
@@ -250,7 +253,7 @@ function Hero() {
         <motion.div initial={reduced ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: easeOut }}>
           <p className="hero-eyebrow">HARSH VARDHAN BHANOT / AN OPEN NOTEBOOK</p>
-          <h1 id="hero-title">the anatomy of a<br /><em>mathematical mind.</em></h1>
+          <h1 id="hero-title">the anatomy of a<br /><em className="scribbled-title">mathematical mind.<Scribble kind="underline" className="title-underline" /></em></h1>
         </motion.div>
         <div className="hero-welcome">
           <p>I think in math. I build in code.<br />This is where the two get tangled.</p>
