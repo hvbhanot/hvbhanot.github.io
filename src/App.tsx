@@ -11,11 +11,7 @@ import { motion, reveal, fadeUp, reduced, easeOut } from './lib/motion';
 import {
   ArrowUpRight,
   ArrowUp,
-  Github,
-  FlaskConical,
   Sparkles,
-  Terminal,
-  GraduationCap,
   Check,
   Copy,
   Pause,
@@ -25,7 +21,7 @@ import {
 } from 'lucide-react';
 import ScrollProgress from './components/nav/ScrollProgress';
 import MagnetTabs from './components/ui/MagnetTabs';
-import ArrowFillButton from './components/ui/ArrowFillButton';
+import ThoughtTrail from './components/ThoughtTrail';
 import ThemeToggle from './components/nav/ThemeToggle';
 import HeroCanvas, {
   surfaces,
@@ -138,19 +134,16 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
         className="wordmark"
         aria-label="Harsh Vardhan Bhanot — home"
       >
-        <Terminal className="wordmark-icon" size={20} strokeWidth={1.5} aria-hidden="true" />
         <span className="wordmark-name">
-          {profile.name}
-          <span>Statistics / Computer Science</span>
+          Harsh<span className="wordmark-period">.</span>
         </span>
       </a>
       <nav className="topbar-nav" aria-label="Primary">
-        <MagnetTabs slug="primary" label="Navigate portfolio" activeTab={active} onSelect={setActive}
-          options={[{ id: '#top', href: '#top', label: 'Home' }, ...navItems.map(item => ({ id: item.href, ...item }))]} />
+        {navItems.map(item => <a key={item.href} href={item.href}
+          aria-current={active === item.href ? 'location' : undefined}>{item.label}</a>)}
       </nav>
       <div className="topbar-actions">
         <ThemeToggle />
-        <a className="header-contact" href={`mailto:${profile.email}`}>Let’s talk <ArrowUpRight size={15} /></a>
         <button
           className="menu-button"
           aria-haspopup="dialog"
@@ -236,95 +229,55 @@ function Hero() {
   const [playing, setPlaying] = useState(!reduced);
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
-      <div className="hero-topline">
-        <span><span className="status-dot" /> A PERSONAL LAB FOR IDEAS THAT WORK</span>
-        <Clock />
-      </div>
-      <div className="hero-stage">
-        <motion.div className="hero-copy"
-          initial={reduced ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: easeOut }}>
-          <p className="hero-intro"><span className="intro-rule" /> HARSH VARDHAN BHANOT</p>
-          <h1 id="hero-title"><span>Think in math.</span><span className="accent-word">Build in code.</span></h1>
-          <p className="hero-sub">I explore the space between statistical thinking<br className="desktop-break" /> and intelligent systems. Then I build things<br className="desktop-break" /> that make the ideas real.</p>
-          <div className="hero-links">
-            <ArrowFillButton href="#research">Explore my work</ArrowFillButton>
-            <a className="hero-secondary" href={profile.github} target="_blank" rel="noreferrer"><Github size={17} /> GitHub <ArrowUpRight size={14} /></a>
-          </div>
-          <div className="hero-academic">
-            <GraduationCap size={18} strokeWidth={1.5} aria-hidden="true" />
-            <div className="academic-details">
-              <p>M.S. Statistics <span className="degree-divider" aria-hidden="true">/</span> M.S. Computer Science</p>
-              <span>Texas Tech University · Concurrent degrees</span>
-            </div>
-          </div>
-        </motion.div>
-        <div className="surface-stage">
-          <div className="surface-top">
-            <span><span className="status-dot" /> THE SHAPE OF AN IDEA</span>
-            <span>LIVE / 0{Object.keys(surfaces).indexOf(kind) + 1}</span>
-          </div>
+      <div className="hero-drawing">
+        <p className="margin-note hero-note">a few things on my mind.<br />all somehow connected.<span aria-hidden="true">↙</span></p>
+        <span className="math-scribble scribble-one" aria-hidden="true">∫ curiosity dx</span>
+        <span className="math-scribble scribble-two" aria-hidden="true">P(idea | coffee) ≈ 1</span>
+        <span className="figure-label">FIG. 01 / A THOUGHT, TAKING SHAPE</span>
+        <div className="hero-object">
           <HeroCanvas kind={kind} radius={radius} playing={playing} />
-          <div className="surface-overlay" aria-hidden="true">
-            <span>
-              {kind === 'mobius'
-                ? 'u ∈ [0, 2π], v ∈ [−r, r]'
-                : kind === 'saddle'
-                  ? 'x, y ∈ [−2, 2]'
-                  : 'u, v ∈ [0, 2π]'}
-            </span>
-            <span>
-              +<br />
-              DRAG TO ROTATE
-            </span>
+        </div>
+        <div className="drawing-caption">
+          <span>not just a drawing. give it a spin.</span>
+          <button type="button" className="surface-pause"
+            aria-label={playing ? 'Pause surface rotation' : 'Play surface rotation'}
+            aria-pressed={playing} onClick={() => setPlaying(!playing)}>
+            {playing ? <Pause size={13} /> : <Play size={13} />}
+          </button>
+        </div>
+      </div>
+      <div className="hero-introduction">
+        <motion.div initial={reduced ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: easeOut }}>
+          <p className="hero-eyebrow">HARSH VARDHAN BHANOT / AN OPEN NOTEBOOK</p>
+          <h1 id="hero-title">the anatomy of a<br /><em>mathematical mind.</em></h1>
+        </motion.div>
+        <div className="hero-welcome">
+          <p>I think in math. I build in code.<br />This is where the two get tangled.</p>
+          <div className="hero-links">
+            <a className="paper-button" href="#research">view my work <ArrowUpRight size={16} /></a>
+            <a className="paper-button paper-button-dark" href="#contact">let’s talk <ArrowUpRight size={16} /></a>
           </div>
-          <div className="surface-toolbar">
+        </div>
+      </div>
+      <div className="hero-footnote">
+        <a className="scroll-cue" href="#mind"><span aria-hidden="true">↓</span> scroll to follow a thought</a>
+        <details className="surface-settings">
+          <summary>play with the mathematics <Plus size={13} /></summary>
+          <div className="surface-settings-content">
             <MagnetTabs slug="surface" className="surface-selector" label="Mathematical surface"
               activeTab={kind} onSelect={(value) => setKind(value as SurfaceKind)}
               options={(Object.keys(surfaces) as SurfaceKind[]).map(id => ({ id, label: surfaces[id].label }))} />
-            <button
-              className="surface-pause"
-              type="button"
-              aria-label={
-                playing ? 'Pause surface rotation' : 'Play surface rotation'
-              }
-              aria-pressed={playing}
-              onClick={() => setPlaying(!playing)}
-            >
-              {playing ? <Pause size={14} /> : <Play size={14} />}
-            </button>
+            <div className="surface-parameter">
+              <label htmlFor="surface-radius">{kind === 'mobius' ? 'Width' : kind === 'saddle' ? 'Curvature' : 'Tube radius'}<span>r = {radius.toFixed(2)}</span></label>
+              <input id="surface-radius" type="range" min="0.35" max="1.15" step="0.05" value={radius}
+                onChange={(event) => setRadius(Number(event.target.value))} />
+              <span className="surface-note">{surfaces[kind].note}</span>
+            </div>
+            <Equation className="surface-equation" tex={surfaces[kind].equation} display />
           </div>
-          <div className="surface-parameter">
-            <label htmlFor="surface-radius">
-              {kind === 'mobius'
-                ? 'Width'
-                : kind === 'saddle'
-                  ? 'Curvature'
-                  : 'Tube radius'}{' '}
-              <span>r = {radius.toFixed(2)}</span>
-            </label>
-            <input
-              id="surface-radius"
-              type="range"
-              min="0.35"
-              max="1.15"
-              step="0.05"
-              value={radius}
-              onChange={(event) => setRadius(Number(event.target.value))}
-            />
-            <span className="surface-note">{surfaces[kind].note}</span>
-          </div>
-          <Equation
-            className="surface-equation"
-            tex={surfaces[kind].equation}
-            display
-          />
-        </div>
-      </div>
-      <div className="hero-bottom">
-        <p><span className="bottom-label">CURRENTLY EXPLORING</span></p>
-        <div className="interest-list"><span>Agentic systems</span><span>Statistical learning</span><span>Scientific computing</span></div>
-        <a href="#stats" className="hero-lab-link"><FlaskConical size={15} /> A little less theory. Try the lab. <ArrowUpRight size={14} /></a>
+        </details>
+        <Clock />
       </div>
     </section>
   );
@@ -370,7 +323,7 @@ function Research({ onOpen }: { onOpen: (project: Project) => void }) {
     >
       <SectionLabel number="01">Selected work</SectionLabel>
       <div className="section-heading">
-        <h2 id="research-title">Ideas, put to work<span className="accent-word">.</span></h2>
+        <h2 id="research-title">some thoughts<br /><em>became things.</em></h2>
         <p>Open-source systems. Research in progress.<br />A few things I’ve been thinking about and building.</p>
       </div>
       <div className="research-toolbar">
@@ -563,7 +516,7 @@ function About() {
       <SectionLabel number="02">A bit about me</SectionLabel>
       <div className="about-intro">
         <h2 id="about-title">
-          The human<br />behind the systems<span className="accent-word">.</span>
+          a person,<br /><em>not just a parameter.</em>
         </h2>
         <div className="about-bio">
           <p className="about-name">Harsh Vardhan Bhanot.</p>
@@ -609,8 +562,8 @@ function About() {
             </div>
             <div>
               <span>2026 / COMPLETED</span>
-              <h3>Texas A&M–Corpus Christi</h3>
-              <p>B.S. Computer Science · Applied Mathematics minor</p>
+              <h3>B.S. Computer Science</h3>
+              <p>Applied Mathematics minor</p>
             </div>
           </div>
         </div>
@@ -676,7 +629,7 @@ function StatsPlayground() {
       </SectionLabel>
       <motion.div className="section-heading" {...reveal}>
         <motion.h2 id="playground-title" variants={fadeUp}>
-          Less abstract.<br /><span className="accent-word">More hands-on.</span>
+          what happens if<br /><em>you change this?</em>
         </motion.h2>
         <motion.p variants={fadeUp}>
           A formula is a starting point.
@@ -788,7 +741,7 @@ function Contact() {
       <SectionLabel number="04">Let’s connect</SectionLabel>
       <div className="contact-spread">
         <h2 id="contact-title">
-          Good questions.<br /><span className="accent-word">Great conversations.</span>
+          have a thought?<br /><em>let’s untangle it.</em>
         </h2>
         <div className="contact-invitation">
           <p>
@@ -935,6 +888,7 @@ function Site() {
       <TopBar onMenu={() => setMenuOpen(true)} />
       <main id="main" tabIndex={-1}>
         <Hero />
+        <ThoughtTrail />
         <Research onOpen={setActive} />
         <Community />
         <About />

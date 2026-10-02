@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Harsh Vardhan Bhanot — Think in math. Build in code. Dual M.S. student in Statistics & Computer Science at Texas Tech. Research and interactive stats experiments."
+      content="Harsh Vardhan Bhanot — The anatomy of a mathematical mind. Dual M.S. student in Statistics & Computer Science at Texas Tech. Research and interactive stats experiments."
     />
-    <meta name="theme-color" content="#111513" />
+    <meta name="theme-color" content="#f7f5f0" />
     <meta
       property="og:title"
-      content="Harsh Vardhan Bhanot — Think in math. Build in code."
+      content="Harsh Vardhan Bhanot — The anatomy of a mathematical mind."
     />
     <meta
       property="og:description"
@@ -23,12 +23,12 @@
     <meta property="og:image:height" content="907" />
     <meta
       property="og:image:alt"
-      content="Think in math. Build in code. Harsh Vardhan Bhanot’s mathematical portfolio, with an emerald wireframe torus on a graphite background."
+      content="The anatomy of a mathematical mind. Harsh Vardhan Bhanot’s mathematical portfolio, with a black wireframe torus on warm ivory paper."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Harsh Vardhan Bhanot — Think in math. Build in code."
+      content="Harsh Vardhan Bhanot — The anatomy of a mathematical mind."
     />
     <meta
       name="twitter:description"
@@ -36,28 +36,25 @@
     />
     <meta name="twitter:image" content="https://hvbhanot.pro/og.png" />
     <link rel="canonical" href="https://hvbhanot.pro/" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
-    <link rel="apple-touch-icon" href="/favicon.svg?v=6" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=7" />
+    <link rel="apple-touch-icon" href="/favicon.svg?v=7" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Patrick+Hand&display=swap"
       rel="stylesheet"
     />
     <script>
       (function () {
         try {
-          var t = localStorage.getItem('hvb-theme');
-          var lightOk = false; // VITE_ENABLE_LIGHT_THEME gates runtime; boot stays dark-safe
-          if (t === 'light' && lightOk)
-            document.documentElement.setAttribute('data-theme', 'light');
-          else document.documentElement.setAttribute('data-theme', 'dark');
+          var t = localStorage.getItem('hvb-paper-theme');
+          document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
         } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.setAttribute('data-theme', 'light');
         }
       })();
     </script>
-    <title>Harsh Vardhan Bhanot — Think in math. Build in code.</title>
+    <title>Harsh Vardhan Bhanot — The anatomy of a mathematical mind.</title>
   </head>
   <body>
     <div id="root"></div>

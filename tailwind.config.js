@@ -4,10 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Manrope"', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['"Newsreader"', 'Georgia', 'serif'],
         body: [
-          '"Manrope"',
-          'Inter',
+          '"DM Sans"',
           'system-ui',
           '-apple-system',
           'sans-serif',
@@ -24,22 +23,22 @@ export default {
         ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       colors: {
-        // Graphite and emerald — keep in sync with :root in src/index.css
+        // Paper and ink — keep in sync with :root in src/index.css
         bg: {
-          DEFAULT: '#111513',
-          raise: '#191f1c',
+          DEFAULT: '#f7f5f0',
+          raise: '#efede6',
         },
-        line: 'rgba(232, 241, 236, 0.15)',
+        line: 'rgba(36, 36, 32, 0.16)',
         ink: {
-          DEFAULT: '#e8f1ec',
-          dim: '#a4b5ab',
-          faint: '#8fa297',
+          DEFAULT: '#242420',
+          dim: '#595950',
+          faint: '#6f6c62',
         },
         accent: {
-          prob: '#47d7a0',
-          gd: '#47d7a0',
-          proof: '#b1e1c3',
-          math: '#6fc4bf',
+          prob: '#30302b',
+          gd: '#986044',
+          proof: '#536854',
+          math: '#5c6687',
         },
       },
     },

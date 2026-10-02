@@ -10,7 +10,6 @@ export const profile = {
   shortName: 'Harsh Bhanot',
   initials: 'HVB',
   role: 'AI systems built on mathematics',
-  university: 'Texas A&M University – Corpus Christi',
   degree: 'B.S. Computer Science',
   concentration: 'Cyber Security / Infrastructure',
   minor: 'Applied Mathematics',
@@ -23,7 +22,7 @@ export const profile = {
   github: 'https://github.com/hvbhanot',
   openwebui: 'https://openwebui.com/u/hvbhanot',
   tensortonic: `${communityStats.tensorTonic.solved} verified ML problems solved on TensorTonic`,
-  bio: 'I’m pursuing concurrent master’s degrees in Statistics and Computer Science at Texas Tech, after a B.S. at Texas A&M–Corpus Christi. My work ranges from fine-tuning code models for population genetics to building agents that use tools and verify their work. I care about the assumptions behind a model, the evidence for a result, and the code that connects them.',
+  bio: 'I’m Harsh, a researcher and builder pursuing concurrent master’s degrees in Statistics and Computer Science at Texas Tech. I like finding the mathematics hiding inside a problem, then writing the code that makes it useful. Lately, that means language models, computational genetics, and agents that can check their own work.',
   tagline: 'Think in math. Build in code.',
   subline: `Dual M.S. · Statistics & Computer Science · Texas Tech · ${communityStats.tensorTonic.solved} ML problems solved`,
   /** Current graduate program (primary academic status). */
@@ -36,10 +35,11 @@ export const profile = {
 };
 
 export const navItems: NavItem[] = [
-  { label: 'Research', href: '#research' },
-  { label: 'About', href: '#about' },
-  { label: 'Playground', href: '#stats' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'mind', href: '#mind' },
+  { label: 'work', href: '#research' },
+  { label: 'about', href: '#about' },
+  { label: 'math lab', href: '#stats' },
+  { label: 'let’s talk', href: '#contact' },
 ];
 
 export type Experience = {
@@ -53,7 +53,7 @@ export type Experience = {
 export const experience: Experience[] = [
   {
     title: 'Undergraduate Research Assistant',
-    org: 'Texas A&M University – Corpus Christi · Computational Genetics & AI Systems',
+    org: 'Computational Genetics & AI Systems',
     period: '2025 – Jul 2026',
     desc: 'AI systems research — fine-tuning, agent workflows, and reproducible tooling, applied to evolutionary-simulation data.',
     bullets: [
@@ -76,7 +76,7 @@ export const experience: Experience[] = [
   },
   {
     title: 'Hardware Support Intern',
-    org: 'Texas A&M University – Corpus Christi · IT Department',
+    org: 'University IT Department',
     period: 'Jan 2024 – Jul 2026',
     desc: 'Technical support for hardware and software issues serving 3,000+ students and faculty.',
     bullets: [

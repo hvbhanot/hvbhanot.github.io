@@ -10,10 +10,10 @@ import {
 
 export type Theme = 'dark' | 'light';
 
-const STORAGE_KEY = 'hvb-theme';
+const STORAGE_KEY = 'hvb-paper-theme';
 
 function lightEnabled(): boolean {
-  return import.meta.env.VITE_ENABLE_LIGHT_THEME === 'true';
+  return true;
 }
 
 function readStored(): Theme {
@@ -23,7 +23,7 @@ function readStored(): Theme {
   } catch {
     /* ignore */
   }
-  return 'dark';
+  return 'light';
 }
 
 function applyTheme(theme: Theme) {
@@ -44,7 +44,7 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const lightAvailable = lightEnabled();
   const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof document === 'undefined') return 'dark';
+    if (typeof document === 'undefined') return 'light';
     const stored = readStored();
     if (stored === 'light' && !lightAvailable) return 'dark';
     return stored;

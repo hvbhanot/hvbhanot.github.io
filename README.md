@@ -1,6 +1,6 @@
 # Harsh Vardhan Bhanot — mathematics × systems
 
-A personal research portfolio built around statistical learning, AI systems, and reproducible experiments. The September 2026 redesign adapts Obsidian UI’s Magnet Tabs and Arrow Fill Button to a graphite and emerald identity: clear Manrope typography, rounded project cards, interactive parametric surfaces, and a dark green community statistics panel.
+A personal research portfolio built around statistical learning, AI systems, and reproducible experiments. The October 2026 redesign uses warm paper, ink, editorial serif type, mathematical line art, and a scroll-led story inspired by somehowliving.tech. Interactive parametric surfaces and the seven math experiments remain at its core.
 
 ## Stack
 
@@ -9,13 +9,14 @@ React 19, TypeScript, Vite, Tailwind CSS, Framer Motion, KaTeX, and native canva
 ## Sections
 
 - `#top` — introduction and rotatable 3D parametric surfaces: torus, Möbius strip, and saddle. Select a surface, adjust its radius/width/curvature, pause, or rotate with pointer/arrow keys (Home resets orientation).
+- `#mind` — three chapters connecting statistical uncertainty, optimization, and useful systems. A horizontal scroll story on large screens; normal vertical reading on mobile and with reduced motion.
 - `#research` — filterable visual project gallery, mathematical concept sketches, complete project dialogs, and an archive.
 - `#community` — dated public-source metrics, with a direct source link for every number.
 - `#about` — background with a statistics/computer-science intersection diagram, education, expandable experience, research threads, and toolkit.
 - `#stats` — seven lazy-loaded experiments in a keyboard-operable workbench.
 - `#contact` — email, copy action, and public profiles.
 
-Legacy anchors still redirect through `src/lib/legacyHash.ts`. Native dialogs contain keyboard focus and restore it when closed. Reduced-motion preferences pause the hero and remove entrance motion. The existing optional light-theme flag remains supported.
+Legacy anchors still redirect through `src/lib/legacyHash.ts`. Native dialogs contain keyboard focus and restore it when closed. Reduced-motion preferences pause the hero and remove entrance motion. The paper theme is the default, with a persistent dark-theme toggle.
 
 ## Development
 
@@ -42,4 +43,4 @@ The page and project descriptions derive their numbers from that one snapshot. U
 
 ## Deployment
 
-GitHub Pages and Railway remain supported; see [DEPLOY.md](DEPLOY.md). Shared-link metadata uses the existing production domain, `https://hvbhanot.pro`, and the custom `public/og.png` artwork. Component provenance and implementation details are in [docs/obsidian-redesign.md](docs/obsidian-redesign.md).
+GitHub Pages and Railway remain supported; see [DEPLOY.md](DEPLOY.md). Shared-link metadata uses the existing production domain, `https://hvbhanot.pro`, and the custom `public/og.png` artwork. Current design and artwork provenance are in [docs/mathematical-mind-redesign.md](docs/mathematical-mind-redesign.md). Earlier component provenance remains in [docs/obsidian-redesign.md](docs/obsidian-redesign.md).
