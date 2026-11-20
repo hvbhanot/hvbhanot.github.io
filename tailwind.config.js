@@ -35,7 +35,7 @@ export default {
           faint: '#6f6c62',
         },
         accent: {
-          prob: '#30302b',
+          prob: '#3f6178',
           gd: '#986044',
           proof: '#536854',
           math: '#5c6687',

@@ -1,10 +1,18 @@
 # Mathematical mind — October 2026
 
-The reference at https://www.somehowliving.tech informed the paper background, black line art, serif/italic headline pairing, handwritten annotations, sparse navigation, and scrolling narrative. The portfolio uses its own copy, mathematical canvases, and project content; no reference artwork or source was copied.
+The reference at https://www.somehowliving.tech informed the paper background, black line art, serif headline, sparse navigation, and scrolling narrative. The portfolio uses its own copy, mathematical canvases, and project content; no reference artwork or source was copied.
 
 The hero retains the actual torus, Möbius strip, and saddle mathematics. The surface settings are available under “play with the mathematics”; the illustration supports drag, arrow keys, Home to reset, and pause. A three-chapter thought trail connects statistical inference, gradient descent, and useful systems. Wide screens at least 700px tall use a pinned horizontal journey driven by ordinary page scrolling. Smaller screens and reduced-motion preferences use a normal vertical document. The skip link bypasses the journey.
 
-The default theme is warm ivory (#f7f5f0) and ink (#242420), with Newsreader, DM Sans, IBM Plex Mono, and Patrick Hand. A persistent optional dark theme uses its own storage key, `hvb-paper-theme`, so the old dark default does not override this design. Existing project filters, dialogs, community source links, contact actions, and seven interactive experiments are retained.
+The default theme is warm ivory (#f7f5f0) and ink (#242420), with Newsreader, DM Sans, and IBM Plex Mono. A persistent optional dark theme uses its own storage key, `hvb-paper-theme`, so the old dark default does not override this design. Existing project filters, dialogs, community source links, contact actions, and seven interactive experiments are retained.
+
+## November 2026 — verified manuscript revision
+
+The notebook now uses a restrained split hero with a precise, coordinate-blue surface, its governing equation, parameter domain, and live parameter/playback state. The controls distinguish the torus minor radius, Möbius half-width, and saddle coefficient. Pen jitter, duplicate strokes, doodles, handwritten UI, rotated cards, and decorative metric operators were removed.
+
+Project figures are assigned explicitly in `projects.ts`, rather than by array position. The thought trail now shows computed Beta(2, 2) and Beta(8, 4) densities, gradient steps for \(J(x,y)=x^2+3y^2\), and a tool-use feedback loop. Pure figure mathematics lives in `src/lib/math/plots.ts` and has numerical tests.
+
+The public snapshot was refreshed on 2026-11-20 UTC: 1,465 Deep Research downloads, 385 Browser Agent downloads, 178 verified TensorTonic problems, 20 Open WebUI contributions, and top 0.517% contribution rank. `src/data/community.ts` remains the sole source for these values.
 
 The previous undergraduate institution name was removed from the site’s bio, education, and experience entries. Degree and experience facts remain. The current Texas Tech graduate programs remain identified.
 
@@ -16,4 +24,4 @@ The previous undergraduate institution name was removed from the site’s bio, e
 
 ## Validation
 
-TypeScript, parametric surface tests, community-statistics tests, and the production build pass. The built site was searched for the removed institution name. Browser visual and interaction verification was not performed: the in-app Browser reported no available browser, and browser testing was not requested.
+TypeScript, five surface/figure-math tests, four community-statistics tests, the production build, and both Playwright section/modal tests pass. A production smoke test also loaded the refreshed stats and all seven lazy experiment chunks without runtime errors. Light and dark desktop hero views, all three scroll-led panels, and mobile hero/inference/lab views were captured and inspected. No horizontal page overflow was found at 320, 390, 700, 850, 1000, 1100, or 1440px. Reduced-motion mode disables the rotation control with an explanatory label. Primary text, secondary text, and coordinate-blue accent contrast pass 4.5:1 in both themes.

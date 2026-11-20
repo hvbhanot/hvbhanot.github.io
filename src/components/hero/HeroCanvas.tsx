@@ -68,13 +68,10 @@ export default function HeroCanvas({
           depth: zz,
         };
       };
-      const line = (points: Point[], color: string, width = 0.65, pen = 0, seed = 0) => {
+      const line = (points: Point[], color: string, width = 0.65) => {
         ctx.beginPath();
         points.forEach((point, i) => {
           const p = project(point);
-          // Fixed pen variation avoids random flicker while rotating or pausing.
-          p.x += pen * (Math.sin(i * .53 + seed) + .4 * Math.sin(i * 1.71));
-          p.y += pen * (Math.cos(i * .47 + seed) + .35 * Math.sin(i * 1.37));
           if (i === 0) ctx.moveTo(p.x, p.y);
           else ctx.lineTo(p.x, p.y);
         });
@@ -108,28 +105,23 @@ export default function HeroCanvas({
       ];
       axisEnds.forEach((end, i) => {
         ctx.setLineDash([2, 5]);
-        line([[0, 0, 0], end], `rgba(${colors.ink},0.25)`);
+        line([[0, 0, 0], end], `rgba(${colors.ink},0.55)`);
         ctx.setLineDash([]);
         const p = project(end);
-        ctx.font = '15px "Patrick Hand", cursive';
-        ctx.fillStyle = `rgba(${colors.ink},0.55)`;
+        ctx.font = '12px "IBM Plex Mono", monospace';
+        ctx.fillStyle = `rgb(${colors.ink})`;
         ctx.fillText(['x', 'y', 'z'][i], p.x + 6, p.y - 7);
       });
       paths.forEach((path, i) => {
         const depth =
           path.reduce((sum, point) => sum + project(point).depth, 0) /
           path.length;
-        const alpha = Math.max(0.16, Math.min(0.75, 0.48 - depth * 0.085));
+        const alpha = Math.max(0.2, Math.min(0.82, 0.55 - depth * 0.085));
         line(
           path,
           `rgba(${colors.accents.prob},${alpha})`,
-          i % 5 === 0 ? 1.15 : 0.75,
-          .85,
-          i * 2.31,
+          i % 5 === 0 ? 1.15 : 0.7,
         );
-        if (i % 4 === 0) {
-          line(path, `rgba(${colors.accents.prob},.19)`, .65, 1.8, i * 2.31 + 2);
-        }
       });
       const origin = project([0, 0, 0]);
       ctx.fillStyle = `rgba(${colors.ink},0.7)`;

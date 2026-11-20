@@ -22,13 +22,12 @@ import {
 import ScrollProgress from './components/nav/ScrollProgress';
 import MagnetTabs from './components/ui/MagnetTabs';
 import ThoughtTrail from './components/ThoughtTrail';
-import Scribble from './components/Scribble';
 import ThemeToggle from './components/nav/ThemeToggle';
 import HeroCanvas, {
   surfaces,
   type SurfaceKind,
 } from './components/hero/HeroCanvas';
-import ProjectPlot, { type PlotKind } from './components/research/ProjectPlot';
+import ProjectPlot from './components/research/ProjectPlot';
 import Equation from './components/math/Equation';
 import { profile, experience, navItems } from './data/resume';
 import {
@@ -230,30 +229,11 @@ function Hero() {
   const [playing, setPlaying] = useState(!reduced);
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
-      <div className="hero-drawing">
-        <p className="margin-note hero-note">a few things on my mind.<br />all somehow connected.<Scribble kind="arrow" className="note-arrow" /></p>
-        <div className="margin-doodle" aria-hidden="true"><Scribble className="margin-tangle" /><span>the first draft</span></div>
-        <Scribble kind="star" className="hero-star" />
-        <span className="math-scribble scribble-one" aria-hidden="true">∫ curiosity dx</span>
-        <span className="math-scribble scribble-two" aria-hidden="true">P(idea | coffee) ≈ 1</span>
-        <span className="figure-label">FIG. 01 / A THOUGHT, TAKING SHAPE</span>
-        <div className="hero-object">
-          <HeroCanvas kind={kind} radius={radius} playing={playing} />
-        </div>
-        <div className="drawing-caption">
-          <span>not just a drawing. give it a spin.</span>
-          <button type="button" className="surface-pause"
-            aria-label={playing ? 'Pause surface rotation' : 'Play surface rotation'}
-            aria-pressed={playing} onClick={() => setPlaying(!playing)}>
-            {playing ? <Pause size={13} /> : <Play size={13} />}
-          </button>
-        </div>
-      </div>
       <div className="hero-introduction">
         <motion.div className="hero-heading" initial={reduced ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: easeOut }}>
-          <p className="hero-eyebrow">HARSH VARDHAN BHANOT / AN OPEN NOTEBOOK</p>
-          <h1 id="hero-title">the anatomy of a<br /><em className="scribbled-title">mathematical mind.<Scribble kind="underline" className="title-underline" /></em></h1>
+          <p className="hero-eyebrow">Harsh Vardhan Bhanot / Research notebook</p>
+          <h1 id="hero-title">the anatomy of a<br /><em>mathematical mind.</em></h1>
         </motion.div>
         <div className="hero-welcome">
           <p>I think in math. I build in code.<br />This is where the two get tangled.</p>
@@ -263,21 +243,43 @@ function Hero() {
           </div>
         </div>
       </div>
+      <div className="hero-drawing">
+        <span className="figure-label">Figure 1 / Parametric surface</span>
+        <div className="hero-object">
+          <HeroCanvas kind={kind} radius={radius} playing={playing} />
+        </div>
+        <div className="drawing-caption">
+          <span>Drag to rotate; use arrow keys when focused.</span>
+          <button type="button" className="surface-pause"
+            disabled={reduced}
+            title={reduced ? 'Rotation is disabled by your reduced-motion preference' : undefined}
+            aria-label={reduced ? 'Surface rotation disabled by reduced-motion preference' : playing ? 'Pause surface rotation' : 'Play surface rotation'}
+            aria-pressed={playing} onClick={() => setPlaying(!playing)}>
+            {playing ? <Pause size={13} /> : <Play size={13} />}
+          </button>
+        </div>
+        <div className="hero-formula">
+          <span className="hero-formula-label">
+            {surfaces[kind].label} / {surfaces[kind].symbol} = {radius.toFixed(2)} / {playing ? 'auto-rotate on' : 'paused'}
+          </span>
+          <Equation tex={surfaces[kind].equation} altText={surfaces[kind].alt} display />
+          <Equation className="hero-domain" tex={surfaces[kind].domain} altText={surfaces[kind].domainAlt} />
+        </div>
+      </div>
       <div className="hero-footnote">
         <a className="scroll-cue" href="#mind"><span aria-hidden="true">↓</span> scroll to follow a thought</a>
         <details className="surface-settings">
-          <summary>play with the mathematics <Plus size={13} /></summary>
+          <summary>Surface parameters <Plus size={13} /></summary>
           <div className="surface-settings-content">
             <MagnetTabs slug="surface" className="surface-selector" label="Mathematical surface"
               activeTab={kind} onSelect={(value) => setKind(value as SurfaceKind)}
               options={(Object.keys(surfaces) as SurfaceKind[]).map(id => ({ id, label: surfaces[id].label }))} />
             <div className="surface-parameter">
-              <label htmlFor="surface-radius">{kind === 'mobius' ? 'Width' : kind === 'saddle' ? 'Curvature' : 'Tube radius'}<span>r = {radius.toFixed(2)}</span></label>
+              <label htmlFor="surface-radius">{surfaces[kind].parameter}<span>{surfaces[kind].symbol} = {radius.toFixed(2)}</span></label>
               <input id="surface-radius" type="range" min="0.35" max="1.15" step="0.05" value={radius}
                 onChange={(event) => setRadius(Number(event.target.value))} />
               <span className="surface-note">{surfaces[kind].note}</span>
             </div>
-            <Equation className="surface-equation" tex={surfaces[kind].equation} display />
           </div>
         </details>
         <Clock />
@@ -310,14 +312,6 @@ function Research({ onOpen }: { onOpen: (project: Project) => void }) {
     : featured;
   const visible = expanded || tag ? filtered : filtered.slice(0, 6);
   const archive = projects.filter((project) => project.status === 'archived');
-  const plotKinds: PlotKind[] = [
-    'network',
-    'routing',
-    'matrix',
-    'loss',
-    'tree',
-    'waves',
-  ];
   return (
     <section
       id="research"
@@ -339,7 +333,7 @@ function Research({ onOpen }: { onOpen: (project: Project) => void }) {
       </div>
       <div className="research-index" id="research-index" aria-live="polite">
         {visible.map((project) => {
-          const kind = plotKinds[featured.indexOf(project) % plotKinds.length];
+          const kind = project.figure ?? 'feedback';
           return (
             <button
               type="button"
@@ -354,25 +348,12 @@ function Research({ onOpen }: { onOpen: (project: Project) => void }) {
                   <span>
                     {project.catalog} / {project.year}
                   </span>
-                  <span>
-                    {project.spotlight ? '✦ FEATURED' : 'CONCEPT STUDY'}
-                  </span>
+                  <span>{project.status}</span>
                 </span>
-                <ProjectPlot kind={kind} />
+                <ProjectPlot kind={kind} labels={project.figureLabels} />
                 <span className="art-bottomline">
-                  <span>
-                    {
-                      {
-                        network: 'REASON → RETRIEVE → SYNTHESIZE',
-                        routing: 'LOCAL ↔ CLOUD',
-                        matrix: 'FIRST PRINCIPLES / NUMPY',
-                        loss: 'TRAIN → EVALUATE → OPTIMIZE',
-                        tree: 'PLAN → ACT → VERIFY',
-                        waves: 'SIGNAL → UNDERSTANDING',
-                      }[kind]
-                    }
-                  </span>
-                  <span className="project-open">Explore <ArrowUpRight size={13} /></span>
+                  <span>{project.figureCaption}</span>
+                  <span className="project-open">View project</span>
                 </span>
               </span>
               <span className="project-copy">
@@ -436,25 +417,21 @@ function Community() {
       value: numberFormat.format(deepResearch.downloads),
       label: 'Deep Research downloads',
       href: deepResearch.href,
-      symbol: '↓',
     },
     {
       value: numberFormat.format(browserAgent.downloads),
       label: 'Browser Agent downloads',
       href: browserAgent.href,
-      symbol: '↓',
     },
     {
       value: String(tensorTonic.solved),
       label: 'Verified ML problems solved',
       href: tensorTonic.href,
-      symbol: '∑',
     },
     {
       value: String(openWebui.contributions),
       label: 'Open WebUI contributions',
       href: openWebui.href,
-      symbol: '+',
     },
   ];
   return (
@@ -475,7 +452,7 @@ function Community() {
           rel="noreferrer"
           className="community-rank"
         >
-          TOP <strong>{openWebui.contributionPercentile}%</strong>
+          Top <strong>{openWebui.contributionPercentile}%</strong>
           <span>
             Open WebUI contribution rank <ArrowUpRight size={14} />
           </span>
@@ -490,10 +467,7 @@ function Community() {
             className="community-metric"
             key={metric.label}
           >
-            <span className="metric-value">
-              {metric.value}
-              <span>{metric.symbol}</span>
-            </span>
+            <span className="metric-value">{metric.value}</span>
             <span>
               {metric.label}
               <ArrowUpRight size={14} />
@@ -502,8 +476,8 @@ function Community() {
         ))}
       </div>
       <p className="source-note">
-        <span>PUBLICLY VERIFIABLE / SOURCE LINKS ABOVE</span>
-        <span>LAST CHECKED {statsCheckedLabel.toUpperCase()} UTC</span>
+        <span>Publicly verifiable / source links above</span>
+        <span>Last checked {statsCheckedLabel} UTC</span>
       </p>
     </aside>
   );
@@ -594,9 +568,9 @@ function About() {
         </div>
       </div>
       <div className="focus-index">
-        {focusAreas.map((area, index) => (
+        {focusAreas.map((area) => (
           <article key={area.title}>
-            <span className="focus-number">f{['₁', '₂', '₃'][index]}(x)</span>
+            {area.tex && <Equation className="focus-equation" tex={area.tex} altText={area.texAlt} display />}
             <h3>{area.title}</h3>
             <p>{area.desc}</p>
             <span className="focus-methods">{area.methods.join(' / ')}</span>

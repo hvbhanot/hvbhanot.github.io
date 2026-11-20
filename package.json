@@ -13,7 +13,7 @@
     "stats:refresh": "node scripts/refresh-stats.mjs",
     "test:stats": "node --test tests/community-stats.test.mjs",
     "build:sites": "npm run build && node scripts/package-sites-build.mjs",
-    "test:math": "node --test tests/parametric-surfaces.test.mjs"
+    "test:math": "node --test tests/parametric-surfaces.test.mjs tests/plot-math.test.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.0.0",

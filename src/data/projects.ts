@@ -1,4 +1,5 @@
 import { communityStats, numberFormat } from './community';
+import type { PlotKind } from '../components/research/ProjectPlot';
 
 export type ProjectMetric = {
   label: string;
@@ -27,6 +28,9 @@ export type Project = {
   result?: string;
   metrics?: ProjectMetric[];
   featured?: boolean;
+  figure?: PlotKind;
+  figureCaption?: string;
+  figureLabels?: readonly string[];
 };
 
 export function isFeatured(p: Project): boolean {
@@ -46,6 +50,9 @@ export const projects: Project[] = [
     spotlight: true,
     badge: `${numberFormat.format(communityStats.deepResearch.downloads)} downloads`,
     tags: ['agents', 'systems'],
+    figure: 'feedback',
+    figureCaption: 'Query → search → read → synthesize',
+    figureLabels: ['QUERY', 'SEARCH', 'READ', 'SYNTHESIZE'],
     abstract:
       'A chat-input toggle that reuses Open WebUI’s configured search engine and runs a think → search → read loop, then injects cited evidence so the selected model writes the report.',
     abstractTex:
@@ -82,6 +89,8 @@ export const projects: Project[] = [
     year: '2026',
     status: 'active',
     tags: ['agents', 'systems'],
+    figure: 'routing',
+    figureCaption: 'Task → configured local or cloud model',
     abstract:
       'A terminal coding agent that reads code, edits, runs tests, and routes work to the best configured model — cloud when available, local (Ollama / LM Studio / llama.cpp / vLLM) otherwise.',
     abstractTex:
@@ -115,6 +124,8 @@ export const projects: Project[] = [
     status: 'active',
     featured: true,
     tags: ['statistics', 'deep-learning'],
+    figure: 'matrix',
+    figureCaption: 'Illustrative covariance structure / NumPy',
     abstract:
       'A growing library of verified TensorTonic problem solutions — losses, optimizers, linear algebra, and classical ML — implemented carefully in NumPy/Python.',
     abstractTex: '\\hat{\\theta} = \\arg\\min_{\\theta} \\mathcal{L}(\\theta)',
@@ -149,6 +160,9 @@ export const projects: Project[] = [
     year: '2026',
     status: 'ongoing',
     tags: ['automl', 'deep-learning'],
+    figure: 'feedback',
+    figureCaption: 'Propose → train → validate → revise',
+    figureLabels: ['PROPOSE', 'TRAIN', 'VALIDATE', 'REVISE'],
     abstract:
       'Point it at a CSV and an Ollama Cloud model iteratively proposes architectures, hyperparameters, and preprocessing — train, diagnose, revise.',
     abstractTex:
@@ -181,6 +195,9 @@ export const projects: Project[] = [
     year: '2026',
     status: 'active',
     tags: ['agents', 'security'],
+    figure: 'feedback',
+    figureCaption: 'Plan → act → verify → revise',
+    figureLabels: ['PLAN', 'SPECIALIST', 'ACT', 'VERIFY'],
     abstract:
       'A multi-agent CTF solver using ReAct reasoning, a 44-tool registry, persistent scratchpad memory, and verification loops — fully local via Ollama (COSC 6338).',
     abstractTex:
@@ -213,6 +230,8 @@ export const projects: Project[] = [
     year: '2026',
     status: 'active',
     tags: ['teaching', 'systems'],
+    figure: 'constraint',
+    figureCaption: 'Lecture context + mode → constrained response',
     abstract:
       'A FastAPI teaching assistant with Guided Learning and constrained Recall Mode over lecture-uploaded RAG context.',
     abstractTex:
@@ -243,6 +262,9 @@ export const projects: Project[] = [
     status: 'active',
     badge: `${numberFormat.format(communityStats.browserAgent.downloads)} downloads`,
     tags: ['agents', 'vision'],
+    figure: 'feedback',
+    figureCaption: 'Screenshot → action → observation',
+    figureLabels: ['SCREENSHOT', 'SELECT ACTION', 'ACT', 'CHECK'],
     abstract:
       'Chrome extension pairing Open WebUI side panel with screenshot-driven navigation and on-page automation.',
     abstractTex: 'a_t = \\pi(s_t),\\quad s_t = \\mathrm{screenshot}_t',
@@ -300,6 +322,8 @@ export const projects: Project[] = [
     status: 'active',
     featured: true,
     tags: ['deep-learning', 'statistics'],
+    figure: 'parallel',
+    figureCaption: 'Parallel subnetworks → concatenated representation',
     abstract:
       'Custom multi-node layers whose parallel sub-networks are concatenated — applied to Iris classification as an architecture study.',
     abstractTex:

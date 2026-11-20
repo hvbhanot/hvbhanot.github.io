@@ -4,6 +4,7 @@ export type FocusArea = {
   methods: string[];
   /** Optional KaTeX for lemma-style cards */
   tex?: string;
+  texAlt?: string;
 };
 
 export const focusAreas: FocusArea[] = [
@@ -11,19 +12,22 @@ export const focusAreas: FocusArea[] = [
     title: 'LLM agents & systems',
     desc: 'Multi-agent architectures as structured inference: ReAct traces, tool use, scratchpad memory, and verification loops — with local models so the experiment stays reproducible.',
     methods: ['Ollama', 'Open WebUI', 'ReAct', 'Tool integration'],
-    tex: '\\mathrm{act}_t \\sim \\pi(\\cdot \\mid s_t, \\mathcal{M})',
+    tex: 'a_t \\sim \\pi_\\theta(\\cdot \\mid s_t, \\mathcal{M}_t)',
+    texAlt: 'At time t, the action is sampled from a policy conditioned on state and memory.',
   },
   {
     title: 'AutoML & fine-tuning',
     desc: 'Search over architectures and adapters as model selection: propose θ, train, read learning curves, revise — LoRA/QLoRA as low-rank capacity knobs, not magic switches.',
     methods: ['PyTorch', 'Unsloth', 'LoRA / QLoRA'],
-    tex: '\\Delta W = BA,\\; \\mathrm{rank}(B)=r',
+    tex: "\\begin{aligned} W' &= W + BA,\\quad \\operatorname{rank}(BA) \\le r\\\\ B &\\in \\mathbb{R}^{d\\times r},\\quad A \\in \\mathbb{R}^{r\\times k} \\end{aligned}",
+    texAlt: 'The update is B times A. B is d by r, A is r by k, and r is the adapter bottleneck rank.',
   },
   {
     title: 'Statistical ML & evaluation',
     desc: 'First-principles estimators, honest loss surfaces, and audit trails — from NumPy primitives to experiment logs that survive handoffs and re-runs.',
     methods: ['NumPy', 'scikit-learn', 'Git audit trails'],
-    tex: '\\hat{\\theta}_n = \\arg\\min_\\theta \\, \\widehat{\\mathcal{L}}_n(\\theta)',
+    tex: '\\hat{\\theta}_n \\in \\arg\\min_\\theta \\frac{1}{n}\\sum_{i=1}^{n}\\ell(f_\\theta(x_i),y_i)',
+    texAlt: 'The estimated parameters minimize the mean empirical loss over n observations.',
   },
 ];
 
