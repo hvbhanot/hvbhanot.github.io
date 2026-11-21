@@ -4,11 +4,12 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Newsreader"', 'Georgia', 'serif'],
+        display: ['"Newsreader"', 'Georgia', '"Times New Roman"', 'serif'],
         body: [
-          '"DM Sans"',
+          '"Inter"',
           'system-ui',
           '-apple-system',
+          '"Segoe UI"',
           'sans-serif',
         ],
         mono: [
@@ -23,22 +24,22 @@ export default {
         ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       colors: {
-        // Paper and ink — keep in sync with :root in src/index.css
+        // Warm archival paper & espresso ink — keep in sync with :root in src/index.css
         bg: {
-          DEFAULT: '#f7f5f0',
-          raise: '#efede6',
+          DEFAULT: '#FAF8F5',
+          raise: '#F3F0EA',
         },
-        line: 'rgba(36, 36, 32, 0.16)',
+        line: 'rgba(28, 27, 24, 0.11)',
         ink: {
-          DEFAULT: '#242420',
-          dim: '#595950',
-          faint: '#6f6c62',
+          DEFAULT: '#1C1B18',
+          dim: '#57534E',
+          faint: '#847E76',
         },
         accent: {
-          prob: '#3f6178',
-          gd: '#986044',
-          proof: '#536854',
-          math: '#5c6687',
+          prob: '#2E5266',
+          gd: '#9A5636',
+          proof: '#3B6E52',
+          math: '#5A5572',
         },
       },
     },

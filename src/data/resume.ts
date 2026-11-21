@@ -35,11 +35,10 @@ export const profile = {
 };
 
 export const navItems: NavItem[] = [
-  { label: 'mind', href: '#mind' },
-  { label: 'work', href: '#research' },
-  { label: 'about', href: '#about' },
-  { label: 'math lab', href: '#stats' },
-  { label: 'let’s talk', href: '#contact' },
+  { label: 'Impact', href: '#community' },
+  { label: 'Research', href: '#research' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 export type Experience = {

@@ -1,22 +1,21 @@
-# Harsh Vardhan Bhanot — mathematics × systems
+# Harsh Vardhan Bhanot — AI Systems & Statistics
 
-A personal research portfolio built around statistical learning, AI systems, and reproducible experiments. The October 2026 redesign uses warm paper, ink, editorial serif type, mathematical line art, and a scroll-led story inspired by somehowliving.tech. Interactive parametric surfaces and the seven math experiments remain at its core.
+A quiet, prose-first personal research portfolio built around statistical learning, autonomous agents, and reproducible open-source systems. The site uses warm archival neutrals, refined serif/monospace typography, an asymmetric margin-rail layout, and interactive SVG conceptual diagrams for featured projects.
 
 ## Stack
 
-React 19, TypeScript, Vite, Tailwind CSS, Framer Motion, KaTeX, and native canvas. The site is one document with hash navigation; it does not use a router.
+React 19, TypeScript, Vite, Tailwind CSS, Framer Motion, and KaTeX. The portfolio is a single continuous scrolling page with hash navigation to sections and individual project dossiers.
 
 ## Sections
 
-- `#top` — introduction and rotatable 3D parametric surfaces: torus, Möbius strip, and saddle. Select a surface, adjust its radius/width/curvature, pause, or rotate with pointer/arrow keys (Home resets orientation).
-- `#mind` — three chapters connecting statistical uncertainty, optimization, and useful systems. A horizontal scroll story on large screens; normal vertical reading on mobile and with reduced motion.
-- `#research` — filterable visual project gallery, mathematical concept sketches, complete project dialogs, and an archive.
-- `#community` — dated public-source metrics, with a direct source link for every number.
-- `#about` — background with a statistics/computer-science intersection diagram, education, expandable experience, research threads, and toolkit.
-- `#stats` — seven lazy-loaded experiments in a keyboard-operable workbench.
-- `#contact` — email, copy action, and public profiles.
+- `#top` — identity, graduate affiliation, research focus, and primary links.
+- `#community` — verified public-source metrics (Open WebUI downloads, contribution rank, and TensorTonic solved count), each linked directly to its source.
+- `#research` — flagship project showcase with live interactive conceptual diagrams, topic filtering, expandable Problem / Method / Result dossiers, and a collapsible archive of earlier projects.
+- `#threads` — research philosophy quote and three core research threads paired with KaTeX formulations.
+- `#about` — biography, education, expandable experience rows, and tools/stack index (`#about-skills`).
+- `#contact` — correspondence, copyable email address, public profiles, and colophon.
 
-Legacy anchors still redirect through `src/lib/legacyHash.ts`. Native dialogs contain keyboard focus and restore it when closed. Reduced-motion preferences pause the hero and remove entrance motion. The paper theme is the default, with a persistent dark-theme toggle.
+Legacy anchors (`#work`, `#experience`, `#toolkit`, `#stats`, `#notes`, `#mind`) redirect cleanly through `src/lib/legacyHash.ts`. Light mode is the default, with a persistent dark-theme toggle (`localStorage`). `prefers-reduced-motion` disables transitions and scroll-linked motion.
 
 ## Development
 
@@ -29,7 +28,7 @@ npm run test:math
 npm run build
 ```
 
-`npm run test:scene` runs the existing Playwright checks against a server already running on port 4321. It checks desktop/mobile overflow and project dialogs.
+`npm run test:scene` runs Playwright checks against a running server on port 4321, verifying desktop/tablet/mobile zero horizontal overflow, interactive diagram controls, project filtering, expandable dossiers, archived bookmarks, legacy hash redirects, and light/dark theme persistence.
 
 ## Refresh public stats
 
@@ -37,10 +36,8 @@ npm run build
 npm run stats:refresh
 ```
 
-The refresh reads the public Open WebUI profile, the Deep Research and Browser Agent listings, and the TensorTonic verified badge. It updates `src/data/community.ts` only after all four sources pass validation. Missing fields, unexpected profile identities, invalid numbers, or inconsistent difficulty totals fail without replacing the existing snapshot.
-
-The page and project descriptions derive their numbers from that one snapshot. Updating it does not publish the site; rebuild and deploy through the existing workflow. No visitor-side API calls, credentials, or third-party stats widgets are needed.
+Reads the public Open WebUI profile, Deep Research and Browser Agent listings, and the TensorTonic verified badge, updating `src/data/community.ts` only after all four sources pass validation.
 
 ## Deployment
 
-GitHub Pages and Railway remain supported; see [DEPLOY.md](DEPLOY.md). Shared-link metadata uses the existing production domain, `https://hvbhanot.pro`, and the custom `public/og.png` artwork. Current design and artwork provenance are in [docs/mathematical-mind-redesign.md](docs/mathematical-mind-redesign.md). Earlier component provenance remains in [docs/obsidian-redesign.md](docs/obsidian-redesign.md).
+GitHub Pages and Railway remain supported; see [DEPLOY.md](DEPLOY.md). Design rationale for the current aesthetic lives in [docs/quiet-minimalist-redesign.md](docs/quiet-minimalist-redesign.md).

@@ -1,6 +1,6 @@
+import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '../../lib/theme';
 
-/** Sun/moon that reads as sample-mean morph when light theme is available. */
 export default function ThemeToggle() {
   const { theme, toggle, lightAvailable } = useTheme();
 
@@ -8,18 +8,19 @@ export default function ThemeToggle() {
     return null;
   }
 
+  const isDark = theme === 'dark';
+
   return (
     <button
       type="button"
       className="theme-toggle"
       onClick={toggle}
-      aria-label={
-        theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
-      }
-      title={theme === 'dark' ? 'Light mode (sample mean)' : 'Dark mode'}
+      aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+      aria-pressed={isDark}
+      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       <span className="theme-toggle-glyph" aria-hidden="true">
-        {theme === 'dark' ? 'x̄' : 'μ'}
+        {isDark ? <Sun size={15} strokeWidth={1.75} /> : <Moon size={15} strokeWidth={1.75} />}
       </span>
     </button>
   );

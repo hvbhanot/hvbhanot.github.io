@@ -1,34 +1,16 @@
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useScroll, useSpring } from 'framer-motion';
 import {
-  lazy,
-  Suspense,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from 'react';
-import { motion, reveal, fadeUp, reduced, easeOut } from './lib/motion';
-import {
-  ArrowUpRight,
+  ArrowDown,
   ArrowUp,
-  Sparkles,
+  ArrowUpRight,
   Check,
   Copy,
-  Pause,
-  Play,
   Plus,
-  X,
 } from 'lucide-react';
-import ScrollProgress from './components/nav/ScrollProgress';
-import MagnetTabs from './components/ui/MagnetTabs';
-import ThoughtTrail from './components/ThoughtTrail';
 import ThemeToggle from './components/nav/ThemeToggle';
-import HeroCanvas, {
-  surfaces,
-  type SurfaceKind,
-} from './components/hero/HeroCanvas';
-import ProjectPlot from './components/research/ProjectPlot';
 import Equation from './components/math/Equation';
+import InteractiveDiagram from './components/research/InteractiveDiagram';
 import { profile, experience, navItems } from './data/resume';
 import {
   communityStats,
@@ -41,33 +23,11 @@ import {
   researchTags,
   type Project,
 } from './data/projects';
-import { focusAreas } from './data/research';
+import { focusAreas, researchQuote } from './data/research';
 import { skillGroups } from './data/skills';
-import { playgroundExperiments } from './data/playground';
 import { ThemeProvider } from './lib/theme';
-import { applyLegacyHashRedirect } from './lib/legacyHash';
-
-const experiments = {
-  sampling: lazy(
-    () => import('./components/playground/experiments/SamplingDist'),
-  ),
-  regression: lazy(
-    () => import('./components/playground/experiments/LinearRegression'),
-  ),
-  bayes: lazy(
-    () => import('./components/playground/experiments/BayesianUpdate'),
-  ),
-  gd: lazy(() => import('./components/playground/experiments/GradientDescent')),
-  pca: lazy(
-    () => import('./components/playground/experiments/PrincipalComponents'),
-  ),
-  softmax: lazy(
-    () => import('./components/playground/experiments/SoftmaxTemperature'),
-  ),
-  montecarlo: lazy(
-    () => import('./components/playground/experiments/MonteCarloPi'),
-  ),
-};
+import { notebookHash } from './lib/legacyHash';
+import { motion, reduced } from './lib/motion';
 
 function ExternalLink({
   href,
@@ -81,633 +41,653 @@ function ExternalLink({
   return (
     <a href={href} target="_blank" rel="noreferrer" className={className}>
       {children}
-      <ArrowUpRight size={15} aria-hidden="true" />
     </a>
   );
 }
 
-function Clock() {
-  const [time, setTime] = useState('—');
-  useEffect(() => {
-    const format = new Intl.DateTimeFormat('en-GB', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-      timeZone: 'America/Chicago',
-    });
-    const tick = () => setTime(format.format(new Date()));
-    tick();
-    const timer = window.setInterval(tick, 10_000);
-    return () => window.clearInterval(timer);
-  }, []);
+function formatTagLabel(tag: string): string {
+  if (tag === 'deep-learning') return 'Deep learning';
+  if (tag === 'automl') return 'AutoML';
+  return tag.charAt(0).toUpperCase() + tag.slice(1);
+}
+
+function projectHighlightPill(project: Project): string {
+  if (project.badge) return project.badge;
+  if (project.status === 'ongoing') return 'ongoing';
+  const routing = project.metrics?.find((m) => m.label === 'routing');
+  if (routing) return routing.value;
+  const first = project.metrics?.[0];
+  if (!first) return project.status;
+  if (['downloads', 'solved', 'tools'].includes(first.label)) {
+    return `${first.value} ${first.label}`;
+  }
+  return first.value;
+}
+
+function ScrollHairline() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 240,
+    damping: 32,
+    restDelta: 0.001,
+  });
+
+  if (reduced) return null;
+
   return (
-    <span
-      className="topbar-clock"
-      aria-label={`Local time in Lubbock, Texas: ${time}`}
-    >
-      <span className="status-dot" />
-      Lubbock, TX <time>{time}</time>
-    </span>
+    <div className="scroll-hairline" aria-hidden="true">
+      <motion.div className="scroll-hairline-fill" style={{ scaleX }} />
+    </div>
   );
 }
 
-function TopBar({ onMenu }: { onMenu: () => void }) {
-  const [active, setActive] = useState('#top');
+function TopBar({ activeSection }: { activeSection: string }) {
+  const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries)
-          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
-      },
-      { rootMargin: '-10% 0px -65% 0px' },
-    );
-    [{ href: '#top' }, ...navItems].forEach((item) => {
-      const section = document.querySelector(item.href);
-      if (section) observer.observe(section);
-    });
-    return () => observer.disconnect();
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
   return (
-    <header className="topbar">
-      <a
-        href="#top"
-        className="wordmark"
-        aria-label="Harsh Vardhan Bhanot — home"
-      >
-        <span className="wordmark-name">
-          Harsh<span className="wordmark-period">.</span>
-        </span>
-      </a>
-      <nav className="topbar-nav" aria-label="Primary">
-        {navItems.map(item => <a key={item.href} href={item.href}
-          aria-current={active === item.href ? 'location' : undefined}>{item.label}</a>)}
-      </nav>
-      <div className="topbar-actions">
-        <ThemeToggle />
-        <button
-          className="menu-button"
-          aria-haspopup="dialog"
-          aria-controls="site-menu"
-          onClick={onMenu}
+    <header className={scrolled ? 'site-header is-scrolled' : 'site-header'}>
+      <div className="header-inner">
+        <a
+          href="#top"
+          className="wordmark"
+          aria-label="Harsh Vardhan Bhanot — home"
         >
-          Menu <Plus size={18} />
-        </button>
+          Harsh Vardhan Bhanot
+        </a>
+        <div className="header-right">
+          <nav className="header-nav" aria-label="Primary sections">
+            {navItems.map((item) => {
+              const id = item.href.slice(1);
+              const isCurrent = activeSection === id;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isCurrent ? 'true' : undefined}
+                  className={isCurrent ? 'is-active' : undefined}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </nav>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
 }
 
-function Dialog({
-  open,
-  onClose,
-  children,
-  label,
-  className = '',
-  id,
-}: {
-  open: boolean;
-  onClose: () => void;
-  children: ReactNode;
-  label: string;
-  className?: string;
-  id?: string;
-}) {
-  const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const dialog = ref.current;
-    if (!dialog || !open) return;
-    const previousFocus = document.activeElement as HTMLElement | null;
-    dialog.showModal();
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      dialog.close();
-      document.body.style.overflow = previousOverflow;
-      previousFocus?.focus({ preventScroll: true });
-    };
-  }, [open]);
-  return (
-    <dialog
-      ref={ref}
-      id={id}
-      className={`site-dialog ${className}`}
-      aria-label={label}
-      onCancel={(event) => {
-        event.preventDefault();
-        onClose();
-      }}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) {
-          const rect = event.currentTarget.getBoundingClientRect();
-          if (
-            event.clientX < rect.left ||
-            event.clientX > rect.right ||
-            event.clientY < rect.top ||
-            event.clientY > rect.bottom
-          )
-            onClose();
-        }
-      }}
-    >
-      <button
-        type="button"
-        className="modal-close"
-        onClick={onClose}
-        aria-label="Close"
-        autoFocus
-      >
-        <X size={20} />
-      </button>
-      {children}
-    </dialog>
-  );
-}
-
 function Hero() {
-  const [kind, setKind] = useState<SurfaceKind>('torus');
-  const [radius, setRadius] = useState(0.8);
-  const [playing, setPlaying] = useState(!reduced);
   return (
-    <section className="hero" id="top" aria-labelledby="hero-title">
-      <div className="hero-introduction">
-        <motion.div className="hero-heading" initial={reduced ? false : { opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: easeOut }}>
-          <p className="hero-eyebrow">Harsh Vardhan Bhanot / Research notebook</p>
-          <h1 id="hero-title">the anatomy of a<br /><em>mathematical mind.</em></h1>
-        </motion.div>
-        <div className="hero-welcome">
-          <p>I think in math. I build in code.<br />This is where the two get tangled.</p>
-          <div className="hero-links">
-            <a className="paper-button" href="#research">view my work <ArrowUpRight size={16} /></a>
-            <a className="paper-button paper-button-dark" href="#contact">let’s talk <ArrowUpRight size={16} /></a>
-          </div>
-        </div>
-      </div>
-      <div className="hero-drawing">
-        <span className="figure-label">Figure 1 / Parametric surface</span>
-        <div className="hero-object">
-          <HeroCanvas kind={kind} radius={radius} playing={playing} />
-        </div>
-        <div className="drawing-caption">
-          <span>Drag to rotate; use arrow keys when focused.</span>
-          <button type="button" className="surface-pause"
-            disabled={reduced}
-            title={reduced ? 'Rotation is disabled by your reduced-motion preference' : undefined}
-            aria-label={reduced ? 'Surface rotation disabled by reduced-motion preference' : playing ? 'Pause surface rotation' : 'Play surface rotation'}
-            aria-pressed={playing} onClick={() => setPlaying(!playing)}>
-            {playing ? <Pause size={13} /> : <Play size={13} />}
-          </button>
-        </div>
-        <div className="hero-formula">
-          <span className="hero-formula-label">
-            {surfaces[kind].label} / {surfaces[kind].symbol} = {radius.toFixed(2)} / {playing ? 'auto-rotate on' : 'paused'}
-          </span>
-          <Equation tex={surfaces[kind].equation} altText={surfaces[kind].alt} display />
-          <Equation className="hero-domain" tex={surfaces[kind].domain} altText={surfaces[kind].domainAlt} />
-        </div>
-      </div>
-      <div className="hero-footnote">
-        <a className="scroll-cue" href="#mind"><span aria-hidden="true">↓</span> scroll to follow a thought</a>
-        <details className="surface-settings">
-          <summary>Surface parameters <Plus size={13} /></summary>
-          <div className="surface-settings-content">
-            <MagnetTabs slug="surface" className="surface-selector" label="Mathematical surface"
-              activeTab={kind} onSelect={(value) => setKind(value as SurfaceKind)}
-              options={(Object.keys(surfaces) as SurfaceKind[]).map(id => ({ id, label: surfaces[id].label }))} />
-            <div className="surface-parameter">
-              <label htmlFor="surface-radius">{surfaces[kind].parameter}<span>{surfaces[kind].symbol} = {radius.toFixed(2)}</span></label>
-              <input id="surface-radius" type="range" min="0.35" max="1.15" step="0.05" value={radius}
-                onChange={(event) => setRadius(Number(event.target.value))} />
-              <span className="surface-note">{surfaces[kind].note}</span>
-            </div>
-          </div>
-        </details>
-        <Clock />
-      </div>
-    </section>
-  );
-}
-
-function SectionLabel({
-  number,
-  children,
-}: {
-  number: string;
-  children: ReactNode;
-}) {
-  return (
-    <p className="section-label">
-      <span>{number}</span>
-      {children}
-    </p>
-  );
-}
-
-function Research({ onOpen }: { onOpen: (project: Project) => void }) {
-  const [tag, setTag] = useState<string | null>(null);
-  const [expanded, setExpanded] = useState(false);
-  const featured = projects.filter(isFeatured);
-  const filtered = tag
-    ? featured.filter((project) => project.tags?.includes(tag))
-    : featured;
-  const visible = expanded || tag ? filtered : filtered.slice(0, 6);
-  const archive = projects.filter((project) => project.status === 'archived');
-  return (
-    <section
-      id="research"
-      className="section research-section"
-      aria-labelledby="research-title"
-    >
-      <SectionLabel number="01">Selected work</SectionLabel>
-      <div className="section-heading">
-        <h2 id="research-title">some thoughts<br /><em>became things.</em></h2>
-        <p>Open-source systems. Research in progress.<br />A few things I’ve been thinking about and building.</p>
-      </div>
-      <div className="research-toolbar">
-        <MagnetTabs slug="research" className="tag-filter" label="Filter research by tag"
-          activeTab={tag ?? 'all'} onSelect={(value) => setTag(value === 'all' ? null : value)}
-          options={[{ id: 'all', label: `All work (${featured.length})` }, ...researchTags.filter(t => featured.some(p => p.tags?.includes(t))).map(t => ({ id: t, label: t === 'deep-learning' ? 'Deep learning' : t.charAt(0).toUpperCase() + t.slice(1) }))]} />
-        <span className="toolbar-note">
-          {String(filtered.length).padStart(2, '0')} PROJECTS
+    <section id="top" className="chapter hero-chapter" aria-labelledby="hero-title">
+      <div className="chapter-rail hero-rail">
+        <span className="status-row">
+          <span className="status-dot" aria-hidden="true" />
+          <span>Texas Tech</span>
         </span>
+        <span className="rail-note">{profile.location}</span>
       </div>
-      <div className="research-index" id="research-index" aria-live="polite">
-        {visible.map((project) => {
-          const kind = project.figure ?? 'feedback';
-          return (
-            <button
-              type="button"
-              className={`research-card plot-${kind}`}
-              key={project.title}
-              onClick={() => onOpen(project)}
-              aria-haspopup="dialog"
-            >
-              <span className="project-art">
-                <span className="card-glow" aria-hidden="true" />
-                <span className="art-topline">
-                  <span>
-                    {project.catalog} / {project.year}
-                  </span>
-                  <span>{project.status}</span>
-                </span>
-                <ProjectPlot kind={kind} labels={project.figureLabels} />
-                <span className="art-bottomline">
-                  <span>{project.figureCaption}</span>
-                  <span className="project-open">View project</span>
-                </span>
-              </span>
-              <span className="project-copy">
-                <span className="project-title-line">
-                  <span className="work-title">{project.title}</span>
-                  <ArrowUpRight size={25} strokeWidth={1.5} />
-                </span>
-                <span className="work-sub">{project.subtitle}</span>
-                <span className="project-tags">
-                  <span>{project.technologies.slice(0, 3).join(' / ')}</span>
-                  {project.badge && (
-                    <span className="work-badge">{project.badge}</span>
-                  )}
-                </span>
-              </span>
-            </button>
-          );
-        })}
+
+      <div className="chapter-main">
+        <p className="hero-eyebrow">
+          Concurrent M.S. Statistics &amp; M.S. Computer Science
+        </p>
+        <h1 id="hero-title" className="hero-name">
+          {profile.name}
+        </h1>
+        <p className="hero-thesis">
+          Statistical learning, autonomous agents, and reproducible open-source
+          systems.
+        </p>
+        <p className="hero-lead">
+          I study the mathematics behind machine learning problems and build
+          inspectable software around them—spanning language-model agents,
+          parameter-efficient fine-tuning, and computational genetics tooling.
+        </p>
+        <div className="hero-actions">
+          <a className="btn-primary" href="#research">
+            <span>Selected research</span>
+            <ArrowDown size={14} aria-hidden="true" />
+          </a>
+          <nav className="hero-links" aria-label="Profiles and email">
+            <ExternalLink href={profile.github} className="quiet-link">
+              <span>GitHub</span>
+              <ArrowUpRight size={13} aria-hidden="true" />
+            </ExternalLink>
+            <ExternalLink href={profile.openwebui} className="quiet-link">
+              <span>Open WebUI</span>
+              <ArrowUpRight size={13} aria-hidden="true" />
+            </ExternalLink>
+            <ExternalLink href={profile.linkedin} className="quiet-link">
+              <span>LinkedIn</span>
+              <ArrowUpRight size={13} aria-hidden="true" />
+            </ExternalLink>
+            <a href="#contact" className="quiet-link">
+              <span>Email</span>
+            </a>
+          </nav>
+        </div>
       </div>
-      {!tag && featured.length > 6 && (
-        <button
-          type="button"
-          className="index-expand"
-          aria-expanded={expanded}
-          aria-controls="research-index"
-          onClick={() => setExpanded(!expanded)}
-        >
-          {expanded
-            ? 'Show selected projects'
-            : `Explore all ${featured.length} projects`}
-          <span>{expanded ? '−' : '+'}</span>
-        </button>
-      )}
-      {archive.length > 0 && (
-        <details className="archive">
-          <summary>
-            Earlier explorations <span>{archive.length} projects</span>
-          </summary>
-          {archive.map((project) => (
-            <button
-              type="button"
-              key={project.title}
-              onClick={() => onOpen(project)}
-            >
-              <span>{project.catalog}</span>
-              <strong>{project.title}</strong>
-              <span>{project.subtitle}</span>
-              <ArrowUpRight size={16} />
-            </button>
-          ))}
-        </details>
-      )}
     </section>
   );
 }
 
-function Community() {
+function ImpactStrip() {
   const { openWebui, deepResearch, browserAgent, tensorTonic } = communityStats;
   const metrics = [
     {
       value: numberFormat.format(deepResearch.downloads),
       label: 'Deep Research downloads',
+      meta: 'Open WebUI filter',
       href: deepResearch.href,
     },
     {
       value: numberFormat.format(browserAgent.downloads),
       label: 'Browser Agent downloads',
+      meta: 'Open WebUI tool',
       href: browserAgent.href,
     },
     {
       value: String(tensorTonic.solved),
-      label: 'Verified ML problems solved',
+      label: 'Verified ML problems',
+      meta: `${tensorTonic.easy}E · ${tensorTonic.medium}M · ${tensorTonic.hard}H · TensorTonic`,
       href: tensorTonic.href,
     },
     {
-      value: String(openWebui.contributions),
-      label: 'Open WebUI contributions',
+      value: `Top ${openWebui.contributionPercentile}%`,
+      label: 'Open WebUI rank',
+      meta: `${openWebui.contributions} contributions · ${openWebui.points} pts`,
       href: openWebui.href,
     },
   ];
+
   return (
-    <aside
+    <section
       id="community"
-      className="community-section"
+      className="chapter impact-chapter"
       aria-labelledby="community-title"
     >
-      <div className="community-heading">
-        <h2 id="community-title">
-          Built in the open.
-          <br />
-          Used in the real world.
+      <div className="chapter-rail">
+        <h2 id="community-title" className="rail-title">
+          Verified Impact
         </h2>
-        <a
-          href={openWebui.href}
-          target="_blank"
-          rel="noreferrer"
-          className="community-rank"
-        >
-          Top <strong>{openWebui.contributionPercentile}%</strong>
-          <span>
-            Open WebUI contribution rank <ArrowUpRight size={14} />
-          </span>
-        </a>
+        <span className="rail-note">Checked {statsCheckedLabel}</span>
       </div>
-      <div className="metric-grid">
-        {metrics.map((metric) => (
-          <a
-            href={metric.href}
-            target="_blank"
-            rel="noreferrer"
-            className="community-metric"
-            key={metric.label}
-          >
-            <span className="metric-value">{metric.value}</span>
-            <span>
-              {metric.label}
-              <ArrowUpRight size={14} />
-            </span>
-          </a>
-        ))}
+
+      <div className="chapter-main">
+        <div className="impact-grid">
+          {metrics.map((metric) => (
+            <ExternalLink
+              key={metric.label}
+              href={metric.href}
+              className="impact-item"
+            >
+              <span className="impact-value">
+                <span>{metric.value}</span>
+                <ArrowUpRight
+                  size={14}
+                  className="impact-arrow"
+                  aria-hidden="true"
+                />
+              </span>
+              <span className="impact-label">{metric.label}</span>
+              <span className="impact-meta">{metric.meta}</span>
+            </ExternalLink>
+          ))}
+        </div>
       </div>
-      <p className="source-note">
-        <span>Publicly verifiable / source links above</span>
-        <span>Last checked {statsCheckedLabel} UTC</span>
-      </p>
-    </aside>
+    </section>
   );
 }
 
-function About() {
+const featured = projects.filter(isFeatured);
+const earlier = projects.filter((project) => !isFeatured(project));
+const featuredTags = researchTags.filter((tag) =>
+  featured.some((project) => project.tags?.includes(tag)),
+);
+
+function ProjectDossierBody({
+  project,
+  includeDiagram = false,
+}: {
+  project: Project;
+  includeDiagram?: boolean;
+}) {
   return (
-    <section
-      id="about"
-      className="section about-section"
-      aria-labelledby="about-title"
+    <div
+      className={
+        includeDiagram && project.figure
+          ? 'dossier-body has-diagram'
+          : 'dossier-body'
+      }
     >
-      <SectionLabel number="02">A bit about me</SectionLabel>
-      <div className="about-intro">
-        <h2 id="about-title">
-          a person,<br /><em>not just a parameter.</em>
-        </h2>
-        <div className="about-bio">
-          <p className="about-name">Harsh Vardhan Bhanot.</p>
-          <p>{profile.bio}</p>
-          <a
-            href={profile.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            className="text-link"
-          >
-            More about my background <ArrowUpRight size={18} />
-          </a>
-        </div>
-      </div>
-      <div className="about-grid">
-        <div className="intersection-panel">
-          <div
-            className="venn-figure"
-            role="img"
-            aria-label="My work sits at the intersection of statistics and computer science"
-          >
-            <div className="venn-circle venn-stats">
-              <span>STATISTICS</span>
-            </div>
-            <div className="venn-circle venn-cs">
-              <span>
-                COMPUTER
-                <br />
-                SCIENCE
-              </span>
-            </div>
-            <span className="venn-intersection">∩</span>
+      <div className="dossier-prose">
+        {includeDiagram && (
+          <div className="dossier-overview">
+            <p className="dossier-abstract">
+              {project.abstract ?? project.description}
+            </p>
+            {project.abstractTex && (
+              <div className="equation-well">
+                <Equation tex={project.abstractTex} display />
+              </div>
+            )}
           </div>
-          <p className="intersection-caption">
-            A statistical foundation.
-            <br />A systems mindset.
-          </p>
-          <div className="education">
-            <div>
-              <span>2026 — NOW</span>
-              <h3>Texas Tech University</h3>
-              <p>Concurrent M.S. Statistics + M.S. Computer Science</p>
+        )}
+
+        <div className="dossier-sections">
+          {project.problem && (
+            <div className="dossier-block">
+              <h4>Problem</h4>
+              <p>{project.problem}</p>
             </div>
-            <div>
-              <span>2026 / COMPLETED</span>
-              <h3>B.S. Computer Science</h3>
-              <p>Applied Mathematics minor</p>
+          )}
+          {project.method && (
+            <div className="dossier-block">
+              <h4>Method</h4>
+              <p>{project.method}</p>
             </div>
-          </div>
-        </div>
-        <div className="experience">
-          <p className="subhead">EXPERIENCE / THE PATH SO FAR</p>
-          {experience.map((job, i) => (
-            <details className="xp-row" key={job.title}>
-              <summary>
-                <span className="xp-number">0{i + 1}</span>
-                <span className="xp-title">
-                  <strong>{job.title}</strong>
-                  <span>{job.org}</span>
-                  <span className="xp-period">{job.period}</span>
-                </span>
-                <Plus size={17} />
-              </summary>
-              <p>{job.desc}</p>
-              <ul>
-                {job.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
+          )}
+          {project.result && (
+            <div className="dossier-block">
+              <h4>Result</h4>
+              <p>{project.result}</p>
+            </div>
+          )}
+          {!project.problem && !project.method && !project.result && (
+            <div className="dossier-block">
+              <h4>Highlights</h4>
+              <ul className="dossier-list">
+                {project.highlights.map((line) => (
+                  <li key={line}>{line}</li>
                 ))}
               </ul>
-            </details>
-          ))}
+            </div>
+          )}
+        </div>
+
+        <div className="dossier-footer">
+          {project.metrics && project.metrics.length > 0 && (
+            <dl className="dossier-metrics">
+              {project.metrics.map((metric) => (
+                <div key={metric.label}>
+                  <dt>{metric.label}</dt>
+                  <dd>{metric.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          <div className="dossier-tech">
+            <span className="dossier-tech-label">Built with</span>
+            <span>{project.technologies.join(' · ')}</span>
+          </div>
+          {includeDiagram && project.href && (
+            <ExternalLink href={project.href} className="quiet-link dossier-link">
+              <span>{project.hrefLabel ?? 'View repository'}</span>
+              <ArrowUpRight size={13} aria-hidden="true" />
+            </ExternalLink>
+          )}
         </div>
       </div>
-      <div className="focus-index">
-        {focusAreas.map((area) => (
-          <article key={area.title}>
-            {area.tex && <Equation className="focus-equation" tex={area.tex} altText={area.texAlt} display />}
-            <h3>{area.title}</h3>
-            <p>{area.desc}</p>
-            <span className="focus-methods">{area.methods.join(' / ')}</span>
-          </article>
-        ))}
-      </div>
-      <div id="about-skills" className="toolkit">
-        <p className="subhead">THE TOOLCHAIN</p>
-        {skillGroups.map((group) => (
-          <div className="tool-row" key={group.category}>
-            <h3>{group.category}</h3>
-            <p>{group.skills.join(' · ')}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+
+      {includeDiagram && project.figure && (
+        <div className="dossier-visual">
+          <InteractiveDiagram
+            kind={project.figure}
+            catalog={project.catalog}
+            caption={project.figureCaption}
+            labels={project.figureLabels}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 
-function StatsPlayground() {
-  const [active, setActive] = useState(0);
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const experiment = playgroundExperiments[active];
-  const Experiment = experiments[experiment.id];
+function ShowcaseProject({ project }: { project: Project }) {
+  const id = 'entry-' + project.catalog.replace(/\D/g, '');
+  const highlightMetric = projectHighlightPill(project);
+
+  return (
+    <article
+      id={id}
+      className="showcase-entry"
+      aria-labelledby={`${id}-title`}
+    >
+      <div className="showcase-grid">
+        <div className="showcase-copy">
+          <div className="entry-meta-row">
+            <span className="entry-catalog">{project.catalog}</span>
+            <span className="meta-sep" aria-hidden="true">·</span>
+            <span className="entry-year">{project.year}</span>
+            <span className="meta-sep" aria-hidden="true">·</span>
+            <span className="entry-pill">{highlightMetric}</span>
+          </div>
+
+          <h3 id={`${id}-title`} className="showcase-title">
+            {project.title}
+          </h3>
+          <p className="showcase-subtitle">{project.subtitle}</p>
+          <p className="showcase-abstract">
+            {project.abstract ?? project.description}
+          </p>
+
+          {project.abstractTex && (
+            <div className="equation-well">
+              <Equation tex={project.abstractTex} display />
+            </div>
+          )}
+
+          <div className="showcase-actions">
+            {project.href && (
+              <ExternalLink href={project.href} className="quiet-link">
+                <span>{project.hrefLabel ?? 'View repository'}</span>
+                <ArrowUpRight size={13} aria-hidden="true" />
+              </ExternalLink>
+            )}
+            {project.tags && (
+              <span className="entry-tags">
+                {project.tags.map(formatTagLabel).join(' · ')}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {project.figure && (
+          <div className="showcase-diagram">
+            <InteractiveDiagram
+              kind={project.figure}
+              catalog={project.catalog}
+              caption={project.figureCaption}
+              labels={project.figureLabels}
+            />
+          </div>
+        )}
+      </div>
+
+      <details className="entry-details showcase-details">
+        <summary>
+          <span>Research notes &amp; architecture</span>
+          <Plus size={15} className="expand-icon" aria-hidden="true" />
+        </summary>
+        <ProjectDossierBody project={project} />
+      </details>
+    </article>
+  );
+}
+
+function IndexProject({ project }: { project: Project }) {
+  const id = 'entry-' + project.catalog.replace(/\D/g, '');
+  const tagNote = projectHighlightPill(project);
+
+  return (
+    <article
+      id={id}
+      className="index-entry"
+      aria-labelledby={`${id}-title`}
+    >
+      <details className="entry-details index-details">
+        <summary className="index-summary">
+          <span className="index-catalog">{project.catalog}</span>
+          <span className="index-main">
+            <h3 id={`${id}-title`}>{project.title}</h3>
+            <span className="index-subtitle">{project.subtitle}</span>
+          </span>
+          <span className="index-meta">
+            <span className="entry-pill">{tagNote}</span>
+            <span className="index-year">{project.year}</span>
+          </span>
+          <Plus size={15} className="expand-icon" aria-hidden="true" />
+        </summary>
+        <ProjectDossierBody project={project} includeDiagram />
+      </details>
+    </article>
+  );
+}
+
+function ResearchSection({
+  tag,
+  setTag,
+}: {
+  tag: string;
+  setTag: (tag: string) => void;
+}) {
+  const visible = featured.filter(
+    (project) => tag === 'all' || project.tags?.includes(tag),
+  );
+  const showcaseCount = tag === 'all' ? 3 : 1;
+  const flagship = visible.slice(0, showcaseCount);
+  const secondary = visible.slice(showcaseCount);
+
   return (
     <section
-      id="stats"
-      className="section playground-section"
-      aria-labelledby="playground-title"
+      id="research"
+      className="chapter"
+      aria-labelledby="research-title"
     >
-      <SectionLabel number="03">
-        The math lab / {playgroundExperiments.length} live experiments
-      </SectionLabel>
-      <motion.div className="section-heading" {...reveal}>
-        <motion.h2 id="playground-title" variants={fadeUp}>
-          what happens if<br /><em>you change this?</em>
-        </motion.h2>
-        <motion.p variants={fadeUp}>
-          A formula is a starting point.
-          <br />
-          Explore the behavior behind it. Seven
-          <br />
-          interactive, reproducible experiments.
-        </motion.p>
-      </motion.div>
-      <div className="experiment-workbench">
-        <label className="mobile-experiment-picker" htmlFor="mobile-experiment">
-          Choose an experiment
-          <select id="mobile-experiment" value={active}
-            onChange={(event) => setActive(Number(event.target.value))}>
-            {playgroundExperiments.map((exp, index) => (
-              <option key={exp.id} value={index}>{exp.title}</option>
-            ))}
-          </select>
-        </label>
+      <div className="chapter-rail">
+        <span className="rail-num">01</span>
+        <h2 id="research-title" className="rail-title">
+          Selected Work
+        </h2>
+        <span className="rail-note">
+          {featured.length} active · {earlier.length} archived
+        </span>
+      </div>
+
+      <div className="chapter-main">
         <div
-          className="experiment-index"
-          role="tablist"
-          aria-label="Statistics experiments"
-          aria-orientation="horizontal"
+          className="filter-bar"
+          role="group"
+          aria-label="Filter research by topic"
         >
-          {playgroundExperiments.map((exp, index) => (
-            <button
-              type="button"
-              ref={(node) => {
-                tabRefs.current[index] = node;
-              }}
-              key={exp.id}
-              id={`tab-${exp.id}`}
-              role="tab"
-              aria-selected={index === active}
-              aria-controls="experiment-panel"
-              tabIndex={index === active ? 0 : -1}
-              onClick={() => setActive(index)}
-              onKeyDown={(event) => {
-                let next = index;
-                if (event.key === 'ArrowDown' || event.key === 'ArrowRight')
-                  next = (index + 1) % playgroundExperiments.length;
-                else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft')
-                  next =
-                    (index - 1 + playgroundExperiments.length) %
-                    playgroundExperiments.length;
-                else if (event.key === 'Home') next = 0;
-                else if (event.key === 'End')
-                  next = playgroundExperiments.length - 1;
-                else return;
-                event.preventDefault();
-                setActive(next);
-                tabRefs.current[next]?.focus();
-              }}
-            >
-              <span>0{index + 1}</span>
-              {exp.title}
-              <ArrowUpRight size={15} aria-hidden="true" />
-            </button>
-          ))}
-          <p className="experiment-index-note">
-            Δ INPUT → Δ UNDERSTANDING
-            <br />
-            Move a parameter. See what follows.
-          </p>
+          {(['all', ...featuredTags] as const).map((item) => {
+            const active = tag === item;
+            return (
+              <button
+                key={item}
+                type="button"
+                aria-pressed={active}
+                className={active ? 'filter-chip is-active' : 'filter-chip'}
+                onClick={() => setTag(item)}
+              >
+                {active && !reduced && (
+                  <motion.span
+                    layoutId="research-filter-pill"
+                    className="filter-chip-bg"
+                    transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                  />
+                )}
+                <span className="filter-chip-label">
+                  {item === 'all' ? 'All' : formatTagLabel(item)}
+                </span>
+              </button>
+            );
+          })}
         </div>
-        <div
-          id="experiment-panel"
-          role="tabpanel"
-          aria-labelledby={`tab-${experiment.id}`}
-          tabIndex={0}
-          className={`experiment-panel accent-${experiment.accent}`}
-        >
-          <div className="experiment-heading">
-            <span>EXPERIMENT 0{active + 1}</span>
-            <span>INTERACTIVE</span>
+
+        <div className="showcase-stack">
+          {flagship.map((project) => (
+            <ShowcaseProject key={project.catalog} project={project} />
+          ))}
+        </div>
+
+        {secondary.length > 0 && (
+          <div className="secondary-group">
+            <h3 className="group-kicker">
+              {tag === 'all' ? 'More selected systems' : 'Related systems'}
+            </h3>
+            <div className="index-stack">
+              {secondary.map((project) => (
+                <IndexProject key={project.catalog} project={project} />
+              ))}
+            </div>
           </div>
-          <h3>{experiment.title}</h3>
-          <p className="experiment-lede">{experiment.lede}</p>
-          <Equation className="play-eq" tex={experiment.equation} display />
-          <Suspense
-            fallback={
-              <p className="play-loading" role="status">
-                Preparing the experiment…
-              </p>
-            }
-          >
-            <Experiment key={experiment.id} />
-          </Suspense>
+        )}
+
+        <details className="archive-drawer">
+          <summary>
+            <span>Earlier archive ({earlier.length})</span>
+            <Plus size={15} className="expand-icon" aria-hidden="true" />
+          </summary>
+          <div className="index-stack archive-stack">
+            {earlier.map((project) => (
+              <IndexProject key={project.catalog} project={project} />
+            ))}
+          </div>
+        </details>
+      </div>
+    </section>
+  );
+}
+
+function ResearchThreadsSection() {
+  return (
+    <section
+      id="threads"
+      className="chapter"
+      aria-labelledby="threads-title"
+    >
+      <div className="chapter-rail">
+        <span className="rail-num">02</span>
+        <h2 id="threads-title" className="rail-title">
+          Research Threads
+        </h2>
+        <span className="rail-note">Method &amp; notation</span>
+      </div>
+
+      <div className="chapter-main">
+        <blockquote className="method-quote">
+          <p>{researchQuote}</p>
+        </blockquote>
+
+        <div className="threads-list">
+          {focusAreas.map((area) => (
+            <article key={area.title} className="thread-row">
+              <div className="thread-copy">
+                <h3>{area.title}</h3>
+                <p>{area.desc}</p>
+                <span className="thread-methods">
+                  {area.methods.join(' · ')}
+                </span>
+              </div>
+              {area.tex && (
+                <div className="thread-math">
+                  <Equation
+                    tex={area.tex}
+                    altText={area.texAlt}
+                    display
+                  />
+                </div>
+              )}
+            </article>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function Contact() {
+function AboutSection() {
+  return (
+    <section id="about" className="chapter" aria-labelledby="about-title">
+      <div className="chapter-rail">
+        <span className="rail-num">03</span>
+        <h2 id="about-title" className="rail-title">
+          Background
+        </h2>
+        <span className="rail-note">Education &amp; craft</span>
+      </div>
+
+      <div className="chapter-main">
+        <div className="about-prose">
+          <p>{profile.bio}</p>
+          <ExternalLink href={profile.linkedin} className="quiet-link">
+            <span>Full background on LinkedIn</span>
+            <ArrowUpRight size={13} aria-hidden="true" />
+          </ExternalLink>
+        </div>
+
+        <div className="sub-section">
+          <h3 className="group-kicker">Education</h3>
+          <div className="edu-list">
+            <div className="edu-row">
+              <span className="edu-period">{profile.masters.period}</span>
+              <div className="edu-body">
+                <h4>{profile.masters.institution}</h4>
+                <p>Concurrent M.S. Statistics &amp; M.S. Computer Science</p>
+              </div>
+              <span className="entry-pill">{profile.masters.status}</span>
+            </div>
+            <div className="edu-row">
+              <span className="edu-period">{profile.graduation}</span>
+              <div className="edu-body">
+                <h4>{profile.degree}</h4>
+                <p>Minor in {profile.minor}</p>
+              </div>
+              <span className="edu-muted">Completed</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="sub-section">
+          <h3 className="group-kicker">Experience</h3>
+          <div className="xp-list">
+            {experience.map((job) => (
+              <details className="xp-item" key={job.title}>
+                <summary className="xp-summary">
+                  <span className="xp-period">{job.period}</span>
+                  <span className="xp-heading">
+                    <strong>{job.title}</strong>
+                    <span className="xp-org">{job.org}</span>
+                  </span>
+                  <Plus size={15} className="expand-icon" aria-hidden="true" />
+                </summary>
+                <div className="xp-body">
+                  <p>{job.desc}</p>
+                  <ul>
+                    {job.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+
+        <div id="about-skills" className="sub-section">
+          <h3 className="group-kicker">Tools &amp; stack</h3>
+          <div className="skills-table">
+            {skillGroups.map((group) => (
+              <div className="skill-row" key={group.category}>
+                <h4>{group.category}</h4>
+                <p>{group.skills.join(' · ')}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactFooter() {
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
   const timer = useRef<number | undefined>(undefined);
+
   useEffect(() => () => window.clearTimeout(timer.current), []);
-  const copy = async () => {
+
+  const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(profile.email);
       setCopied(true);
@@ -718,195 +698,143 @@ function Contact() {
       setCopyError(true);
     }
   };
+
   return (
     <footer
       id="contact"
-      className="section contact"
+      className="chapter contact-chapter"
       aria-labelledby="contact-title"
     >
-      <SectionLabel number="04">Let’s connect</SectionLabel>
-      <div className="contact-spread">
-        <h2 id="contact-title">
-          have a thought?<br /><em>let’s untangle it.</em>
+      <div className="chapter-rail">
+        <span className="rail-num">04</span>
+        <h2 id="contact-title" className="rail-title">
+          Correspondence
         </h2>
-        <div className="contact-invitation">
-          <p>
-            Research, an interesting system,
-            <br />
-            or a problem worth thinking about.
-            <br />
-            <span>My inbox is open.</span>
-          </p>
+        <span className="rail-note">{profile.coordinates}</span>
+      </div>
+
+      <div className="chapter-main">
+        <p className="contact-headline">Write to me.</p>
+        <p className="contact-lead">
+          Open to conversations on statistical learning, autonomous agent
+          systems, graduate research, or open-source collaborations.
+        </p>
+
+        <div className="contact-email-row">
           <a className="contact-mail" href={`mailto:${profile.email}`}>
             {profile.email}
-            <ArrowUpRight size={22} aria-hidden="true" />
           </a>
-          <button className="copy-email" type="button" onClick={copy}>
-            {copied ? <Check size={13} /> : <Copy size={13} />}
+          <button
+            className="copy-button"
+            type="button"
+            onClick={copyEmail}
+          >
+            {copied ? (
+              <Check size={13} aria-hidden="true" />
+            ) : (
+              <Copy size={13} aria-hidden="true" />
+            )}
             <span aria-live="polite">
               {copied
-                ? 'Email copied'
+                ? 'Copied'
                 : copyError
-                  ? 'Select the email above to copy it'
-                  : 'Copy email address'}
+                  ? 'Select address above'
+                  : 'Copy'}
             </span>
           </button>
         </div>
-      </div>
-      <div className="contact-foot">
-        <span>© {new Date().getFullYear()} Harsh Vardhan Bhanot</span>
-        <nav aria-label="Elsewhere">
-          <ExternalLink href={profile.github}>GitHub</ExternalLink>
-          <ExternalLink href={profile.linkedin}>LinkedIn</ExternalLink>
-          <ExternalLink href={profile.openwebui}>Open WebUI</ExternalLink>
-        </nav>
-        <a href="#top">
-          Back to the beginning <ArrowUp size={14} aria-hidden="true" />
-        </a>
-      </div>
-      <div className="colophon">
-        <span>HVB / STATISTICS × COMPUTER SCIENCE</span>
-        <span className="footer-note"><Sparkles size={12} aria-hidden="true" /> Curiosity is the constant.</span>
+
+        <div className="colophon">
+          <span>© {new Date().getFullYear()} {profile.name}</span>
+          <nav className="colophon-links" aria-label="External profiles">
+            <ExternalLink href={profile.github}>GitHub</ExternalLink>
+            <ExternalLink href={profile.linkedin}>LinkedIn</ExternalLink>
+            <ExternalLink href={profile.openwebui}>Open WebUI</ExternalLink>
+          </nav>
+          <a href="#top" className="back-top">
+            <span>Top</span>
+            <ArrowUp size={13} aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </footer>
   );
 }
 
-function ProjectModal({
-  project,
-  onClose,
-}: {
-  project: Project | null;
-  onClose: () => void;
-}) {
-  const hasPMR = Boolean(
-    project?.problem || project?.method || project?.result,
-  );
-  return (
-    <Dialog
-      open={Boolean(project)}
-      onClose={onClose}
-      label={project?.title ?? 'Project'}
-      className="project-dialog"
-    >
-      {project && (
-        <>
-          <p className="modal-code">
-            INVESTIGATION {project.catalog} / {project.year}
-          </p>
-          <h2>{project.title}</h2>
-          <p className="modal-subtitle">{project.subtitle}</p>
-          {project.abstract && (
-            <p className="modal-description">{project.abstract}</p>
-          )}
-          {project.abstractTex && (
-            <Equation className="modal-tex" tex={project.abstractTex} display />
-          )}
-          {project.metrics && (
-            <div className="metric-row">
-              {project.metrics.map((metric) => (
-                <span key={metric.label}>
-                  <strong>{metric.value}</strong>
-                  {metric.label}
-                </span>
-              ))}
-            </div>
-          )}
-          {hasPMR ? (
-            <>
-              {project.problem && (
-                <>
-                  <h3>01 / Problem</h3>
-                  <p>{project.problem}</p>
-                </>
-              )}
-              {project.method && (
-                <>
-                  <h3>02 / Method</h3>
-                  <p>{project.method}</p>
-                </>
-              )}
-              {project.result && (
-                <>
-                  <h3>03 / Result</h3>
-                  <p>{project.result}</p>
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <h3>Overview</h3>
-              <p>{project.description}</p>
-              <h3>Highlights</h3>
-              <ul>
-                {project.highlights.map((highlight) => (
-                  <li key={highlight}>{highlight}</li>
-                ))}
-              </ul>
-            </>
-          )}
-          <h3>Built with</h3>
-          <p className="modal-stack">{project.technologies.join(' / ')}</p>
-          {project.href && (
-            <ExternalLink className="text-link modal-link" href={project.href}>
-              {project.hrefLabel ?? 'View source'}
-            </ExternalLink>
-          )}
-        </>
-      )}
-    </Dialog>
-  );
-}
-
 function Site() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [active, setActive] = useState<Project | null>(null);
-  const closeProject = useCallback(() => setActive(null), []);
+  const [tag, setTag] = useState('all');
+  const [activeSection, setActiveSection] = useState('top');
+
   useEffect(() => {
-    applyLegacyHashRedirect();
+    const ids = ['community', 'research', 'about', 'contact'];
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              Math.abs(a.boundingClientRect.top) -
+              Math.abs(b.boundingClientRect.top),
+          );
+        if (visible[0]?.target.id) {
+          setActiveSection(visible[0].target.id);
+        }
+      },
+      { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1] },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    let frame = 0;
+    const followAnchor = () => {
+      cancelAnimationFrame(frame);
+      if (!window.location.hash) return;
+      const id = notebookHash().slice(1);
+      if (id.startsWith('entry-')) setTag('all');
+      frame = requestAnimationFrame(() => {
+        const target = document.getElementById(id);
+        if (!target) return;
+        if (id.startsWith('entry-')) {
+          const archive = target.closest('details');
+          if (archive) archive.open = true;
+          const notes = target.querySelector('details');
+          if (notes) notes.open = true;
+        }
+        target.scrollIntoView({ behavior: 'instant' });
+      });
+    };
+    followAnchor();
+    window.addEventListener('hashchange', followAnchor);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('hashchange', followAnchor);
+    };
+  }, []);
+
   return (
     <div className="site-root">
+      <ScrollHairline />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <ScrollProgress />
-      <TopBar onMenu={() => setMenuOpen(true)} />
+      <TopBar activeSection={activeSection} />
       <main id="main" tabIndex={-1}>
         <Hero />
-        <ThoughtTrail />
-        <Research onOpen={setActive} />
-        <Community />
-        <About />
-        <StatsPlayground />
-        <Contact />
+        <ImpactStrip />
+        <ResearchSection tag={tag} setTag={setTag} />
+        <ResearchThreadsSection />
+        <AboutSection />
       </main>
-      <Dialog
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        label="Site index"
-        className="menu-dialog"
-        id="site-menu"
-      >
-        <p className="section-label">HVB / INDEX</p>
-        <nav aria-label="Site sections">
-          {navItems.map((item, index) => (
-            <a
-              href={item.href}
-              key={item.href}
-              onClick={() => setMenuOpen(false)}
-            >
-              <span>0{index + 1}</span>
-              {item.label}
-              <ArrowUpRight size={24} />
-            </a>
-          ))}
-        </nav>
-        <a className="menu-mail" href={`mailto:${profile.email}`}>
-          {profile.email}
-        </a>
-      </Dialog>
-      <ProjectModal project={active} onClose={closeProject} />
+      <ContactFooter />
     </div>
   );
 }
